@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>05_리플렉트 API 구현</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+a {color:#1b52b1;text-decoration:underline}
+a:active, a:hover {text-decoration:underline}
+li ul{padding-left:10px;}
+h1 {font-size:25px;padding-top:10px;}
+h2 {color:#000b72;font-size:22px;padding-bottom:10px;padding-top:10px;border-bottom:1px solid #d0d0d0;}
+h3 {font-size:14px;padding:10px 20px;background:#d0d0d0;}
+header h2 {margin-top:20px;font-size:14px;padding:10px 20px;background:#d0d0d0;color:#333;}
+h4 {color:#000;padding:10px 20px;border:1px solid #d0d0d0;}
+
+section {padding:10px;}
+article {padding:20px;}
+xmp {margin:2%;background:#f1f1f1;white-space:pre-line;padding:0 2% 1% 2%;}
+pre{margin-bottom:20px;background:#000;white-space:pre-line;padding:1% 2% 1% 2%;color:#ff0;font-size:16px;font-family:tahoma;}
+pre span{color:#fff;font-size:14px;}
+header > div, section > div {margin-bottom:20px;border:1px solid #d0d0d0;padding:5px 30px;}
+.colorscripter-code{border:0;padding:0;}
+.colorscripter-code table{width:100%;}
+.data_box table td{text-align:center;}
+ul {padding:10px 0;}
+ol {padding-left:20px;}
+p {padding-top:10px;}
+.btn_top{display:inline-block;position:fixed;bottom:10px;right:10px;width:50px;height:50px;line-height:50px;background:#d0d0d0;color:#000;text-align:center;}
+footer{text-align:right;}
+section em{display:block;color:#595;}
+dl {background:#efefef;padding:20px;margin:10px 0;}
+dl dt{font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap guide_wrap">
+	<header>
+		<h1>05_리플렉트 API 구현</h1>
+
+		<h2>목차</h2>
+		<div>
+			<ol>
+				<li><a href="#con1">1. Reflect 객체</a></li>
+				<li><a href="#con2">2. 요약</a></li>
+			</ol>
+		</div>
+	</header>
+	<section>
+	<div>
+		ES6는 객체 리플렉션object reflection(객체 프로퍼티를 들여다보고 조작하는 일)이 가능한 새 리플렉트Reflect API를 도입했다. <br><br>
+		<ul>
+			<li>주어진 this 값으로 함수 호출</li>
+			<li>다른 생성자의 prototype 프로퍼티로 생성자 호출</li>
+			<li>객체 프로퍼티의 속성 정의 및 변경</li>
+			<li>이터레이터 객체로 객체 프로퍼티를 열거</li>
+			<li>객체의 내부 [[prototype]] 프로퍼티를 조회, 설정</li>
+			<li>객체 프로퍼티/메소드를 확인하고 조작</li>
+		</ul>
+	</div>
+	<h2 id="con1">1. Reflect 객체</h2>
+	<section>
+		<div>
+			<ul>
+				<li>ES6 전역 Reflect 객체에는 객체 리플렉션에 관한 모든 메소드가 있다. </li>
+				<li>Reflect 는 함수객체가 아니므로 호출할 수 없고 new 연산자를 붙여 사용할 수도 없다.</li>
+				<li>Reflect 객체의 메소드는 상당수 기능 면에서 전역 Object 객체의 메소드와 중복된다. </li>
+			</ul>
+
+			<em>리플랙션 : 객체의 정보를 알아내는 기술로써 이를 통해 객체 안에 포함된 메소드, 필드, 프로퍼티, 이벤트 등을 알아낼 수 있다. </em>
+		</div>
+
+		<h3>Reflect.apply(function,this,arg)메소드</h3>
+		<div>
+			Reflect.apply()는 주어진 this값으로 target function를 호출하는 메소드로, Function.prototype.apply() 메소드와 같다. <br>
+			<strong>
+				Reflect.apply(target, thisArgument, argumentsList)
+				<em>VS</em>
+				func.apply(thisArg, [argsArray])
+			</strong><br><br>
+
+			다음 3개의 인자를 받는다. <br><br>
+			<ul>
+				<li>첫 번째 인자는 타깃 함수다.</li>
+				<li>두번째 선택 인자는 타깃 함수 내부의 this값이다.</li>
+				<li>세번쨰 선택 인자를 타깃 함수의 인자를 지정한 배열 객체다. </li>
+			</ul>
+		</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;function_name(a,&nbsp;b,&nbsp;c){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;this.value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;a&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;b&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;c;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;returned_value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;Reflect.apply(function_name,&nbsp;{value&nbsp;:&nbsp;<span style="color:#c10aff">100</span>},&nbsp;[<span style="color:#c10aff">10</span>,&nbsp;<span style="color:#c10aff">20</span>,&nbsp;<span style="color:#c10aff">30</span>]);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#4be6fa">console</span>.log(returned_value);</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<h3>Reflect.construct(constructor, args, prototype) 메소드</h3>
+		<div>
+			<ul>
+				<li>Reflect.construct()는 함수를 생성자로 실행하는 메소드다. </li>
+				<li>경우에 따라 한 생성자의 prototype과 다른 생성자의 prototype을 매치시켜야 하기 떄문에 </li>
+			</ul>
+		</div>
+
+		<div>
+			다음 3개의 인자를 받는다.
+			<ul>
+				<li>첫 번째 인자는 타깃 생성자다. </li>
+				<li>두 번째 선택 인자는 타깃 생성자의 인자에 해당하는 배열이다.</li>
+				<li>세 번쨰 선택 인자는 타깃 생성자의 prototype으로 사용할 생성자다. </li>
+			</ul>
+		</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;constructor1(a,&nbsp;b){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.a&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;a;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.b&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;b;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.f&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;this.a&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;this.b&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;this.c;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;constructor2()&nbsp;{}</div><div style="padding:0 6px; white-space:pre; line-height:130%">constructor2.<span style="color:#4be6fa">prototype</span>.c&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">100</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;myObject&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;Reflect.construct(constructor1,&nbsp;[<span style="color:#c10aff">1</span>,&nbsp;<span style="color:#c10aff">2</span>],&nbsp;constructor2);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#4be6fa">console</span>.log(myObject.f());&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#999999">//&nbsp;실행결과&nbsp;103</span></div></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			constructor1 을 실행 중 constructor2 의 prototype을 constructor1 의 prototype 으로 사용했다.
+		</div>
+
+		<h3>Reflect.defineProperty(object, property, descriptor) 메소드</h3>
+		<div>
+			Reflect.defineProperty()는 객체에 새 프로퍼티를 정의하거나 기존 프로퍼티를 수정하는 메소드다. 작업이 끝나면 성공여부를 불리언 값으로 반환한다. <br><br>
+
+			<strong>Object.defineProperty() <em>VS</em> Reflect.defineProperty()   ??</strong><br><br>
+			<ul>
+				<li>반환 값 : Object.defineProperty()은 수정된 객체를 반환 / Reflect.defineProperty()는 불리언 값을 반환</li>
+				<li>실패 시 : Object.defineProperty()은 예외 / Reflect.defineProperty()는 false를 반환</li>
+			</ul>
+		</div>
+
+		<div>
+			Reflect.defineProperty() 은 다음 3개의 인자를 받는다.
+			<ul>
+				<li>첫 번째 인자는 프로퍼티를 정의/수정할 객체다.</li>
+				<li>두 번째 인자는 정의/수정할 프로퍼티명 또는 심볼이다.</li>
+				<li>세 번째 인자는 정의/수정할 프로퍼티의 서술이다. </li>
+			</ul>
+		</div>
+
+		<h4>데이터 프로퍼티와 접근자 프로퍼티 </h4>
+		<div>
+			<strong>서술자 descriptor</strong>는 프로퍼티의 속성을 서술하는 객체다. <br>
+			Reflect.defineProperty(), Object.defineProperty(), Object.defineProperties(), Object.create() 메소드로 프로퍼티를 생성할 떄 해당 프로퍼티의 서술자를 전달한다.
+		</div>
+
+		<div>
+			<strong>데이터 프로퍼티 - data property</strong><br><br>
+			<ul>
+				<li>쓰기 가능 또는 불가 상태의 값을 가진다. </li>
+				<li>속성으로는 value, writable, enumerable, configurable</li>
+			</ul>
+		</div>
+
+		<div>
+			<strong>데이터 프로퍼티 서술자의 속성</strong><br><br>
+			<ul>
+				<li><strong>value (값) :</strong>프로퍼티를 할당된 값으로 ( 기본값 : undefined ) </li>
+				<li><strong>writable (쓰기 가능) :</strong> 이 속성이 true면 할당 연산자로 값을 변경할 수 있다. ( 기본값 : false ) </li>
+				<li>
+					<strong>configurable (설정 가능) :</strong> 이 속성이 true면 프로퍼티 속성을 변경 / 삭제할 수 있다. ( 기본값 : false )<br>
+					ex ) configurable 이 false 이고 writable이 true면 값과 쓰기가능 속성은 변경 가능하다.
+				</li>
+				<li>
+					<strong>enumerable (열거 가능) :</strong> 이 속성이 true면 프로퍼티를 for...in 루프나 Object.keys() 메소드에 열거할수 있다.
+					 (기본값 : false)<br>
+
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			<strong>데이터 프로퍼티 서술자의 속성</strong><br><br>
+			<ul>
+				<li>쓰기 가능 또는 불가 상태의 값을 가진다. </li>
+				<li>속성으로는 value, writable, enumerable, configurable</li>
+			</ul>
+		</div>
+
+		<div>
+			<strong>접근자 프로퍼티 - accessor property</strong><br><br>
+			<ul>
+				<li>쓰기 가능 또는 불가 상태의 값을 가진다. </li>
+				<li>속성으로는 프로퍼티는 프로퍼티 값을 조회/지정하는 함수의 게터-세터 쌍을 가진다. </li>
+			</ul>
+		</div>
+
+
+	</section>
+
+	<h2 id="con2">2. 요약</h2>
+	<section>
+
+	</section>
+
+
+	</section>
+	<a href="#" class="btn_top">TOP</a>
+	<footer>
+		<address>Jewdri . 출처 : ECMSScript 6 길들이기 : 최신 표준으로 다시 배우는 자바스크립트 프로그래밍</address>
+	</footer>
+</div>
+</body>
+</html>

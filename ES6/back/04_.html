@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>04_비동기 프로그래밍</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+a {color:#1b52b1;text-decoration:underline}
+a:active, a:hover {text-decoration:underline}
+li ul{padding-left:10px;}
+h1 {font-size:25px;padding-top:10px;}
+h2 {color:#000b72;font-size:22px;padding-bottom:10px;padding-top:10px;border-bottom:1px solid #d0d0d0;}
+h3 {font-size:14px;padding:10px 20px;background:#d0d0d0;}
+header h2 {margin-top:20px;font-size:14px;padding:10px 20px;background:#d0d0d0;color:#333;}
+h4 {color:#000;padding:10px 20px;border:1px solid #d0d0d0;}
+
+section {padding:10px;}
+article {padding:20px;}
+xmp {margin:2%;background:#f1f1f1;white-space:pre-line;padding:0 2% 1% 2%;}
+pre{margin-bottom:20px;background:#000;white-space:pre-line;padding:1% 2% 1% 2%;color:#ff0;font-size:16px;font-family:tahoma;}
+pre span{color:#fff;font-size:14px;}
+header > div, section > div {margin-bottom:20px;border:1px solid #d0d0d0;padding:5px 30px;}
+.colorscripter-code{border:0;padding:0;}
+.colorscripter-code table{width:100%;}
+.data_box table td{text-align:center;}
+ul {padding:10px 0;}
+ol {padding-left:20px;}
+p {padding-top:10px;}
+.btn_top{display:inline-block;position:fixed;bottom:10px;right:10px;width:50px;height:50px;line-height:50px;background:#d0d0d0;color:#000;text-align:center;}
+footer{text-align:right;}
+section em{display:block;color:#595;}
+dl {background:#efefef;padding:20px;margin:10px 0;}
+dl dt{font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap guide_wrap">
+	<header>
+		<h1>04_비동기 프로그래밍</h1>
+
+		<h2>목차</h2>
+		<div>
+			<ol>
+				<li><a href="#con1">1. 자바스크립트 실행 모델</a></li>
+				<li><a href="#con2">2. 비동기 코드 작성</a></li>
+				<li><a href="#con3">3. 구원자, 프라미스</a></li>
+				<li><a href="#con4">4. 프라미스 기반의 자바스크립트 API</a></li>
+				<li><a href="#con5">5. 요약</a></li>
+			</ol>
+		</div>
+	</header>
+	<section>
+	<div>
+		ES6에는 널리 잘 알려진 프로그래밍 패턴을 자체 지원한다. 프라미스Promise 패턴도 그 중 하나로, 비동기 코드를 읽고 쓰고 쉽게 해준다. <br>
+		이 장에서는 ES6 프라미스 API로 비동기 코드를 작성하는 방법으르 알아본다.<br>
+		이제는 새 자바스크립트와 HTML5 비동기 API가 프라미스와 어우러져 보다 간결한 코딩이 가능하다.
+		<ul>
+			<li>자바스크립트 실행 모델</li>
+			<li>비동기 코드 작성이 까다로운 점</li>
+			<li>프라미스 생성과 작동 원리</li>
+			<li>비동기 코드 작성 시 프라미스의 유용성</li>
+			<li>상이한 프라미스 상태</li>
+			<li>프라미스 객체의 다양한 메소드</li>
+			<li>프라미스를 사용하는 다양한 자바스크립트 및 HTML5 API</li>
+		</ul>
+	</div>
+	<h2 id="con1">1. 자바스크립트 실행 모델</h2>
+	<section>
+		자바스크립트 코드는 싱글 스레드 single thread로 작동한다. <br>
+		다시 말해, 스크립트 2개를 동시에 실행하는 건 불가능하다. <br>
+		브라우저에 접속한 각 웹사이트는 스레드 하나를 메인 스레드로 잡은 채 웹 소스파일을 내려받고 파싱, 실행한다. <br><br>
+		메인 스레드엔 한번에 하나씩 비동기 작업을 실행하기 위해 큐를 둔다. <br>
+		이벤트 처리기, 골백 등 어떤 유형의 작업이라도 큐에 쌓을 수 있다. <br>
+		AJAX 요청/응답 이벤트 발생, 타이머 등록 등이 일어나면 큐에 새 작업을 추가한다. <br>
+		실행 시간이 오래 걸리는 작업이 섞이면 큐의 다른 작업들과 메인 스크립트를 멈추게 할 수도 있다. <br>
+		메인스레드는 가능할때면 언제나 큐에 줄 선 작업들을 하나씩 꺼내어 실행한다. <br><br><br><br>
+		HTML5는 메인 스레드와 병렬로 실행되는, 웹 워커(web worker)라는 실제 스레드를 도입했다. <br>
+		웹 워커의 실행이 끝나거나 메인 스레드에 알림이 필요할 때 새 이벤트를 그냥 큐에 넣는다.<br><br>
+		자바스크립트 코드를 비동기적으로 실행할 수 있는건 바로 이 큐 덕분이다.
+	</section>
+
+	<h2 id="con2">2. 비동기 코드 작성</h2>
+	<section>
+		<div>
+			ES5는 이벤트와 콜백이라는, 두가지 비동기 코드 작성 패턴을 지원한다. <br>
+			보통 비동기 작업을 시작하고 이벤트 처리기를 등록하거나, 콜백을 전달해서 작업이 끝난 후 실행되도록 코딩한다.
+		</div>
+
+		<div>이벤트/콜백 예제를 보면서 어떤 면에서 비동기 코드 작성이 어려운지 생각해보기 바란다.</div>
+
+		<h3>이벤트를 포함한 비동기 코드</h3>
+		<div>
+			이벤트를 포함한 비동기 자바스크립트 API는 처리 후 성공/실패에 따른 처리기를 각각 등록한다. <br>
+			예를들어 AJAX 요청은 결과의 성공 여부에 따라 분기하여 실행할 이벤트 처리기를 등록한다. <br>
+			AJAX 요청 후 조회한 정보를 로깅하는 예제를 보자.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayName</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #75715e">//보통 DOM을 이용해서 화면에 표시한다.</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Name</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 : &quot;</span><span style="color: #f92672">+</span> <span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayProfession</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Profession</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 :&quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayAge</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Age</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 :&quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayData</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">data</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">json</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">JSON</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">parse</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">data</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">displayName</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">displayProfession</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">displayAge</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 :&quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">request</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">XMLHttpRequest</span><span style="color: #f8f8f2">();</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">url</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;data.json&quot;</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">open</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;GET&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">url</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">addEventListener</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;load&quot;</span><span style="color: #f8f8f2">,</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">if</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">status</span> <span style="color: #f92672">===</span> <span style="color: #ae81ff">200</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #a6e22e">displayData</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">responseText</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">else</span><span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;서버 에러 :&quot;</span><span style="color: #f92672">+</span> <span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">status</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">},</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">addEventListener</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;error&quot;</span><span style="color: #f8f8f2">,</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;AJAX 요청 실패&quot;</span><span style="color: #f8f8f2">)</span>
+			<span style="color: #f8f8f2">},</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">send</span><span style="color: #f8f8f2">();</span>
+			</pre>
+		</div>
+
+		<!--script>
+			function displayName(json) {
+				try {
+					//보통 DOM을 이용해서 화면에 표시한다.
+					console.log(json.Name);
+				}catch (e) {
+					console.log("예외 : "+ e.message);
+				}
+			}
+
+			function displayProfession(json) {
+				try {
+					console.log(json.Profession);
+				}catch (e) {
+					console.log("예외 :"+e.message);
+				}
+			}
+
+			function displayAge(json) {
+				try {
+					console.log(json.Age);
+				}catch(e) {
+					console.log("예외 :"+e.message);
+				}
+			}
+
+			function displayData(data) {
+				try {
+					var json = JSON.parse(data);
+
+					displayName(json);
+					displayProfession(json);
+					displayAge(json);
+				}catch (e) {
+					console.log("예외 :"+e.message);
+				}
+			}
+
+			var request = new XMLHttpRequest();
+			var url = "data.json";
+
+			request.open("GET", url);
+			request.addEventListener("load",function() {
+				if(request.status === 200){
+					displayData(request.responseText);
+				}else{
+					console.log("서버 에러 :"+ request.status);
+				}
+			}, false);
+
+			request.addEventListener("error",function() {
+				console.log("AJAX 요청 실패")
+			}, false);
+
+			request.send();
+		</script-->
+
+		<div>
+			XMLHttpRequest 객체의 send() 메소드는 비동기 실행되며 data.json 파일을 읽어들인 후 성공하면 load, 실패하면 error 이벤트 처리기를 각각 호출한다.  <br>
+			이와 같은 AJAX 작동 방식에 문제는 없지만, 이벤트가 개입된 코드를 작성하는 방법이 골치 아프다. <br>
+			어떤 문제점들이 있는지 정리한다.
+			<ul>
+				<li>
+					비동기 실행 코드 블록마다 일일히 이벤트 처리기를 붙여야한다.  try...catch문 하나로 전체 코드를 감싸지 못하니 예외를 골라내기가 매우 어렵다.
+				</li>
+				<li>
+					중첩된 함수 호출 탓에 코드를 따라가기 어렵고 읽기 힘들다.
+				</li>
+				<li>
+					프로그램의 다른 부분에서 특정 비동기 작업이 완료됐는지, 중단 됐는지, 아니면 아직 실행중인지 알려면 해당하는 사용자 변수를 어딘가엔 두어야 한다. <br>
+					사실 상 비동기 작업의 상태를 파악하기가 쉽지 않다.
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			AJAX 혹은 다른 비동기 작업을 여러 다발 중첩시키면 코드는 더 더욱 읽고 분석하기 힘들어진다. <br>
+			여러 데이터를 화면에 표시 후 정확한지 여부를 사용자에게 묻고 그 결과를 서버에 다시 전송하는 다음 프로그램이 그런 경우다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">function</span> <span style="color: #a6e22e">verify</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+				<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">result</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">confirm</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;데이터가 정확한가요?&quot;</span><span style="color: #f8f8f2">);</span>
+					<span style="color: #66d9ef">if</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">result</span> <span style="color: #f92672">==</span> <span style="color: #66d9ef">true</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+						<span style="color: #75715e">//AJAX 요청으로 데이터를 서버로 전송</span>
+					<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">else</span> <span style="color: #f8f8f2">{</span>
+						<span style="color: #75715e">//AJAX 요청으로 데이터를 서버로 전송 </span>
+					<span style="color: #f8f8f2">}</span>
+				<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 발생 : &quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayData</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">data</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+				<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">json</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">JSON</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">parse</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">data</span><span style="color: #f8f8f2">);</span>
+
+					<span style="color: #a6e22e">displayName</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+					<span style="color: #a6e22e">displayProfession</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+					<span style="color: #a6e22e">displayAge</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+
+					<span style="color: #a6e22e">verify</span><span style="color: #f8f8f2">();</span>
+				<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 발생 : &quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+			</pre>
+		</div>
+
+		<h3>콜백을 포함한 비동기 코드</h3>
+		<div>
+			콜백을 이용한 비동기 자바스크립트 API는 성공/에러 콜백을 모두 넘기고 성공 여부에 따라 어느 한쪽을 호출한다. <br><br>
+			이를테면, 제이쿼리로 AJAX 요청을 할 때는 성공과 실패, 각 경우에 해당하는 콜백도 같이 넘긴다. <br>
+			제이쿼리로 AJAX 요청 후 조회한 정보를 로깅하는 예제를 보자.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayName</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+				<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Name</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 발생 :&quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayProfession</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+				<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Profession</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 발생 :&quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayAge</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+				<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">Age</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 발생 :&quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">function</span> <span style="color: #a6e22e">displayData</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">data</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+				<span style="color: #66d9ef">try</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">json</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">JSON</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">parse</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">data</span><span style="color: #f8f8f2">);</span>
+
+					<span style="color: #a6e22e">displayName</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+					<span style="color: #a6e22e">displayProfession</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+					<span style="color: #a6e22e">displayAge</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">json</span><span style="color: #f8f8f2">);</span>
+
+				<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">catch</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;예외 발생 :&quot;</span><span style="color: #f92672">+</span><span style="color: #a6e22e">e</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">message</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #a6e22e">$</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">ajax</span><span style="color: #f8f8f2">({</span><span style="color: #a6e22e">url</span><span style="color: #f92672">:</span> <span style="color: #e6db74">&quot;data.json&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">success</span><span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">result</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">status</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">responseObject</span><span style="color: #f8f8f2">){</span>
+				<span style="color: #a6e22e">displayData</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">responseObject</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">responseText</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">},</span> <span style="color: #a6e22e">error</span> <span style="color: #f92672">:</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">xhr</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">status</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">error</span><span style="color: #f8f8f2">){</span>
+				<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;AJAX 요청을 할 수 없습니다. 에러 내용은 &quot;</span><span style="color: #f92672">+</span> <span style="color: #a6e22e">error</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}});</span>
+			</pre>
+		</div>
+
+		<div>
+			제이쿼리 AJAX 자체는 문제가 없지만 콜백이 있는 코드는 다음 문제들이 있다. <br><br>
+			<ul>
+				<li>
+					try/catch문을 여러 개 써야 하므로 예외를 잡아내기 어렵다.
+				</li>
+				<li>중첩된 함수 호출을 따라가야 하므로 가독성이 현저히 떨어진다. </li>
+				<li>비동기 작업 상태를 유지하기 어렵다. 제이쿼리 AJAX, 또는 다른 비동기 작업이 여러 개 중첩되면 문제는 더 복잡해진다.</li>
+			</ul>
+		</div>
+
+	</section>
+
+	<h2 id="con3">3. 구원자, 프라미스</h2>
+	<section>
+		<div>
+			프라미스 패턴은 새로운 비동기 코드 작성 패턴이다. <br>
+			프라미스 패턴은 이벤트/콜백 패턴의 단점을 한번에 해소하고 비동기 코드를 마치 동기 코드처럼 표현한다. <br><br>
+			과거 비동기 자바스크립트 API는 대개 프라미스로 감싼 형태였지만 새 API는 순수 프라미스를 구현한 것이다. <br><br>
+			프라미스가 자바스크립트에 내장된 건 처음이지만, C#, C++ 11,  스위프트, 스칼라 등 다른 프로그래밍 언어에서는 이미 예전부터 지원해왔다.
+		</div>
+
+		<h3>프라미스 생성자</h3>
+		<div>
+			 프라미스 생성자는 프라미스 인스턴스를 만든다.  <br>
+			 이 때 비동기 작업에 해당하는 실행자executor라는 콜백을 넘긴다.  <br>
+			 실행자는 귀결resolve 콜백과 버림reject 콜백, 두 파라미터를 가지며, 작업이 성공하면 귀결 콜백이, 실패하면 버림 콜백이 실행된다.  <br>
+			 성공하면 귀결 콜백에 결과값을, 실패하면 버림 콜백에 실패 사유를 각각 전달한다.
+		</div>
+
+		<div>
+			프라미스는 어떻게 생성하는지, 프라미스로 AJAX 요청을 어떻게 감싸는지 살펴보자.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">promise</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Promise</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">resolve</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">reject</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">request</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">XMLHttpRequest</span><span style="color: #f8f8f2">();</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">url</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;data.json&quot;</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">open</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;GET&quot;</span><span style="color: #f8f8f2">,</span><span style="color: #a6e22e">url</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">addEventListener</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;load&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">if</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">status</span> <span style="color: #f92672">===</span> <span style="color: #ae81ff">200</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">resolve</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">responseText</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;responseText&quot;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span><span style="color: #66d9ef">else</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">reject</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;서버 에러 : &quot;</span><span style="color: #f92672">+</span> <span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">status</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">},</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">addEventListener</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;error&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #a6e22e">reject</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;AJAX 요청 실패&quot;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">},</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">request</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">send</span><span style="color: #f8f8f2">();</span>
+
+			<span style="color: #f8f8f2">});</span>
+			</pre>
+		</div>
+
+		<div>
+			실행자 자체는 동기적으로 실행되지만, 비동기 작업을 실행하므로 비동기 작업이 끝나기 전에 반환할 수도 있다. <br><br>
+			프라미스는 다음 네 가지 상태값을 가진다. <br><br>
+			<ul>
+				<li><strong>이룸 Fulfilled :</strong> 귀결 콜백이 프라미스 아닌 객체를 인자로, 또는 인자없이 실행될 때 프라미스는 이룸(이루어진) 상태다.</li>
+				<li><strong>버림 Rejected :</strong> 실행자 스코프에서 예외가 발생하거나 버림 콜백이 실행될 경우 프라미스는 버림(버려진) 상태다.</li>
+				<li><strong>미결 Pending :</strong> 귀결/버림 콜백 실행 전 프라미스는 미결 상태다.</li>
+				<li><strong>확정settled :</strong> 미결 상태가 아닌, 이룸/버림 중 한 쪽에 도달한 확정 상태다. </li>
+			</ul>
+			<br><br>
+			프라미스는 일단 이룸/버림 상태에 이르면 두 번 다시 돌아가지 않는다. <br>
+			상태를 바꾸어도 소용없다.<br><br><br>
+			프라미스 객체를 인자로 받은 상태에서 귀결 콜백이 실행되면 이 인자 객체 상태가 이룸인지, 버림인지에 따라 전체 프라미스의 이룸/버림이 확정된다.
+		</div>
+
+		<h3>이룸값</h3>
+		<div>
+			이룸값은 비동기 작업 성공 시 귀결되는 이룸 프라미스의 값이다. <br>
+			귀결 콜백의 인자가 다른 프라미스 객체가 아니라면, 이 인자를 프라미스 객체의 이룸값으로 간주한다.<br><br>
+			귀결 콜백 인자가 없으면 이룸값은 undefined, 프라미스 상태는 이룸이다. <br><br><br>
+			프라미스 객체를 귀결 콜백의 인자로 넘기면? 이를테면 프라미스 A에 또 다른 프라미스 B를 인자로 넘긴 상태에서 A의 귀결 콜백을 호출하면 어떻게 될까?
+			B 가 이룸 프라미스면 A도 마찬가지라고 할 수 있고, A, B 둘다 이룸값은 동일하다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">A</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Promise</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">resolve</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">reject</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+				<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">B</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Promise</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">res</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">rej</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">rej</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;사유&quot;</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">});</span>
+
+				<span style="color: #a6e22e">resolve</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">B</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">});</span>
+
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">C</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Promise</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">resolve</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">reject</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+				<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">D</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Promise</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">res</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">rej</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+					<span style="color: #a6e22e">res</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;결과&quot;</span><span style="color: #f8f8f2">);</span>
+				<span style="color: #f8f8f2">});</span>
+
+				<span style="color: #a6e22e">resolve</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">D</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">});</span>
+			</pre>
+		</div>
+		<div>
+			여기서 B는 버림 프라미스라 A 또한 버려지고 둘을 모두 버리는 이유를 문자열 "사유"에 담는다. 마찬가지로, D는 이룸프라미스라 C도 이룸 프라미스이고, C, D의 이룸값은 문자열 "결과"다.
+		</div>
+		<div>
+			"프라미스가 어떤 값으로 귀결", "어떤 값으로 귀결된 프라미스" 같은 말은 프라미스 실행자가 실행되거나 resolve 콜백을 주어진 값으로 호출한다는 뜻이다.
+		</div>
+
+		<h3>then(onFulfilled, onRejected) 메소드</h3>
+		<div>
+			프라미스 객체의 then() 메소드에는 이룸/버림 처리 이후 수행할 작업을 넣는다. <br>
+			이 작업은 또 다른 이벤트/콜백 기반의 비동기 작업이 올 수 있다. <br><br>
+			then() 은 onFulfilled, onRejected, 2개의 인자를 받는다. onFulfilled 콜백은 프라미스 이루어질 경우, onRejected 콜백은 프라미스 버려질 경우 각각 실행된다. <br>
+			onRejectedsms 는 실행자 스코프 내에서 예외가 발생해도 싱핼되므로 마치 예외 처리기처럼 작동한다.<br><br><br><br>
+			onFulfilled는 프라미스의 이룸값, onRejected는 버림사유를 각각 파라미터로 받는다. <br>
+			then()에 전한 콜백은 비동기 실행된다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;promise&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;request&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;XMLHttpRequest();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;url&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ffd500">"data.json"</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;request.open(<span style="color:#ffd500">"GET"</span>,&nbsp;url);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"load"</span>,&nbsp;<span style="color:#ff3399">function</span>()&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(request.status&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">200</span>)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(resolve.responseText);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span style="color:#ff3399">else</span>&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"서버&nbsp;에러&nbsp;:"</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>request.status);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"error"</span>,&nbsp;<span style="color:#ff3399">function</span>()&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"AJAX&nbsp;요청&nbsp;실패"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;request.send();</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">promise.then(<span style="color:#ff3399">function</span>(value)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;JSON.parse(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">},&nbsp;<span style="color:#ff3399">function</span>(reason)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(reason);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+		<div>
+			AJAX 요청이 성공하면(즉, 프라미스가 이루어지면) 응답 텍스트를 인자로 onFulfilled 콜백을 실행하여 JSON 문자열을 자바스크립트 객체로 변환 후 반환한다 <br><br>
+			프로그래머들은 대부분 프라미스 객체 변수를 빼고 다음과 같이 작성한다 .
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;ajax()&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;request&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;XMLHttpRequest();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;url&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ffd500">"data.json"</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.open(<span style="color:#ffd500">"GET"</span>,&nbsp;url);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"load"</span>,&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(request.status&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">200</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(request.responseText);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span style="color:#ff3399">else</span>{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"서버&nbsp;에러&nbsp;:&nbsp;"</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>request.status);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"error"</span>,&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"AJAX&nbsp;요청&nbsp;실패"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.send();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;})</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">ajax().then(<span style="color:#ff3399">function</span>(value)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;JSON.parse(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">},&nbsp;<span style="color:#ff3399">function</span>(reason)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(reason);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			코드가 한결 읽기 쉬워졌다. 새로 구현된 자바스크립트 API는 모두 이런 패턴으로 프라미스를 사용한다.
+		</div>
+
+		<div>
+			then() 메소드는 항상 프라미스 객체를 새로 만들어 반환하고 이 객체는 콜백을 호출한 반환값으로 귀결된다. 다음은 then()이 새 프라미스 객체를 반환하는 경우다. <br><br>
+			<ul>
+				<li>
+					onFulfilled 콜백이 호출되고 내부에 return 문이 없으면, 내부적으로 새 이룸 프라미스를 생성 후 반환한다.
+				</li>
+				<li>
+					onFulfilled 콜백이 임의의 프라미스를 반환하면, 내부적으로 이 프라미스로 귀결된 새 프라미스 객체를 생성하여 반환한다.
+				</li>
+				<li>
+					onFulfilled 콜백이 프라미스 아닌 다른 것을 반환해도 내부적으로 이 반환 값으로 귀결된 새 프라미스 객체를 만들어 반환한다.
+				</li>
+				<li>
+					onFulfilled 대신 null을 넘기면 콜백을 내부적으로 생성하여 null로 대체한다. <br>
+					내부에서 만들어진 onFulfilled는 부모 프라미스의 이룸갑승로 귀결된 새 이룸 프라미스 객체를 반환한다.
+				</li>
+				<li>
+					onRejected 콜백이 호출되고 내부에 return문이 없으면, 내부적으로 새 이룸 프라미스를 생성 후 반환한다.
+				</li>
+				<li>
+					onRejected 콜백이 임의의 프라미스를 반환하면, 내부적으로 이 프라미스로 귀결된 새 프라미스 객체를 생성하여 반환한다.
+				</li>
+				<li>
+					onRejected 콜백이 프라미스 아닌 다른 것을 반환해도 내부적으로 이 반환값으로 귀결된 새 프라미스 객체를 만들어 반환한다.
+				</li>
+				<li>
+					onRejected 대신 null을 넘기거나 생략하면 콜백을 내부적으로 생성하여 null 로 대체한다. 내부에서 만들어진 onRejected 는 부모 프라미스와 버림 사유와 동일한 새 버림 프라미스 객체를 반환한다.
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			예제에서 조회한 데이터를 콘솔에 표시하려면 프라미스를 체이닝chaining하면 된다. 그리고 onFulfilled 콜백에서도 예외가 발생할지 모를 일이니 데이터를 로깅하고 가능한 모든 예외를 처리하도록 코드를 확장하자
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;ajax()&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;request&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;XMLHttpRequest();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;url&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ffd500">"data.json"</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.open(<span style="color:#ffd500">"GET"</span>,&nbsp;url);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"load"</span>,&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(request.status&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">200</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(request.responseText);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span style="color:#ff3399">else</span>&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"서버&nbsp;에러&nbsp;:"</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>request.status);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"error"</span>,&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"AJAX&nbsp;요청실패"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.send();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;})</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">ajax().then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;JSON.parse(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Name);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Profession);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Age);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#4be6fa">null</span>,&nbsp;<span style="color:#ff3399">function</span>(reason){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(reason);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			다수의 프라미스를 then()으로 체이닝하고 전체 프라미스 체인 중 최초 프라미스의 실행자가 받은 AJAX 응답을 파싱/로깅한다. then() 메소드는 모든 onFulfilled 메소드와 실행자의 예외/오류 처리기 역할을 담당한다.
+		</div>
+
+		<div>
+			표시된 데이터가 정확한지를 확인하는 이벤트 기반의 비동기 작업을 추가하자.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;ajax(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;request&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;XMLHttpRequest();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;url&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ffd500">"data.json"</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.open(<span style="color:#ffd500">"GET"</span>,url);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"load"</span>,&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(request.status&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">200</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(request.responseText);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span style="color:#ff3399">else</span>{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"서버&nbsp;에러&nbsp;:"</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>request.status);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"error"</span>,&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"AJAX&nbsp;요청&nbsp;실패"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.send();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;});</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;verify(value)&nbsp;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">true</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"AJAX&nbsp;요청하여&nbsp;서버에&nbsp;데이터를&nbsp;전송"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span style="color:#ff3399">else</span>{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"AJAX&nbsp;요청하여&nbsp;서버에&nbsp;데이터를&nbsp;전송"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;});</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">ajax().then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;JSON.parse(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Name);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Profession);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Age);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;result&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#4be6fa">confirm</span>(<span style="color:#ffd500">"데이터가&nbsp;정확한가요:?"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;result;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(verify).then(<span style="color:#4be6fa">null</span>,&nbsp;<span style="color:#ff3399">function</span>(reason){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(reason);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+		<div>
+			AJAX 로직을 프라미스로 감싸고 나니 코드를 읽고 쓰기가 훨씬 수월해졌다.
+		</div>
+
+		<h3>catch(onRejected) 메소드</h3>
+		<div>
+			then() 메소드로 다른 기능없이 에러/예외만 처리하고자 할 때는 catch() 메소드를 쓴다. <br>
+
+			"catch(잡다)"라는 의미가 있어 코드 가독성이 향상된다. <br><br>
+			이 메소드는 onRejected 콜백을 인자로 받아 onRejected 와 같은 방식으로 호출한다.
+		</div>
+
+		<div>
+			catch()는 언제나 새 프라미스를 반환하며, 다음 몇가지 경우의 수가 있다. <br><br>
+			<ul>
+				<li>onRejected 콜백 내부에 return문이 없으면, 내부적으로 이룸 프라미스를 생성 후 반환한다. </li>
+				<li>onRejected 콜백이 호출 후 임의의 프라미스를 반환하면, 내부적으로 이 반환값으로 귀결된 새 프라미스 객체를 만들어 반환한다.</li>
+				<li>onRejected 대신 null을 넘기거나 생략하면 콜백을 내부적으로 생성하여 null로 대체한다. 내부에서 만들어진 onRejected는 부모 프라미스와 버림 사유와 동일한 새 버림 프라미스를 객체를 반환한다.</li>
+				<li>catch()를 호출한 프라미스 객체가 이루어지면 이 메소드는 부모 프라미스와 이룸값을 가진 새 이룸 프라미스 객체를 반환하고 onRejected 콜백은 무시한다.</li>
+			</ul>
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">promise.then(<span style="color:#4be6fa">null</span>,&nbsp;<span style="color:#ff3399">function</span>(reason){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>catch()로 바꾸면 이렇다.</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">promise.<span style="color:#ff3399">catch</span>(<span style="color:#ff3399">function</span>(reason){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			AJAX 코드 예제에서 제일 마지막 연결된 then()을 catch()로 바꾸기
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;ajax(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;request&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;XMLHttpRequest();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;url&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ffd500">"data.json"</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.open(<span style="color:#ffd500">"GET"</span>,&nbsp;url);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"load"</span>,&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(request.status&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">200</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(request.responseText);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span style="color:#ff3399">else</span>{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"서버&nbsp;에러&nbsp;:"</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;request.status);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.<span style="color:#4be6fa">addEventListener</span>(<span style="color:#ffd500">"error"</span>,&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"AJAX&nbsp;요청&nbsp;실패"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">false</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request.send();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;})</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;verify(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">true</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"AJAX&nbsp;요청하여&nbsp;서버에&nbsp;데이터를&nbsp;전송한다.&nbsp;"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<span style="color:#ff3399">else</span>{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"AJAX&nbsp;요청하여&nbsp;서버에&nbsp;데이터를&nbsp;전송한다.&nbsp;"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;});</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">ajax().then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;JSON.parse(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Name);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Profession);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.Age);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;result&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#4be6fa">confirm</span>(<span style="color:#ffd500">"데이터가&nbsp;정확한가요&nbsp;?"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;result;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}).then(verify).<span style="color:#ff3399">catch</span>(<span style="color:#ff3399">function</span>(reason){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(reason);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<h3>Promise.resolve(value) 메소드</h3>
+		<div>
+			resolve()는 주어진 값으로 귀결된 프라미스 객체를 반환하는 메소드다. <br><br>
+			이 메소드의 기본 기능은 임의의 값을 프라미스 객체로 반환하는 것이다. 프라미스인지 아닌지 확실치 않은 값을 프라미스로 바꾸어 사용하고자 할 때 유용하다. <br><br>
+			예컨대, 인터페이스가 상이한 제이쿼리 프라미스를 ES6 프라미스로 변환할 때 resolve()를 이용한다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;p1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;Promise.resolve(<span style="color:#c10aff">4</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">p1.then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">Promise.resolve(p1).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">Promise.resolve({<span style="color:#4be6fa">name</span>:<span style="color:#ffd500">"수지"</span>}).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.<span style="color:#4be6fa">name</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<h3>Promise.reject(value) 메소드</h3>
+		<div>
+			reject()는 주어진 값이 실패 사유인 프라미스 객체를 반환하는 메소드다. <br><br>
+			Promise.resolve()와 달리 reject()는 프라미스 변환이 아닌, 디버깅 용도로만 쓴다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;p1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;Promise.reject(<span style="color:#c10aff">4</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">p1.then(<span style="color:#4be6fa">null</span>,&nbsp;<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">Promise.reject({<span style="color:#4be6fa">name</span>:<span style="color:#ffd500">"수지"</span>}).then(<span style="color:#4be6fa">null</span>,&nbsp;<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value.<span style="color:#4be6fa">name</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<h3>Promise.all(iterable) 메소드</h3>
+		<div>
+			all()은 주어진 이터러블 객체의 프라미스가 모두 이루어질 때 새 이룸 프라미스를 반환하는 메소드다.<br><br>
+			어떤 비동기 작업들을 다 끝내고 나서 다음 작업으로 넘어갈 때 유용하다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;p1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">setTimeout</span>(<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"1"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">1000</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;p2&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">setTimeout</span>(<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"2"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">2000</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;arr&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[p1,&nbsp;p2];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">Promise.all(arr).then(<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"Done"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			프라미스 중 하나라도 버려지면  Promise.all() 메소드는 즉시 해당 실패 사유를 지닌 새 버림 프라미스를 반환한다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;p1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">setTimeout</span>(<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"1"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(<span style="color:#ffd500">"에러"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">1000</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;p2&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">setTimeout</span>(<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"2"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">2000</span>)</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;arr&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[p1,&nbsp;p2];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">Promise.all(arr).then(<span style="color:#4be6fa">null</span>,&nbsp;<span style="color:#ff3399">function</span>(reason){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(reason);&nbsp;&nbsp;<span style="color:#999999">//1초후&nbsp;콘솔창에&nbsp;"Error"가&nbsp;표시된다.</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<h3>Promise.race(iterable) 메소드</h3>
+		<div>
+			race() 는 주어진 이터러블 객체의 프라미스 중 어느 하나라도 이루어질 때 해당 이룸값을 지닌 새 이룸 프라미스를 반환하는 메소드다. <br><br>
+			메소드 명에서 연산되는 것처럼 프라미스들끼리 경쟁을 붙여 우승자를 뽑는 것이다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;p1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">setTimeout</span>(<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(<span style="color:#ffd500">"이룸값&nbsp;1"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">1000</span>)</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;p2&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Promise(<span style="color:#ff3399">function</span>(resolve,&nbsp;reject){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">setTimeout</span>(<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(<span style="color:#ffd500">"이룸값&nbsp;2"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span style="color:#c10aff">2000</span>)</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;arr&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[p1,&nbsp;p2];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">Promise.race(arr).then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">},&nbsp;<span style="color:#ff3399">function</span>(reason){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(reason);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+	</section>
+
+	<h2 id="con4">. 프라미스 기반의 자바스크립트 API</h2>
+	<section>
+		<div>
+			요즘 나온 비동기 자바스크립트 API는 이벤트/콜백이 아닌, 프라미스 패턴에 기반을 둔다. 오래된 자바스크립트 API도 새 버전에서는 프라미스 기반이다. <br><br>
+			배터리 상태 API, 웹 암호화 API 도 과거 이벤트 기반이었지만, 업데이트 된 버전은 순수하게 프라미스를 이용하여 구현했다.
+		</div>
+
+		<h3>배터리 상태 API</h3>
+		<div>
+			배터리 상태  API는 현재 배터리 충전 상태를 표시한다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#4be6fa">navigator</span>.getBattery().then(<span style="color:#ff3399">function</span>(value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"배터리상태&nbsp;:&nbsp;"</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>(value.level&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">*</span>&nbsp;<span style="color:#c10aff">1000</span>));</div><div style="padding:0 6px; white-space:pre; line-height:130%">},&nbsp;<span style="color:#ff3399">function</span>(reason){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">"에러&nbsp;:&nbsp;"</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>reason);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			navigator 객체의  getBattery() 메소드는 배터리 상태 데이터 조회 성공 시 이룸 프라미스를, 실패 시 버림 프라미스를 반환한다.<br>
+			이룸 프라미스의 반환값은 배터리 정보를 담고 있는 객체로, level 프로퍼티는 남아있는 배터리량을 가리킨다.
+		</div>
+
+		<h3>웹 암호화 API</h3>
+		<div>
+			웹 암호화 API는 해싱hashing, 서명 생성/ 검증, 암호화/복호화 기능을 제공한다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;convertStringToArrayBufferView(str){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;bytes&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;Unit8Array(str.<span style="color:#4be6fa">length</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;iii<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;iii<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span>str.<span style="color:#4be6fa">length</span>;&nbsp;iii<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byte[iii]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;str.charCodeAt(iii);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;bytes;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;covertArrayBufferToHexaDecimal(buffer){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;data_view&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">new</span>&nbsp;DataView(buffer);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;iii,&nbsp;len,&nbsp;hex&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ffd500">''</span>,&nbsp;c;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(iii<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>,&nbsp;len&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;data_view.byteLength;&nbsp;iii<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span>len;&nbsp;iii<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;data_view.getUnit8(iii).toString(<span style="color:#c10aff">16</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(c.<span style="color:#4be6fa">length</span><span style="color:#ff3399">&lt;</span><span style="color:#c10aff">2</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ffd500">'0'</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>c;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hex&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;c;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;hex;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#4be6fa">window</span>.<span style="color:#4be6fa">crypto</span>.subtle.digest({<span style="color:#4be6fa">name</span>:<span style="color:#ffd500">"SHA-256"</span>},&nbsp;convertStringToArrayBufferView(<span style="color:#ffd500">"ECMAScript&nbsp;6"</span>)).then(<span style="color:#ff3399">function</span>(result){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;hash_value&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;convertStringToArrayBufferView(result);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(hash_value);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			주어진 문자열의 SHA-256 해시값을 찾는 코드다.<br><br>
+			window.crypto.subtle.digest 메소드는 문자열의 배열 버퍼를 받아 알고리즘 명칭을 해시한 다음 프라미스 객체를 반환한다. 해시값이 성공적으로 생성되면 이 값을 나타내는 배열 버퍼가 이룸값인 이룸 프라미스를 반환한다.
+		</div>
+	</section>
+
+	<h2 id="con6">5. 요약</h2>
+	<div>
+		이 장에서는 자바스크립트로 비동기 코드를 실행하는 방법과 색다른 패턴으로 작성하는 법을 배웠다. 프라미스를 이용하면 비동기 코드를 읽고 쓰시가 쉬워진다는 사실을 알았고 ES6 프라미스 API 사용법을 살펴보았다.
+	</div>
+
+	</section>
+	<a href="#" class="btn_top">TOP</a>
+	<footer>
+		<address>Jewdri . 출처 : ECMSScript 6 길들이기 : 최신 표준으로 다시 배우는 자바스크립트 프로그래밍</address>
+	</footer>
+</div>
+</body>
+</html>

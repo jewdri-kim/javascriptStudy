@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>02_라이브러리</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+a {color:#1b52b1;text-decoration:underline}
+a:active, a:hover {text-decoration:underline}
+li ul{padding-left:10px;}
+h1 {font-size:25px;padding-top:10px;}
+h2 {color:#000b72;font-size:22px;padding-bottom:10px;padding-top:10px;border-bottom:1px solid #d0d0d0;}
+h3 {font-size:14px;padding:10px 20px;background:#d0d0d0;}
+header h2 {margin-top:20px;font-size:14px;padding:10px 20px;background:#d0d0d0;color:#333;}
+h4 {color:#000;padding:10px 20px;border:1px solid #d0d0d0;}
+
+section {padding:10px;}
+article {padding:20px;}
+xmp {margin:2%;background:#f1f1f1;white-space:pre-line;padding:0 2% 1% 2%;}
+pre{margin-bottom:20px;background:#000;white-space:pre-line;padding:1% 2% 1% 2%;color:#ff0;font-size:16px;font-family:tahoma;}
+pre span{color:#fff;font-size:14px;}
+header > div, section > div {margin-bottom:20px;border:1px solid #d0d0d0;padding:5px 30px;}
+.colorscripter-code{border:0;padding:0;}
+.colorscripter-code table{width:100%;}
+.data_box table td{text-align:center;}
+ul {padding:10px 0;}
+ol {padding-left:20px;}
+p {padding-top:10px;}
+.btn_top{display:inline-block;position:fixed;bottom:10px;right:10px;width:50px;height:50px;line-height:50px;background:#d0d0d0;color:#000;text-align:center;}
+footer{text-align:right;}
+section em{display:block;color:#595;}
+dl {background:#efefef;padding:20px;margin:10px 0;}
+dl dt{font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap guide_wrap">
+	<header>
+		<h1>02_라이브러리</h1>
+
+		<h2>목차</h2>
+		<div>
+			<ol>
+				<li><a href="#con1">1. 숫자</a></li>
+				<li><a href="#con2">2. 수학 연산</a></li>
+				<li><a href="#con3">3. 문자열</a></li>
+				<li><a href="#con4">4. 배열</a></li>
+				<li><a href="#con5">5. 콜렉션</a></li>
+				<li><a href="#con6">6. 객체</a></li>
+				<li><a href="#con7">7. 요약</a></li>
+			</ol>
+		</div>
+	</header>
+	<section>
+	<div>
+		이 장에서는 자바스크립트 객체에 추가된 새로운 기능을 둘러본다. <br>다음은 이 장의 주제다.
+		<ul>
+			<li>Number 객체의 새 프로퍼티/메소드</li>
+			<li>숫자 상수를 2진법, 8진법으로 나타내기</li>
+			<li>Math 객체의 새 프로퍼티/메소드</li>
+			<li>여러 줄multiline 문자열 생성 및 String 객체의 새 메소드</li>
+			<li>Array 객체의 새 프로퍼티/메소드</li>
+			<li>맵과 세트의 정의</li>
+			<li>배열 버퍼와 타입화 배열</li>
+		</ul>
+	</div>
+	<h2 id="con1">1. 숫자</h2>
+	<section>
+		<div>
+			ES6부터 새로운 숫자 생성 방식과 Number 객체의 새 프로퍼티 덕분에 더 쉽게 숫자를 다룰 수 있게 됐다.
+		</div>
+
+		<h3>2진수</h3>
+		<div>
+			자바스크립트만으로 숫자 상수를 2진수로 나타낼 방법은 없었다.<br>
+			 ES6 는 상수앞에 0b 를 붙이면 자바스크립트 엔진이 2진수로 처리한다.
+		</div>m
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #a6e22e">b00001111</span><span style="color: #f8f8f2">;</span> <span style="color: #75715e">//10진수 15의 2진수</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">15</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span> <span style="color: #f92672">===</span> <span style="color: #a6e22e">b</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<h3>8진수</h3>
+		<div>
+			ES6 이전엔 숫자 상수를 앞에 0 을 붙여 8진수로 표기했었다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">017</span><span style="color: #f8f8f2">;</span> <span style="color: #75715e">//10진수 15의 8진수</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">15</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span> <span style="color: #f92672">===</span> <span style="color: #a6e22e">b</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>
+			이러한 8진수 표기를 10진수 0으로 헷갈릴 수가 있다. 혼동을 막고자 ES6 는 0o로 바꾸었다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #a6e22e">o17</span><span style="color: #f8f8f2">;</span> <span style="color: #75715e">//10진수 15의 8진수</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">15</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span> <span style="color: #f92672">===</span> <span style="color: #a6e22e">b</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<h3>Number.isInteger(number) 메소드</h3>
+		<div>
+			정수 : 소수점이 없는, 즉 소수점이 0 인 부동 소수점 숫자다.
+		</div>
+
+		<div>
+			ES5 이전엔 정수 여부를 판별할 방법이 마땅치 않았는데, ES6 부터 Number.isInteger() 라는 새 메소드가 인자의 정수여부를 true/false로 반환한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">17.0</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">1.2</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">isInteger</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">isInteger</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<h3>Number.isNaN(value) 메소드</h3>
+		<div>
+			어떤 변수가 NaN 인지 판단하는 일은 지금까지 불가능했다. <br>
+			전역 isNaN() 함수는 숫자 여부를 판별한다. 숫자 아닌값 : true, 그 외 : false 반환
+		</div>
+
+		<div>
+			ES6 의 Number.isNaN() 과 전역 isNaN()의 차이
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;NaN&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">NaN</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">c</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;안녕하세요&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">d</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">12</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;Number.isNaN()&#39;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.isNaN(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.isNaN(</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.isNaN(</span><span style="color: #a6e22e">c</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.isNaN(</span><span style="color: #a6e22e">d</span><span style="color: #f8f8f2">));</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;isNaN()&#39;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isNaN(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isNaN(</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isNaN(</span><span style="color: #a6e22e">c</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isNaN(</span><span style="color: #a6e22e">d</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+		<div>
+			Number.isNaN() 메소드는 정확히 NaN 인 경우에만 true
+		</div>
+		<dl>
+			<dt>Number.isNaN(value) 대신 == 나 === 연산자?</dt>
+			<dd>
+				NaN은 자기 자신과도 동등하지 않은 유일무이한 값으로 NaN == NaN, NaN === NaN 은 모두  false
+			</dd>
+		</dl>
+
+		<h3>Number.isFinite(number) 메소드</h3>
+		<div>
+			ES5 이전엔 유한 숫자 finite number 여부를 판단할 방법이 없었다. <br><br>
+			Number.isFinite() 메소드가 window.isFinite() 함수의 문제점을 해결
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;isFinite()&#39;</span><span style="color: #f8f8f2">)</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isFinite(</span><span style="color: #ae81ff">10</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isFinite(</span><span style="color: #e6db74">&#39;10&#39;</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isFinite(</span><span style="color: #66d9ef">NaN</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isFinite(</span><span style="color: #66d9ef">null</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isFinite([]));</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;Number.isFinite()&#39;</span><span style="color: #f8f8f2">)</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.isFinite(</span><span style="color: #ae81ff">10</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(isFinite(</span><span style="color: #e6db74">&#39;10&#39;</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.isFinite(</span><span style="color: #66d9ef">NaN</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.isFinite(</span><span style="color: #66d9ef">null</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.isFinite([]));</span>
+			</pre>
+		</div>
+
+		<h3>Number.isSafeInteger(number) 메소드</h3>
+		<div>
+			<em>my: 크게 필요할것 같진 않으나 참고삼아 알아두기.</em>
+			자바스크립트 숫자는 IEEE 754 표준에 따라 64비트 부동 소수점 숫자로 지정된다. <br>
+			자바스크립트에서 안전 정수 safe integet 란 IEEE 754 규격에 맞게 다른 정수로 반올림하지 않아도 되는 숫자로,
+			수학적으로는 -(2<sup>53</sup>-1) ~ (2<sup>53</sup>-1) 범위의 숫자다<br>
+			isSafeInteger() 메소드는 저 범위의 숫자인지 아닌지 판별해준다.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">isSafeInteger</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">156</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">isSafeInteger</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;1212&#39;</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">isSafeInteger</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">MAX_SAFE_INTEGER</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">isSafeInteger</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">MAX_SAFE_INTEGER</span><span style="color: #f92672">+</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">isSafeInteger</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">MIN_SAFE_INTEGER</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">isSafeInteger</span><span style="color: #f8f8f2">(Number.</span><span style="color: #a6e22e">MIN_SAFE_INTEGER</span><span style="color: #f92672">-</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<div>
+			Number.MAX_SAFE_INTEGER 와 Number.MIN_SAFE_INTEGER는 각각 -(2<sup>53</sup>-1), (2<sup>53</sup>-1) 다.
+		</div>
+
+		<h3>Number.EPSILON 프로퍼티</h3>
+		<div>
+			자바스크립트는 컴퓨터가 정확히 나타낼수 없는 0.1, 0.2, 0.3 같은 숫자를 이진 부동 소수점 방식으로 표현한다. <br>
+			0.1같은 숫자는 가장 근사한 숫자로 반올림되는 탓에 결과값은 미세한 반올림 오차가 있다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0.1</span> <span style="color: #f92672">+</span> <span style="color: #ae81ff">0.2</span> <span style="color: #f92672">==</span> <span style="color: #ae81ff">0.3</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0.9</span> <span style="color: #f92672">-</span> <span style="color: #ae81ff">0.8</span> <span style="color: #f92672">==</span> <span style="color: #ae81ff">0.1</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0.1</span> <span style="color: #f92672">+</span> <span style="color: #ae81ff">0.2</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0.9</span> <span style="color: #f92672">-</span> <span style="color: #ae81ff">0.8</span><span style="color: #f8f8f2">)</span>
+			</pre>
+		</div>
+
+		<div>
+			ES6 의 Number.EPSILON 프로퍼티는 2<sup>-52</sup>로, 부동 소수점 숫자와 비교 시 이치에 맞는 에러 한계치 margin of error를 나타낸다. <br>
+			이 숫자 이내의 미세한 반올림 오차는 무시하고 부동 소수점 숫자를 비교하는 함수를 만들어 쓸 수 있다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">function</span> <span style="color: #a6e22e">epsilonEqual</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">b</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">return</span> <span style="color: #f8f8f2">Math.</span><span style="color: #a6e22e">abs</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span> <span style="color: #f92672">-</span> <span style="color: #a6e22e">b</span><span style="color: #f8f8f2">)</span> <span style="color: #f92672">&lt;</span>  <span style="color: #f8f8f2">Number.</span><span style="color: #a6e22e">EPSILON</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">epsilonEqual</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0.1</span><span style="color: #f92672">+</span><span style="color: #ae81ff">0.2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">0.3</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">epsilonEqual</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0.9</span><span style="color: #f92672">-</span><span style="color: #ae81ff">0.8</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">0.1</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+	</section>
+
+	<h2 id="con2">2. 수학 연산 </h2>
+	<section>
+		<div>
+			Math 객체에도 삼각, 산술 등의 연산 메소드가 대거 추가됐다. <br>
+			기존까지는 외부 라이브러리를 썼다면, ES6 부터는 정확도기 높고 성능면에서도 최적화된 내장 메소드를 사용할 수 있게 됐다.
+		</div>
+
+		<h3>삼각 연산</h3>
+		<div>
+			Math 객체의 새로운 삼각 연산 메소드
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">sinh</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>  <span style="color: #75715e">//하이퍼볼릭 사인 값</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">cosh</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>  <span style="color: #75715e">//하이퍼볼릭 코사인 값</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">tanh</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>  <span style="color: #75715e">//하이퍼볼릭 탄젠트 값</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">asinh</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>  <span style="color: #75715e">//역 하이퍼볼릭 사인 값</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">acosh</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>  <span style="color: #75715e">//역 하이퍼볼릭 코사인 값</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">atanh</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>  <span style="color: #75715e">//역 하이퍼볼릭 탄젠트 값</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">hypot</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">));</span>  <span style="color: #75715e">//피타고라스 정리</span>
+			</pre>
+		</div>
+
+
+		<h3>산술연산</h3>
+		<div>
+			다음은 새로 합류한 산술 연산 메소드들이다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">log2</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">16</span><span style="color: #f8f8f2">));</span> <span style="color: #75715e">//2를 밑으로 한 로그</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">log10</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1000</span><span style="color: #f8f8f2">));</span> <span style="color: #75715e">//10을 밑으로 한 로그</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">log1p</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span> <span style="color: #75715e">//log(1+value)와 동일</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">expm1</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span> <span style="color: #75715e">// Math.log1p(0) 의 역</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">cbrt</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">8</span><span style="color: #f8f8f2">));</span> <span style="color: #75715e">//세제곱근 값</span>
+			</pre>
+		</div>
+
+		<h3>기타 메소드</h3>
+
+		<div>
+			그 밖에도 숫자 변환 및 숫자에서 정보를 추출하는 메소드가 추가됐다.
+		</div>
+
+		<div>
+			<strong>Math.imul(number1, number2) 함수</strong><br>
+			Math.imul() 함수는 32비트 정수 2개를 받아 곱한 결과값의 하위 32비트를 반환한다. <br>
+			자바스크립트에서 32비트 정수 곱셈을 할 수 있는 유일한 방법이다.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">imul</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">590</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">50000009</span><span style="color: #f8f8f2">));</span> <span style="color: #75715e">// 32 비트 정수곱셈</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">590</span><span style="color: #f92672">*</span><span style="color: #ae81ff">5000000</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">// 62비트 부동소수점 곱셈</span>
+			</pre>
+		</div>
+
+		<div>
+			<strong>Math.clz32(number) 함수</strong><br>
+			Math.clz32() 함수는 32비트 숫자의 전치 제로 비트leading zero bit를 반환한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">clz32</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">7</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">clz32</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1000</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">clz32</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">295000000</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<div>
+			<strong>Math.sign(number) 함수</strong><br>
+			Math.sign() 함수는 주어진 숫자가 음수, 양수, 0인지 반환한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">sign</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">11</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">sign</span><span style="color: #f8f8f2">(</span><span style="color: #f92672">-</span><span style="color: #ae81ff">11</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">sign</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<div>
+			<strong>Math.trunc(number) 함수</strong><br>
+			Math.trunc() 함수는 가수부를 덜어낸 정수부 숫자만 반환한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">trunc</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">11.17</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">trunc</span><span style="color: #f8f8f2">(</span><span style="color: #f92672">-</span><span style="color: #ae81ff">1.112</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<div>
+			<strong>Math.fround(number) 함수</strong><br>
+			Math.fround() 함수는 32비트 부동 소수점 값으로 반올림 하는 함수다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">fround</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">fround</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">fround</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1.137</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Math.</span><span style="color: #a6e22e">fround</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1.5</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+	</section>
+
+	<h2 id="con3">3. 문자열</h2>
+	<section>
+		<div>
+			자바스크립트 문자열은 파이썬, 루비등 다른언어에 비해 기능이 빈약하고 초라했는데 ES6 부터는 <br>
+			새로운 방법으로 문자열을 생성하고 쉽게 다룰 수 있도록 전역 문자열 객체/인스턴스에 프로퍼티가 추가됐다.
+		</div>
+
+		<div>
+			자바스크립트에서의 내부 캐릭터 인코딩<br>
+			<ul>
+				<li>유니코드 Unicode 캐릭터 세트의 모든 캐릭터는 코드 포인트 code point라는 10진수 숫자로 나타낸다.</li>
+				<li>코드 유닛 : 코드 포인트를 저장할 메모리상의 고정 비트수<br>
+				ex) UTF-8 의 코드유닛은 8비트,   UTF-16 의 코드유닛은 16비트</li>
+				<li>코드 유닛과 맞지 않는 코드포인트는 여러 코드 유닛으로 쪼개진다. </li>
+				<li>자바스크립트는 문자열은 언제나 UTF-16 의 코드유닛 </li>
+			</ul>
+		</div>
+
+		<div>
+			<strong>비트가 초과된 코드포인트를 이스케이프</strong><br>
+			ES5 이전엔 저장공간이 16비트 이상인 캐릭터를 이스케이프 하려면 유니코드 2개가 필요했다. <br>
+			\u1F691 -> console.log("\uD83D\uDE91");  => 다른하나의 캐릭터를 표현하기 위해 나란히 붙인 2개의 유니코드를 서로게이트페어 라 한다. <br>
+		</div>
+
+		<div>
+			ES6 부터는 서로게이트페어 없이도 쓸 수 있다.  <br>
+			console.log("\u{1F691}");
+		</div>
+
+		<h3>codePointAt(index) 메소드</h3>
+		<div>
+			codePointAt() 메소드는 주어진 인덱스의 캐릭터에 해당하는 코드포인트를 음이 아닌 정수로 반환한다.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;\u{1F691}&quot;</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">codePointAt</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<h3>String.fromCodePoint(number1, ..., number2) 메소드</h3>
+		<div>
+			fromCodePoint() 메소드는 코드 포인트 뭉치를 입력받아 해당 문자열을 반환한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(String.</span><span style="color: #a6e22e">fromCodePoint</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0x61</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">0x62</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">0x63</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;\u0061\u0062&quot;</span> <span style="color: #f92672">==</span> <span style="color: #f8f8f2">String.</span><span style="color: #a6e22e">fromCodePoint</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0x61</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">0x62</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<h3>repeat(count) 메소드</h3>
+		<div>
+			repeat() 는 문자열을 원하는 개수만큼 복사하여 연결된 문자열을 반환하는 메소드.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;ㅋ&quot;</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">repeat</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">100</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<h3>includes(string, index) 메소드</h3>
+		<div>
+			includes() 메소드는 주어진 문자열이 있는지 참아보고 그 결과를 true/false 로 반환한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">str</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;안녕, 나는 자바스크립트 개발자라궁!&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">includes</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;자바스크립트&quot;</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<div>
+		 	특정 위치 다음부터 참고 싶으면 두번째 선택 파라미터에 인덱스 값을 준다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">str2</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;안녕, 나는 자바스크립트 개발자라궁!&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">includes</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;자바스크립트&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">13</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<h3>startsWith(string, index) 메소드</h3>
+		<div>
+			startsWith() 는 주어진 문자열로 시작하는지 여부를 true/false로 반환하는 메소드.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">str</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;안녕, 나는 자바스크립트 개발자라궁!&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">startsWith</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;안녕, 나는&#39;</span><span style="color: #f8f8f2">));</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">startsWith</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;자바스크립트 개발자&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">7</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<h3>endsWith(string, index) 메소드</h3>
+		<div>
+			endsWith() 는 반대로 주어진 문자열로 끝나는지 확인하는 메소드다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">str</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;안녕, 나는 자바스크립트 개발자라궁!&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">endsWith</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;개발자라궁!&#39;</span><span style="color: #f8f8f2">));</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">endsWith</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;개발자&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">17</span><span style="color: #f8f8f2">));</span>
+			</pre>
+		</div>
+
+		<h3>정규화 normalization</h3>
+		<div>
+			정규화란 문자열 의미를 고정한 채 코드포인트를 검색하고 표준화하는 과정 <br>
+			정규화 유형 : NFC, NFD, NFKC, NFKD 등
+		</div>
+
+		<div><strong>사례</strong></div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;\u00E9&quot;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;e\u0301&quot;</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;\u00E9&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;e\u0301&quot;</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f92672">==</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #66d9ef">for</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">&lt;</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span><span style="color: #f92672">++</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">[</span><span style="color: #a6e22e">i</span><span style="color: #f8f8f2">]);</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">for</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">&lt;</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span><span style="color: #f92672">++</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">[</span><span style="color: #a6e22e">i</span><span style="color: #f8f8f2">]);</span>
+			<span style="color: #f8f8f2">}</span>
+			</pre>
+		</div>
+
+		<div>
+			똑같은 문자열을 표현만 달리 했는데 연산결과는 제 각각  <br>
+			length 프로퍼티는 서로게이트 페어를 무시하고 무조건 16비트를 하나의 캐럭터로 간주한다.. == 연산자 역시 2진수 단위로 비트수를 대조하므로 서로게이트 페어를 무시한다. <br>[] 연산자도 매 16비트가 인덱스 여서 마찬가지. <br><br><br>
+			문제를 해결하려면 ? <br>
+			서로게이트 페어를 16비트 캐릭터로 바꾸어야 하는데, 이때 정규화가 필요.<br>
+			<strong>ES6 는 normalize()라는 도우미를 제공 </strong>
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;\u00E9&quot;</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">normalize</span><span style="color: #f8f8f2">();</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;e\u0301&quot;</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">normalize</span><span style="color: #f8f8f2">();</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f92672">==</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #66d9ef">for</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">&lt;</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span><span style="color: #f92672">++</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">[</span><span style="color: #a6e22e">i</span><span style="color: #f8f8f2">]);</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">for</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span> <span style="color: #f92672">&lt;</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">;</span> <span style="color: #a6e22e">i</span><span style="color: #f92672">++</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">[</span><span style="color: #a6e22e">i</span><span style="color: #f8f8f2">]);</span>
+			<span style="color: #f8f8f2">}</span>
+			</pre>
+		</div>
+
+		<div>
+			normalize()는 정규화한 문자열을 반환하며 NFC 형식을 기본으로 사용 <br>
+			정규화된 문자열은 일반사용자에게 보여줄 용도로 만드는게 아니다. 내부적인 문자열 비교/검색에만 쓰인다.
+		</div>
+
+		<h3>템플릿 문자열</h3>
+		<div>
+			템플릿 문자열은 문자열을 생성하는 새로운 리터럴.<br>
+			표현식/문자열 삽입, 여러줄 문자열, 문자열 형식화, 문자열 태깅 등 다양한 기능을 제공<br>
+			런타임 시점에(실행시점) 일반 자바스크립트 문자열로 처리/변환됨 <br>
+			템플릿 문자열은 홑/곁따옴표 대신 역따옴표(`)로 나타낸다.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">str1</span> <span style="color: #f92672">=</span> <span style="color: #960050; background-color: #1e0010">`안녕하세요</span><span style="color: #f92672">!!!</span><span style="color: #960050; background-color: #1e0010">`</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">str2</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;안녕하세요!!!&quot;</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str1</span> <span style="color: #f92672">===</span> <span style="color: #a6e22e">str2</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>
+			<strong>표현식</strong><br><br>
+			ES5 이전엔 표현식을 다음과 같이 일반 문자열 안에 집어넣었다.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">20</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">10</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">c</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;자바스크립트&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">str</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;나는 &quot;</span><span style="color: #f92672">+</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span> <span style="color: #f92672">+</span> <span style="color: #a6e22e">b</span><span style="color: #f8f8f2">)</span> <span style="color: #f92672">+</span> <span style="color: #e6db74">&quot;살이고 &quot;</span><span style="color: #f92672">+</span> <span style="color: #a6e22e">c</span> <span style="color: #f92672">+</span> <span style="color: #e6db74">&quot;를 좋아해&quot;</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>
+			ES6 템플릿 문자열은 자체로 표현식을 가질 수 있기 때문에 문자열에 표현식을 쉽게 끼워넣으르 수 있다. ( $와 {} )
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">20</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">b</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">10</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">c</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;자바스크립트&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">str</span> <span style="color: #f92672">=</span> <span style="color: #960050; background-color: #1e0010">`나는</span> <span style="color: #a6e22e">$</span><span style="color: #f8f8f2">{</span><span style="color: #a6e22e">a</span><span style="color: #f92672">+</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">}</span><span style="color: #960050; background-color: #1e0010">살이고</span> <span style="color: #a6e22e">$</span><span style="color: #f8f8f2">{</span><span style="color: #a6e22e">c</span><span style="color: #f8f8f2">}</span><span style="color: #960050; background-color: #1e0010">를</span> <span style="color: #960050; background-color: #1e0010">좋아해`</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>책에 있는 대그드 템플릿 문자열, 즉 태그 함수로 문자열을 처리하는 코드 생략 </div>
+
+		<div>
+			<strong>여러 줄 문자열</strong><br><br>
+			ES5 이전엔 개행 문자 \n 로 줄바꿈.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;1\n2\n3&quot;</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>
+			ES6 알기 쉽게 여러줄 문자열 multiline string을 쓰면 된다.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #960050; background-color: #1e0010">`</span><span style="color: #ae81ff">1</span>
+			<span style="color: #ae81ff">2</span>
+			<span style="color: #ae81ff">3</span><span style="color: #960050; background-color: #1e0010">`</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>\n대신 엔터를 치면, 템플릿 문자열이 일반 문자열로 바뀔 때 이부분 모두가 \n으로 바뀐다.</div>
+
+		<div>
+			<strong>원래 문자열</strong><br><br>
+			원래 문자열 raw string은 이스케이프 문자를 해석하지 않은 일반 문자열이다. <br>
+			String.raw 태그 함수를 이용하면 템플릿 문자열의 원래 모습이 나온다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">s</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">String.</span><span style="color: #a6e22e">raw</span> <span style="color: #960050; background-color: #1e0010">`</span><span style="color: #a6e22e">xy</span><span style="color: #960050; background-color: #1e0010">\</span><span style="color: #a6e22e">n$</span><span style="color: #f8f8f2">{</span><span style="color: #ae81ff">1</span><span style="color: #f92672">+</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">}</span><span style="color: #a6e22e">z</span><span style="color: #960050; background-color: #1e0010">`</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">s</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>
+			태그 함수를 만들어 원래 문자열을 반환라며녀 첫번째 인자의 raw 프로퍼티를 사용한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">tag</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">strings</span><span style="color: #f8f8f2">,</span> <span style="color: #f8f8f2">...</span><span style="color: #a6e22e">values</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">return</span> <span style="color: #a6e22e">strings</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">raw</span><span style="color: #f8f8f2">[</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #f8f8f2">}</span>
+
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">str</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">tag</span> <span style="color: #960050; background-color: #1e0010">`안녕</span> <span style="color: #960050; background-color: #1e0010">\</span><span style="color: #a6e22e">n</span> <span style="color: #960050; background-color: #1e0010">하세요</span><span style="color: #f92672">!!!</span><span style="color: #960050; background-color: #1e0010">`</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+
+
+	</section>
+
+	<h2 id="con4">4. 배열</h2>
+	<section>
+		<div>
+			ES6 에는 전역 배열 객체/인스턴스에 새로운 프로퍼티가 있어서 배열을 다루기 쉬워졌다.
+		</div>
+
+		<h3>Array.from(iterable, mapFunc, this) 메소드</h3>
+		<div>
+			Array.from()는 이터러블 객체에서 새 배열 인스턴스를 생성하는 메소드. <br><br>
+			iterable: 이터러블 객체, mapFunc: 이터러블 객체의 각 원소를 상대로 호출할 콜백(맵함수), this: 맵함수 내부의 this값
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">str</span> <span style="color: #f92672">=</span> <span style="color: #e6db74">&quot;0123&quot;</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">obj</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">number</span> <span style="color: #f92672">:</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">};</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">Array.</span><span style="color: #a6e22e">from</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">str</span><span style="color: #f8f8f2">,</span> <span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">value</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #66d9ef">return</span> <span style="color: #f8f8f2">parseInt(</span><span style="color: #a6e22e">value</span><span style="color: #f8f8f2">)</span> <span style="color: #f92672">+</span> <span style="color: #66d9ef">this</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">number</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #f8f8f2">},</span> <span style="color: #a6e22e">obj</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+
+		<h3>Array.of(values...) 메소드</h3>
+
+		<div>
+			Array.of() 메소드는 배열을 생성하는 Array 생성자의 대체 수단이다. <br>
+			기존 Array 생성자가 만드는 배열은 빈 배열 인 반면,  <br>
+			Array.of() 는 인자 값을 유일한 원소로 하는 배열을 생성한다.
+		</div>
+
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr1</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #f8f8f2">Array(</span><span style="color: #ae81ff">2</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr2</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">Array.</span><span style="color: #a6e22e">of</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">2</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr1</span><span style="color: #f8f8f2">[</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">],</span> <span style="color: #a6e22e">arr1</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr2</span><span style="color: #f8f8f2">[</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">],</span> <span style="color: #a6e22e">arr2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+
+		<h3>fill(value, startIndex, endIndex) 메소드</h3>
+		<div>
+			fill() 메소드는 startIndex 부터 endIndex 까지 (endIndex는 포함되지 않음) 주어진 값value으로 배열 ㅇ뤈소를 채운다. <br>
+			startIndex, endIndex는 선택인자로 비워두면 배열 전체를 가득채운다. startIndex만 넣으면 endIndex의 기본값을 배열길이 -1 이다.
+		</div>
+
+		<div>
+			startIndex 가 음수이면 배열길이 +startndex 로, endIndex가 음수면 배열길이 +endIndex로 간주한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr1</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr2</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr3</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr4</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr5</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">];</span>
+
+			<span style="color: #a6e22e">arr1</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">fill</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">5</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">arr2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">fill</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">arr3</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">fill</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">arr4</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">fill</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">arr5</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">fill</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">5</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">2</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr1</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr2</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr3</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr4</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr5</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+
+		<h3>find(testingFunc, this) 메소드</h3>
+		<div>
+			find() 메소드는 테스트 함수를 만족하는 배열원소를 반환하며 만족하지 않을 땐 undefined를 내놓는다.
+			<ul>
+				<li>testingFunc : 테스트함수 </li>
+				<li>this : 테스트함수 내부의 this 값</li>
+				<li>testingFunc(value, index, array) : value(대상 배열 원소), index(처리중인 현재 원소의 인덱스), array(find를 호출한 배열)</li>
+			</ul>
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">x</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">12</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">arr</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">11</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">12</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">13</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">idx</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">result</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">arr</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">find</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">value</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">array</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">if</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">value</span> <span style="color: #f92672">==</span> <span style="color: #66d9ef">this</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #a6e22e">idx</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">return</span> <span style="color: #66d9ef">true</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">},</span> <span style="color: #a6e22e">x</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">result</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">idx</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<h3>findIndex(testingFunc, this) 메소드</h3>
+		<div>
+			findIndex()는 find()와 비슷한 메소드로, 조건에 맞는 원소 대신 그 인덱스를 반환한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">x</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">12</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">arr</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">11</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">12</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">13</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">result</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">arr</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">findIndex</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">value</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">index</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">array</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">if</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">value</span> <span style="color: #f92672">==</span> <span style="color: #66d9ef">this</span><span style="color: #f8f8f2">){</span>
+			<span style="color: #66d9ef">return</span> <span style="color: #66d9ef">true</span><span style="color: #f8f8f2">;</span>
+			<span style="color: #f8f8f2">}</span>
+			<span style="color: #f8f8f2">},</span> <span style="color: #a6e22e">x</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">result</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<h3>copyWithin(targetIndex, startIndex, endIndex) 메소드</h3>
+		<div>
+			copyWithin() 메소드는 배열값 무리를 다른 위치에 복사해 넣는다.
+			<ul>
+				<li>
+					targetIndex : 원소를 복사할 타킷 인덱스
+				</li>
+				<li>
+					startIndex: 복사를 시작할 인덱스
+				</li>
+				<li>
+					endIndex: 복사가 끝나는 인덱스
+				</li>
+				<li>
+					세번째 인자를 비워두면 기본값은 length-1이다. startIndex가 음수면 length+startIndex, <br>
+					endIndex가 음수면 length+endIndex로 계산한다.
+				</li>
+			</ul>
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr1</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr2</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr3</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr4</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">];</span>
+
+			<span style="color: #a6e22e">arr1</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">copyWithin</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">arr2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">copyWithin</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">arr3</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">copyWithin</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">2</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">arr4</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">copyWithin</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">2</span><span style="color: #f8f8f2">,</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr1</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr2</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr3</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">arr4</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<h3>entries(), keys(), and values() 메소드</h3>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">arr</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">[</span><span style="color: #e6db74">&#39;a&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;b&#39;</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&#39;c&#39;</span><span style="color: #f8f8f2">];</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">entries</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">arr</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">entries</span><span style="color: #f8f8f2">();</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">keys</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">arr</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">keys</span><span style="color: #f8f8f2">();</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">values</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">arr</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">values</span><span style="color: #f8f8f2">();</span>		<span style="color: #75715e">// Error</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(...</span><span style="color: #a6e22e">entries</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(...</span><span style="color: #a6e22e">keys</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(...</span><span style="color: #a6e22e">values</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+	</section>
+
+	<h2 id="con5">5. 콜렉션</h2>
+	<section>
+		<div>
+			콜렉션은 원소 여러개를 모아놓은 객체로, ES6에서 데이터를 저장/조직하는 더욱 개선된 다수의 콜렉션 객체가 새로 추가 됐다.
+			<br>
+			예전엔 배열이 유일한 콜렉션 객체였지만, 배열버퍼, 타입화배열, 세트, 맵 등 가짓수가 늘었다.
+		</div>
+
+		<h3>배열 버퍼</h3>
+		<div>
+			기존배열 ?
+			<ul>
+				<li>
+					장점 : 문자열, 숫자, 객체등 어떤 타입의 원소라도 담을 수 있고 동적으로 계속 커질 수 있다.
+				</li>
+				<li>
+					단점 : 실행시간이 느려지고 메모리 점유율이 높아진다. -> 계산량이 많고 대량 데이터가 오가는 애플리케이션이라면 큰 이슈가 될수 있다.
+				</li>
+			</ul>
+			위와같은 단점을 보완하려고 배열 버퍼array buffer가 등장하게 되었다.
+		</div>
+
+		<div>
+			배열버퍼 : 메모리상의 8비트 블록 콜렉션이고 블록하나가 배열버퍼의 원소다. 배열 버퍼의 크기는 생성시 결정되므로 동적으로 커지지 않으며, 숫자만 저장할 수 있고 처음에 모든 블록이 0으로 초기화 된다.
+		</div>
+
+		<div>
+			배열 버퍼 객체는 ArrayBuffer 생성자로 만든다 .<br>
+			배열 버퍼 객체와 데이터 읽기/쓰기는 DataView 객체의 몫이다. <br>
+			숫자를 꼭 8비트로만 나타내야 하는건 아니고 8, 16, 32, 64비트 로도 가능하다 <br>
+
+		</div>
+
+		<div>
+			DataView 객체를 생성해서 ArrayBuffer 객체에 읽기/쓰기하는 과정
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">buffer</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">ArrayBuffer</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">80</span><span style="color: #f8f8f2">);</span> <span style="color: #75715e">//80바이트 크기</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">view</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">DataView</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">buffer</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">view</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">setInt32</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">8</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">22</span><span style="color: #f8f8f2">,</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">number</span> <span style="color: #f92672">=</span> <span style="color: #a6e22e">view</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">getInt32</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">8</span><span style="color: #f8f8f2">,</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">number</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+		<div>
+			DataView 객체는 배열 버퍼숫자를 읽고 배열 버퍼에 숫자를 쓰기위한 메소드를 여럿 제공한다.
+		</div>
+
+		<div>
+			DataView 객체의 데이터를 쓰는 객체 : setIntX(오프셋offset, 저장할숫자, 엔디안endian)<br>
+			<ul>
+				<li>오프셋offset : 숫자를 써넣을 바이트</li>
+				<li>엔디안endian : 단어를 형성하는 2진 바이트에서 저장하는 바이트의 순서를 나타내는 방법. 빅 엔디안(big-endian)과 리틀 엔디안(little-endian)이 있는데, 빅 엔디안은 최상위 비트(MSB)부터 부호화되어 저장되며, 리틀 엔디안은 최하위 비트(LSB)부터 부호화되어 저장된다. 예를 들면, 숫자 12는 2진수로 나타내면 1100인데 빅 엔디안은 1100으로, 리틀 엔디안은 0011로 각각 저장된다.
+				[네이버 지식백과] 엔디안 [endian] (IT용어사전, 한국정보통신기술협회)</li>
+				<li>세번째 인자 엔디안endian을 불린타입으로 명시 (false가 빅엔디안big endian) </li>
+			</ul>
+		</div>
+
+		<div>
+			<ul>
+				<li>setInt8 : 8비트로 숫자를 저장한다. 부호 있는 정수를 받는다. </li>
+				<li>setUint8 : 8비트로 숫자를 저장한다. 부호 없는 정수를 받는다. </li>
+				<li>setInt16 : 16비트로 숫자를 저장한다. 부호 있는 정수를 받는다. </li>
+				<li>setUint16 : 16비트로 숫자를 저장한다. 부호 없는 정수를 받는다. </li>
+				<li>setInt32 : 32비트로 숫자를 저장한다. 부호 있는 정수를 받는다. </li>
+				<li>setUint32 : 32비트로 숫자를 저장한다. 부호 없는 정수를 받는다. </li>
+				<li>setFloat32 : 32비트로 숫자를 저장한다. 부호 있는 소수를 받는다. </li>
+				<li>setFloat64 : 64비트로 숫자를 저장한다. 부호 없는 소수를 받는다. </li>
+			</ul>
+		</div>
+
+		<div>
+			DataView 객체의 데이터를 읽는 객체 : getIntX(오프셋, 엔디안)
+		</div>
+		<div>
+			<ul>
+				<li>getInt8 : 8비트를 읽는다. 부호 있는 정수를 반환한다. </li>
+				<li>getUnit8 : 8비트를 읽는다. 부호 없는 정수를 반환한다. </li>
+				<li>getInt16 : 16비트를 읽는다. 부호 있는 정수를 반환한다. </li>
+				<li>getUnit16 : 16비트를 읽는다. 부호 없는 정수를 반환한다. </li>
+				<li>getInt32 : 32비트를 읽는다. 부호 있는 정수를 반환한다. </li>
+				<li>getUnit32 : 32비트를 읽는다. 부호 없는 정수를 반환한다. </li>
+				<li>getFloat32 : 32비트를 읽는다. 부호 있는 소수를 반환한다. </li>
+				<li>getFloat64 : 64비트를 읽는다. 부호 있는 소수를 반환한다. </li>
+			</ul>
+		</div>
+
+		<h3>타입화 배열</h3>
+
+		<div>
+			배열 버퍼에서 숫자를 읽기/쓰기 하는 방법을 배웠는데, 매번 이렇게 함수를 호출하는건 상당히 귀찮다. <br>
+			타입화 배열typed array은 마치 일반 배열을 다루는 것처럼 배열 버퍼 객체에 읽기/쓰기 할 수 있게 해준다.
+		</div>
+
+		<div>
+			배열 버퍼 객체 생성 후 타입화 배열로 읽기/쓰기 하는 방법을 살펴보자.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">buffer</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">ArrayBuffer</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">80</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">typed_array</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Float64Array</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">buffer</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">typed_array</span><span style="color: #f8f8f2">[</span><span style="color: #ae81ff">4</span><span style="color: #f8f8f2">]</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">11</span><span style="color: #f8f8f2">;</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">typed_array</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">length</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">typed_array</span><span style="color: #f8f8f2">[</span><span style="color: #ae81ff">4</span><span style="color: #f8f8f2">]);</span>
+			</pre>
+		</div>
+
+		<div>
+			타입화 배열을 Float64Array 생성자로 만들었기 때문에 배열버퍼의 데이터는 64비트 부호있는 소수로 처리한다. <br>
+			배열 버퍼 객체의 크기는 640 비트이므로 64비트 숫자 10개만 저장 가능하다.
+		</div>
+
+		<div>
+			타입화 배열도 배열 버퍼 데이터를 상이한 비트 수로 나타내기 위한 다양한 생성자를 갖고 있다. <br>
+			<ul>
+				<li>Int8Array : 8 비트 부호 있는 정수로 다룬다.</li>
+				<li>Unit8Array : 8 비트 부호 없는 정수로 다룬다.</li>
+				<li>Int16Array : 16 비트 부호 있는 정수로 다룬다.</li>
+				<li>Unit16Array : 16 비트 부호 없는 정수로 다룬다.</li>
+				<li>Int32Array : 32 비트 부호 있는 정수로 다룬다.</li>
+				<li>Unit32Array : 32 비트 부호 없는 정수로 다룬다.</li>
+				<li>Float32Array : 32 비트 부호 있는 소수로 다룬다.</li>
+				<li>Float64Array : 64 비트 부호 없는 소수로 다룬다.</li>
+			</ul>
+			<br>
+			타입화 배열은 자바스크립트 일반 배열의 메소드를 모두 갖고 있고 이터러블 객체로도 사용할 수 있다.
+		</div>
+
+		<h3>세트</h3>
+		<div>
+			세트는 타입에 상관없이 '유일한'값을 담을 콜렉션으로 원소들은 삽입한 순서대로 정렬된다.<br>
+			<a href="http://code.d2.co.kr/study/javascript/patterns/ES6/set/00_.html" target="_blank">참고 : 자료구조 집합</a>
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">set1</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Set</span><span style="color: #f8f8f2">();</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">set2</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Set</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;안녕하세요!!!&#39;</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">set2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">add</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">12</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">set2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">has</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&#39;!&#39;</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">set2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">size</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">set2</span><span style="color: #f8f8f2">.</span><span style="color: #66d9ef">delete</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">12</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(...</span><span style="color: #a6e22e">set2</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">set2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">clear</span><span style="color: #f8f8f2">();</span>
+			</pre>
+		</div>
+		<div>
+			세트도 이터러블 규약을 따르므로 이터러블 객체로 사용할 수 있다. <br>
+			세트는 어떤 값을 조회하는 용도보다는 존재 여부를 확인하기 위해 값을 묶어둘 때 사용한다. <br>
+			어떤 값이 있는지 아아보려고 indexOf() 메소드를 사용하는 경우라면 배열보다는 세트가 더 적합하다.
+		</div>
+
+		<h3>위크세트</h3>
+		<div>
+			세트와 위크세트WeakSet는 다음과 같은 차이점이 있다.
+			<ul>
+				<li>세트는 원시타입primitive type과 객체 참조값 모두를 담을 수 있지만, 위크세트는 객체 참조값만 저장할 수 있다. </li>
+				<li>가장 주목할만한 위크세트 객체의 특성은 내부에 저장된 객체를 참조하려는 값이 없을땐 가비지 콜렉션 대상이 된다는 점이다. </li>
+				<li>위크세트 객체는 열거할 수 없어서 크기를 알 수 없고 이터러블 규약을 따르지 않는다.</li>
+			</ul>
+		</div>
+
+		<div>
+			위크세트 객체는 WeakSet 생성자로 만들고 이터러블 객체를 인자로 넘길 수 없다. <br>
+			<em>my: 위크세트 이 책 부실.</em>
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">weakset</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WeakSet</span><span style="color: #f8f8f2">();</span>
+
+			<span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{};</span>
+			<span style="color: #a6e22e">weakset</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">add</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">})()</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">weakset</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">size</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(...</span><span style="color: #a6e22e">weakset</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">weakset</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">clear</span><span style="color: #f8f8f2">();</span>
+			</pre>
+		</div>
+
+		<h3>맵</h3>
+		<div>
+			맵Map은 키/값 쌍을 모아놓은 콜렉션으로 키/값의 타입은 제약이 없다. <br>
+			삽입한 순서대로 정렬되며 맵 객체는 Map 생성자로 만든다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">map</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Map</span><span style="color: #f8f8f2">();</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">o</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">n</span> <span style="color: #f92672">:</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">};</span>
+
+			<span style="color: #a6e22e">map</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">set</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">o</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&quot;A&quot;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">map</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">set</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;2&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">9</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">map</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">has</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;2&quot;</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">map</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">get</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">o</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(...</span><span style="color: #a6e22e">map</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">map</span><span style="color: #f8f8f2">.</span><span style="color: #66d9ef">delete</span><span style="color: #f8f8f2">(</span><span style="color: #e6db74">&quot;2&quot;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">map</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">clear</span><span style="color: #f8f8f2">();</span>
+
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">map2</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">Map</span><span style="color: #f8f8f2">([[</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">],</span> <span style="color: #f8f8f2">[</span><span style="color: #ae81ff">3</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">4</span><span style="color: #f8f8f2">]]);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">map2</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">size</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+		<div>
+			이미 존재하는 키를 추가하면 덮어쓴다. 맵 객체 역시 이터러블 규약을 따르므로 이터러블 객체로 쓸 수 있고 맵을 순회하면 예전처럼 키/값 쌍을 가진 배열을 반환한다.
+		</div>
+
+		<h3>위크맵</h3>
+		<div>
+			맵과 위크맵weakMap의 차이점은 다음과 같다.
+			<ul>
+				<li>맵의 키는 원시 타입, 객체 참조값 모두 가능하지만 위크맵 키는 오직 객체 참조값만 가능하다.</li>
+				<li>가장 주요한 위크맵 객체의 특성은 내부에 저장된 객체를 참조하는 값이 없을 경우 가비지 콜렉션 대상이 된다는 사실이다. </li>
+				<li>위크맵 객체는 열거할 수 없으므로 크기를 알 수 없고 이터러블 규약으 따르지 않는다.</li>
+			</ul>
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">weakmap</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WeakMap</span><span style="color: #f8f8f2">();</span>
+
+			<span style="color: #f8f8f2">(</span><span style="color: #66d9ef">function</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">o</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span> <span style="color: #a6e22e">n</span> <span style="color: #f92672">:</span><span style="color: #ae81ff">1</span><span style="color: #f8f8f2">};</span>
+			<span style="color: #a6e22e">weakmap</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">set</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">o</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&quot;A&quot;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #f8f8f2">})()</span>
+
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">s</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">m</span> <span style="color: #f92672">:</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">};</span>
+			<span style="color: #a6e22e">weakmap</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">set</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">s</span><span style="color: #f8f8f2">,</span><span style="color: #e6db74">&quot;B&quot;</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">weakmap</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">get</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">s</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(...</span><span style="color: #a6e22e">weakmap</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">weakmap</span><span style="color: #f8f8f2">.</span><span style="color: #66d9ef">delete</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">s</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">weakmap</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">clear</span><span style="color: #f8f8f2">();</span>
+
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">weakmap_1</span> <span style="color: #f92672">=</span> <span style="color: #66d9ef">new</span> <span style="color: #a6e22e">WeakMap</span><span style="color: #f8f8f2">([[{},</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">],[{},</span> <span style="color: #ae81ff">5</span><span style="color: #f8f8f2">]]);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">weakmap_1</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">size</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+	</section>
+
+	<h2 id="con6">6. 객체</h2>
+	<section>
+		<div>
+			__proto__ 프로퍼티는 ES6 표준으로 제정되었고 전역 Object 객체에 새로운 프로퍼티가 추가됐다.
+		</div>
+
+		<h3>__proto__ 프로퍼티</h3>
+		<div>
+			__proto__ 는 ES6 이전까지는 표준이 아니었는데, 많이 쓰이다보니 ES6 에서 표준이 되었다. <br><br>
+			많이 쓰인 이유 ? <br>
+			<ul>
+				<li>
+					자바스크립트 객체는 프로토타입prototype, 즉 자신이 상속한 객체를 참조하기 위해 내부에 [[prototype]] 프로퍼티를 둔다.
+				</li>
+				<li>
+					[[prototype]] 는 직접 읽거나 수정할 수 없어서 읽으려면 Object.getPrototypeOf() 메소드를 이용하고, <br>
+					동일한 [[prototype]]으로 새 객체를 생성하려면 Object.create() 메소드를 이용해야 했다.
+				</li>
+				<li>
+					[[prototype]] 는 다루기 까다로운 프로퍼티라서 일부 브라우저는 __proto__ 라는 특별한 프로퍼티를 객체에 두어 밖에서도 접근할 수 있게 했고 덕분에 한결 르포토타입 다루기가 수월해졌다.
+				</li>
+			</ul>
+			<br>
+			위와같은 이유로 __proto__ 는 ES6 이전까지는 표준이 아니었는데, 많이 쓰이다보니 ES6 에서 표준이 되었다.
+		</div>
+
+		<div>ES5 이전에는?</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">var</span> <span style="color: #a6e22e">x</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">x</span><span style="color: #f92672">:</span><span style="color: #ae81ff">12</span><span style="color: #f8f8f2">};</span>
+			<span style="color: #66d9ef">var</span> <span style="color: #a6e22e">y</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">Object.</span><span style="color: #a6e22e">create</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">x</span><span style="color: #f8f8f2">,</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">y</span><span style="color: #f92672">:</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">value</span><span style="color: #f92672">:</span><span style="color: #ae81ff">13</span><span style="color: #f8f8f2">}});</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">y</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">x</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">y</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">y</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>ES6 이후</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">a</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">a</span><span style="color: #f92672">:</span><span style="color: #ae81ff">12</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">__proto__</span> <span style="color: #f92672">:</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">b</span><span style="color: #f92672">:</span><span style="color: #ae81ff">13</span><span style="color: #f8f8f2">}};</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">a</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>
+			<strong>Object.is(value1, value2) 메소드</strong>
+			<br><br>Object.is() 메소드는 두 값의 동등 여부를 판단한다. <br>
+			=== 연산자와 비슷하지만 그렇지 않은 경우도 있다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Object.</span><span style="color: #a6e22e">is</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #ae81ff">0</span> <span style="color: #f92672">===</span> <span style="color: #f92672">-</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Object.</span><span style="color: #a6e22e">is</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">NaN</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">0</span><span style="color: #f92672">/</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">NaN</span> <span style="color: #f92672">===</span> <span style="color: #ae81ff">0</span><span style="color: #f92672">/</span><span style="color: #ae81ff">0</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(Object.</span><span style="color: #a6e22e">is</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">NaN</span><span style="color: #f8f8f2">,</span> <span style="color: #66d9ef">NaN</span><span style="color: #f8f8f2">));</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #66d9ef">NaN</span> <span style="color: #f92672">===</span> <span style="color: #66d9ef">NaN</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+
+		<div>
+			<strong>Object.setPrototypeOf(object, prototype) 메소드</strong>
+			<br><br>객체 [[prototype]] 프로퍼티 값을 할당하는 메소드다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">x</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">x</span><span style="color: #f92672">:</span> <span style="color: #ae81ff">12</span><span style="color: #f8f8f2">};</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">y</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">y</span><span style="color: #f92672">:</span><span style="color: #ae81ff">13</span><span style="color: #f8f8f2">};</span>
+
+			<span style="color: #f8f8f2">Object.</span><span style="color: #a6e22e">setPrototypeOf</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">y</span><span style="color: #f8f8f2">,</span><span style="color: #a6e22e">x</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">y</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">x</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">y</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">y</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+
+		<div>
+			<strong>Object.assign(targetObj, sourceObjs...) 메소드</strong>
+			<br><br>Object.assign() 메소드는 하나, 또는 그 이상의 소스객체에서 모든 열거 가능한 자기 프로퍼티들을 타깃 객체로 복사하고 <br>
+			이 타킷 객체를 반환한다.
+		</div>
+		<!-- HTML generated using hilite.me -->
+		<div style="background: #272822; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+			<pre style="margin: 0; line-height: 125%"><span style="color: #66d9ef">let</span> <span style="color: #a6e22e">x</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">x</span><span style="color: #f92672">:</span><span style="color: #ae81ff">12</span><span style="color: #f8f8f2">};</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">y</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">y</span><span style="color: #f92672">:</span><span style="color: #ae81ff">13</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">__proto__</span><span style="color: #f92672">:</span><span style="color: #a6e22e">x</span><span style="color: #f8f8f2">};</span>
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">z</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">z</span><span style="color: #f92672">:</span><span style="color: #ae81ff">14</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">get</span> <span style="color: #a6e22e">b</span><span style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">{</span><span style="color: #66d9ef">return</span> <span style="color: #ae81ff">2</span><span style="color: #f8f8f2">;},</span> <span style="color: #a6e22e">q</span><span style="color: #f92672">:</span><span style="color: #f8f8f2">{}};</span>
+
+			<span style="color: #f8f8f2">Object.</span><span style="color: #a6e22e">defineProperty</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">z</span><span style="color: #f8f8f2">,</span> <span style="color: #e6db74">&quot;z&quot;</span><span style="color: #f8f8f2">,</span> <span style="color: #f8f8f2">{</span><span style="color: #a6e22e">enumerable</span> <span style="color: #f92672">:</span> <span style="color: #66d9ef">false</span><span style="color: #f8f8f2">});</span>
+
+			<span style="color: #66d9ef">let</span> <span style="color: #a6e22e">m</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">{};</span>
+
+			<span style="color: #f8f8f2">Object.</span><span style="color: #a6e22e">assign</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">m</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">y</span><span style="color: #f8f8f2">,</span> <span style="color: #a6e22e">z</span><span style="color: #f8f8f2">);</span>
+
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">m</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">y</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">m</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">z</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">m</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">b</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">m</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">x</span><span style="color: #f8f8f2">);</span>
+			<span style="color: #a6e22e">console</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">log</span><span style="color: #f8f8f2">(</span><span style="color: #a6e22e">m</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">q</span> <span style="color: #f92672">===</span> <span style="color: #a6e22e">z</span><span style="color: #f8f8f2">.</span><span style="color: #a6e22e">q</span><span style="color: #f8f8f2">);</span>
+			</pre>
+		</div>
+		<div>
+			Object.assign() 사용 시 유의사항 <br>
+			<ul>
+				<li>소스의 게터getter, 타깃의 세터setter를 호출한다. </li>
+				<li>소스 프로퍼티 값을 타깃 객체의 새로운, 또는 이미 존재하는 프로퍼티에 할당하는 기능이 전부다.</li>
+				<li>소스의 [[prptotype]] 프로퍼티는 복사하지 않는다.</li>
+				<li>자바스크립트에서 프로퍼티명은 문자열 아니면 심볼인데 Object.assign()은 둘 다 복사한다.</li>
+				<li>소스의 프로퍼티 정의부는 복사되지 않으므로 필요시 Object.getOwnPropertyDescriptor(), Object.defineProperty()를 대신 사용한다.</li>
+				<li>null 또는 undefined 값인 키는 복사하지 않고 건너뛴다.</li>
+			</ul>
+
+		</div>
+
+
+	</section>
+
+	<h2 id="con7">7. 요약</h2>
+	<div>
+		이 장에서는 숫자, 문자열, 배열, 객체를 다루는 ES6의 새로운 기능을 살펴보았다. <br>
+		수학 연산이 많은 애플리케이션에서 배열이 성능에 어떠한 영향을 끼치는지, 그리고 배열버퍼가 어떻게 배열 자리를 대신하는지 알아봤다. <br>
+		그리고 ES6의 새로운 콜렉션 객체를 이어서 학습했다.
+	</div>
+	</section>
+	<a href="#" class="btn_top">TOP</a>
+	<footer>
+		<address>Jewdri . 출처 : ECMSScript 6 길들이기 : 최신 표준으로 다시 배우는 자바스크립트 프로그래밍</address>
+	</footer>
+</div>
+</body>
+</html>

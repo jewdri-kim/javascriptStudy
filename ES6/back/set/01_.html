@@ -1,0 +1,62 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>집합(Set)</title>
+<script type="text/javascript" src="js/set.js"></script>
+<script type="text/javascript">
+    //책의 set클래스 사용
+	var set = new Set();
+
+	console.log('set에 1추가 :'+set.add(1));
+
+	console.log('set안에 값  보기 :'+set.values());
+    console.log('set안에 1이 있나? '+set.has(1));
+    console.log('set size? '+set.size());
+    console.log('ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ');
+    console.log('set에 2추가 :'+set.add(2));
+    console.log('set안에 값  보기 :'+set.values());
+    console.log('set안에 2이 있나? '+set.has(2));
+    console.log('set size? '+set.size());
+    console.log('ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ');
+    console.log('set에 1삭제  :'+set.remove(1));
+    console.log('set안에 값  보기 :'+set.values());
+    console.log('ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ');
+    console.log('set에 2삭제  :'+set.remove(2));
+    console.log('set안에 값  보기 :'+set.values());
+    console.log('ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ');
+
+
+    var setA = new Set();
+    setA.add(1);
+    setA.add(2);
+    setA.add(3);
+    var setB = new Set();
+    setB.add(3);
+    setB.add(4);
+    setB.add(5);
+    setB.add(6);
+    var setC = new Set();
+    setC.add(3);
+    setC.add(4);
+    console.log('집합A '+setA.values());
+    console.log('집합B '+setB.values());
+    console.log('집합C '+setB.values());
+    var unionAB = setA.union(setB);
+    console.log('합집합 '+unionAB.values());
+    var intersectionAB = setA.intersection(setB);
+    console.log('교집합 '+intersectionAB.values());
+    var differenceAB = setA.difference(setB)
+    console.log('차집합 '+differenceAB.values());
+
+    console.log('집합 A는 집합 B의 부분집합인가? '+setA.subset(setB));
+    console.log('집합 C는 집합 B의 부분집합인가? '+setC.subset(setB));
+</script>
+</head>
+<body>
+    <h1>console창에서 확인</h1>
+</body>
+</html>

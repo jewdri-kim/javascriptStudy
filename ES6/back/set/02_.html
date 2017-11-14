@@ -1,0 +1,337 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>집합(Set)</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<script type="text/javascript"  src="js/jquery-1.11.0.min.js"> </script>
+<script type="text/javascript" src="js/set.js"></script>
+<script type="text/javascript" src="js/prodata.js"></script><!---->
+<script type="text/javascript"  src="js/stack.js"> </script>
+<script type="text/javascript"  src="js/masonry2.js"> </script>
+<script>
+/* prodata */
+var proInfo = [
+    {
+        name:'상품1',
+        img:'img/pro_01.png',
+        price:2000,
+        tag: ['하의','blue','운동','여자']
+    },
+     {
+        name:'상품2',
+        img:'img/pro_02.png',
+        price:2000,
+        tag: ['하의','black','운동','여자','성인']
+    },
+     {
+        name:'상품3',
+        img:'img/pro_03.png',
+        price:2000,
+        tag: ['상의','black','운동','여자','성인']
+    },
+     {
+        name:'상품4',
+        img:'img/pro_04.png',
+        price:2000,
+        tag: ['상의','white','라이프','여자','성인']
+    },
+     {
+        name:'상품5',
+        img:'img/pro_05.png',
+        price:2000,
+        tag: ['상의','pink','라이프','여자','성인']
+    },
+     {
+        name:'상품6',
+        img:'img/pro_06.png',
+        price:2000,
+        tag: ['상의','black','라이프','여자','성인']
+    },
+     {
+        name:'상품7',
+        img:'img/pro_07.png',
+        price:2000,
+        tag: ['상의','pink','운동','여자','성인']
+    },
+     {
+        name:'상품8',
+        img:'img/pro_08.png',
+        price:2000,
+        tag: ['신발','black','운동','공용','성인']
+    },
+     {
+        name:'상품9',
+        img:'img/pro_09.png',
+        price:2000,
+        tag: ['신발','white','라이프','공용','성인']
+    },
+     {
+        name:'상품10',
+        img:'img/pro_10.png',
+        price:2000,
+        tag: ['신발','white','운동','공용','성인']
+    },
+     {
+        name:'상품11',
+        img:'img/pro_11.png',
+        price:2000,
+        tag: ['모자','blue','운동','공용','성인']
+    },
+     {
+        name:'상품12',
+        img:'img/pro_12.png',
+        price:2000,
+        tag: ['모자','red','라이프','공용','성인']
+    },
+     {
+        name:'상품13',
+        img:'img/pro_13.png',
+        price:2000,
+        tag: ['상의','black','라이프','여자','성인']
+    },
+     {
+        name:'상품14',
+        img:'img/pro_14.png',
+        price:2000,
+        tag: ['하의','pink','운동','여자','성인']
+    },
+     {
+        name:'상품15',
+        img:'img/pro_15.png',
+        price:2000,
+        tag: ['하의','black','운동','여자','성인']
+    },
+     {
+        name:'상품16',
+        img:'img/pro_16.png',
+        price:2000,
+        tag: ['신발','red','라이프','남자','성인']
+    },
+     {
+        name:'상품17',
+        img:'img/pro_17.png',
+        price:2000,
+        tag: ['신발','black','red','라이프','공용','성인']
+    },
+     {
+        name:'상품18',
+        img:'img/pro_18.png',
+        price:2000,
+        tag: ['상의','white','운동','남자','성인']
+    },
+     {
+        name:'상품19',
+        img:'img/pro_19.png',
+        price:2000,
+        tag: ['상의','black','운동','남자','성인']
+    },
+     {
+        name:'상품20',
+        img:'img/pro_20.png',
+        price:2000,
+        tag: ['상의','blue','운동','남자','성인']
+    },
+     {
+        name:'상품21',
+        img:'img/pro_21.png',
+        price:2000,
+        tag: ['하의','black','운동','남자','성인']
+    },
+     {
+        name:'상품22',
+        img:'img/pro_22.png',
+        price:2000,
+        tag: ['상의','red','운동','남자','성인']
+    },
+     {
+        name:'상품23',
+        img:'img/pro_23.png',
+        price:2000,
+        tag: ['가방','purple','운동','라이프','공용','성인']
+    },
+     {
+        name:'상품24',
+        img:'img/pro_24.png',
+        price:2000,
+        tag: ['시계','white','운동','라이프','공용','성인']
+    },
+     {
+        name:'상품25',
+        img:'img/pro_25.png',
+        price:2000,
+        tag: ['상의','white','라이프','남자','성인']
+    }
+    ,
+     {
+        name:'상품26',
+        img:'img/pro_26.png',
+        price:2000,
+        tag: ['상의','pink','라이프','키즈','여자']
+    }
+    ,
+     {
+        name:'상품27',
+        img:'img/pro_27.png',
+        price:2000,
+        tag: ['신발','black','라이프','키즈','공용']
+    }
+    ,
+     {
+        name:'상품28',
+        img:'img/pro_28.png',
+        price:2000,
+        tag: ['상의','pink','라이프','키즈','여자']
+    }
+     ,
+     {
+        name:'상품29',
+        img:'img/pro_29.png',
+        price:2000,
+        tag: ['상의','black','라이프','키즈','남자']
+    }
+     ,
+     {
+        name:'상품30',
+        img:'img/pro_30.png',
+        price:2000,
+        tag: ['상의','blue','라이프','키즈','남자']
+    }
+     ,
+     {
+        name:'상품31',
+        img:'img/pro_31.png',
+        price:2000,
+        tag: ['하의','blue','라이프','키즈','남자']
+    }
+     ,
+     {
+        name:'상품32',
+        img:'img/pro_32.png',
+        price:2000,
+        tag: ['하의','pink','라이프','키즈','여자']
+    }
+];
+$(window).on('load',function(){
+    $('.pro_list').Gallery({
+        items: $('.pro_list li'),
+        col:5,
+        itemWidth:300,
+        itemMargin:10
+    });/**/
+});
+$(document).ready(function(){
+    var proManager = new Productdata(proInfo,'.pro_list');
+
+    /*
+    proManager.addSrch('운동');
+    proManager.addSrch('하의');
+    proManager.addSrch('blue');
+    proManager.andSrch();
+    proManager.orSrch();*/
+    var num = $('.pro_list li').length;
+    /*
+    $('.pro_list').Gallery({
+        items: $('.pro_list li'),
+        col:5,
+        itemWidth:300,
+        itemMargin:10
+    });*/
+
+
+    $('.filter ul li a').click(function(e){
+        e.preventDefault();
+        $(this).parent().toggleClass('active');
+        var isActive =  $(this).parent().hasClass('active');
+        var tag = $(this).html().substring(1);
+        if(isActive) proManager.addSrch(tag);
+        else proManager.removeSrch(tag);
+    });
+
+    $('.filter button').click(function(){
+        var type = $(this).data('sort');
+        if(type == 'and')  proManager.andSrch();
+        else proManager.orSrch();
+
+        var num = $('.pro_list li').length;
+        var Cols = 5;
+        if(num < 5)  Cols = num;
+        if(num != 0){
+            $('.pro_list').Gallery({
+                items: $('.pro_list li'),
+                col:Cols,
+                itemWidth:300,
+                itemMargin:10
+            });
+        }
+
+    });
+});
+</script>
+</head>
+<div class="wrap">
+    <header>
+        <h1>나이키 상품</h1>
+        <a href="#"></a>
+        <div class="filter">
+            <ul>
+                <li><a href="#">#하의</a></li>
+                <li><a href="#">#상의</a></li>
+                <li><a href="#">#모자</a></li>
+                <li><a href="#">#신발</a></li>
+                <li><a href="#">#가방</a></li>
+                <li><a href="#">#시계</a></li>
+                <li><a href="#">#운동</a></li>
+                <li><a href="#">#라이프</a></li>
+                <li><a href="#">#blue</a></li>
+                <li><a href="#">#black</a></li>
+                <li><a href="#">#white</a></li>
+                <li><a href="#">#pink</a></li>
+                <li><a href="#">#red</a></li>
+                <li><a href="#">#purple</a></li>
+                <li><a href="#">#여자</a></li>
+                <li><a href="#">#남자</a></li>
+                <li><a href="#">#공용</a></li>
+                <li><a href="#">#성인</a></li>
+                <li><a href="#">#키즈</a></li>
+            </ul>
+            <button data-sort="and">AND 검색</button>
+            <button data-sort="or">OR 검색</button>
+        </div>
+    </header>
+    <section class="content">
+        <ul class="item_list pro_list">
+             <li>
+                <a href="#">
+                    <img src="img/pro_23.png" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pro_23.png" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+</div>
+</html>

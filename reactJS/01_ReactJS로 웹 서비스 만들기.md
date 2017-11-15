@@ -44,8 +44,20 @@ facebook - creat-react-app 설정작업없이 한번에 작업 .
 install
 
 - node.js
-- create-react-app
+
+  - https://nodejs.org/ko/
+  - node.js 버전은 안정적인 버전을 설치바람 후에 yarn 패키지 설치할때 신규버전은 해당사항이 없음.
+  - 8.9.1버전으로 설치해야함
+  - create-react-app
+
+
   - https://github.com/facebookincubator/create-react-app
+
+- yarn 설치
+
+  - 명령어 : npm install -g yarn
+  - movie-app 폴더로 이동 (명렁어: cd 폴더경로)
+  - 폴더경로에서 yarn start
 
 
 

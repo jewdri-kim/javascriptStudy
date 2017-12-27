@@ -1,0 +1,139 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>그래프</title>
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/dictionary.js"></script>
+<script type="text/javascript" src="js/queue.js"></script>
+<script type="text/javascript" src="js/stack.js"></script>
+<script type="text/javascript" src="js/graph.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    //위상정렬
+    console.log('위상정렬');
+    var topsort = new Graph();
+    var myVertices2 = ['A','B','C','D','E','F'];
+    for(var i=0; i<myVertices2.length; i++){
+        topsort.addVertex(myVertices2[i]);
+    }
+    topsort.addEdge('A','C');
+    topsort.addEdge('A','D');
+    topsort.addEdge('B','D');
+    topsort.addEdge('B','E');
+    topsort.addEdge('C','F');
+    topsort.addEdge('F','E');
+    var result = topsort.DFS();
+     console.log('위상정렬result');
+    console.log(result);
+    console.log('위상정렬gg');
+
+    //그래프
+    function printNode(value){
+        console.log('탐색한 정점 '+   value);
+    }
+
+    var graph = new Graph();
+    var myVertices = ['A','B','C','D','E','F','G','H','I'];
+    for(var i=0; i<myVertices.length; i++){
+        graph.addVertex(myVertices[i]);
+    }
+
+    graph.addEdge('A','B');
+    graph.addEdge('A','C');
+    graph.addEdge('A','D');
+    graph.addEdge('C','D');
+    graph.addEdge('C','G');
+    graph.addEdge('D','G');
+    graph.addEdge('D','H');
+    graph.addEdge('B','E');
+    graph.addEdge('B','F');
+    graph.addEdge('E','I');
+
+    var shortestPathA = graph.BFS(myVertices[0]);
+    console.log(shortestPathA);
+
+    var formVertex = myVertices[0];
+    for(var i=1; i<myVertices.length; i++){
+        var toVertex = myVertices[i];
+        var path = new stack();
+        for(var v=toVertex; v!==formVertex; v=shortestPathA.predecessor[v]){
+            path.push(v);
+        }
+        path.push(formVertex);
+        var s = path.pop();
+        while(!path.isEmpty()){
+            s += '-' + path.pop();
+        }
+        console.log(s);
+    }
+
+
+
+    //노드그리기
+    var dapth = [];
+    for(var i=0; i<myVertices.length; i++){
+        dapth.push(shortestPathA.distance[myVertices[i]]);
+    }
+
+    var max_depth = dapth.sort(maxDepth);
+    console.log(max_depth[max_depth.length-1]);
+    $('#myGraph').css('height',(max_depth[max_depth.length-1]*200)+'px');		//max값을 가져와 200씩 3단으로 크기를 정함.
+    var w = parseInt($('#myGraph').css('width'));
+    var nodeTemplate = '<circle cx="{x}" cy="{y}" r="40" stroke="black" stroke-width="3" fill="white" />';
+    var lineTemplate = '<path d="M {strX} {strY} l {endX} {endY}" stroke="black"  stroke-width="3" fill="none" />';
+	//x좌표는 w에서 (하나의 경우 가운데에 오기떄문에 반나눠줌. )
+	//n개일경우, w/n*몇번째인지 곱해주기(몇번째인수보다 좀작게...)
+	//y좌표는,  60(일정크기) +150*depth(차수)
+    $('#myGraph').html(nodeTemplate.replace('{x}',w/2).replace('{y}',60)+'<text x="'+(w/2-5)+'" y="'+60+'" fill="black" tra>A</text>'+
+        lineTemplate.replace('{strX}',w/2).replace('{strY}',60).replace('{endX}',(w/3)-(w/2)).replace('{endY}',(60+150)-60)+
+        nodeTemplate.replace('{x}',w/3).replace('{y}',60+150)+'<text x="'+(w/3-5)+'" y="'+(60+150)+'" fill="black" tra>B</text>'+
+        nodeTemplate.replace('{x}',(w/3)*1.8).replace('{y}',60+150)+'<text x="'+((w/3)*1.8-5)+'" y="'+(60+150)+'" fill="black" tra>C</text>'+
+        nodeTemplate.replace('{x}',(w/3)*2.5).replace('{y}',60+150)+'<text x="'+((w/3)*2.5-5)+'" y="'+(60+150)+'" fill="black" tra>D</text>'+
+        nodeTemplate.replace('{x}',(w/4)*1).replace('{y}',60+(150*2))+'<text x="'+((w/4)*1)+'" y="'+(60+(150*2))+'" fill="black" tra>E</text>'+
+        nodeTemplate.replace('{x}',(w/4)*1.8).replace('{y}',60+(150*2))+'<text x="'+((w/4)*1.8-5)+'" y="'+(60+(150*2))+'" fill="black" tra>F</text>'+
+        nodeTemplate.replace('{x}',(w/4)*2.5).replace('{y}',60+(150*2))+'<text x="'+((w/4)*2.5-5)+'" y="'+(60+(150*2))+'" fill="black" tra>G</text>'+
+        nodeTemplate.replace('{x}',(w/4)*3.5).replace('{y}',60+(150*2))+'<text x="'+((w/4)*3.5-5)+'" y="'+(60+(150*2))+'" fill="black" tra>H</text>'+
+        nodeTemplate.replace('{x}',(w/2)).replace('{y}',60+(150*3))+'<text x="'+((w/2)-5)+'" y="'+(60+(150*3))+'" fill="black" tra>I</text>');
+
+	//text의 x좌표, y좌표를 가져와 라인그릴려고.
+    var pos = new Dictionary();
+    $('#myGraph text').each(function(){
+        var node =$(this).html();
+        var posxy = [$(this).attr('x'),$(this).attr('y')];
+        pos.set(node,posxy);
+    });
+    console.log(pos.getItems());
+
+    $('#myGraph').append('<path id="lineAB" d="M 100 350 l 150 -300" stroke="red"  stroke-width="3" fill="none" />');
+
+
+
+    function maxDepth(a,b){
+        if(a.price < b.price){
+            return -1;
+        }
+        if(a.price > b.price){
+            return 1;
+        }
+        return 0;
+    }
+
+
+
+
+})
+
+
+
+</script>
+</head>
+<body>
+    <svg height="100" width="100%" id="myGraph">
+    </svg>
+</body>
+</html>

@@ -1,0 +1,162 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>딕셔너리와 해시</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+a {color:#1b52b1;text-decoration:underline}
+a:active, a:hover {text-decoration:underline}
+
+h1 {font-size:18px;padding-top:10px;}
+h2 {color:#000b72;font-size:16px;padding-bottom:10px;padding-top:10px;border-bottom:1px solid #d0d0d0;}
+h3 {font-size:14px;padding:10px 20px;background:#d0d0d0;}
+header h2 {margin-top:20px;font-size:14px;padding:10px 20px;background:#d0d0d0;color:#333;}
+h4 {color:#000;padding:10px 20px;border:1px solid #d0d0d0;}
+
+section {padding:10px;}
+article {padding:20px;}
+xmp {margin:2%;background:#f1f1f1;white-space:pre-line;padding:0 2% 1% 2%;}
+pre{margin-bottom:20px;background:#000;white-space:pre-line;padding:1% 2% 1% 2%;color:#ff0;font-size:16px;font-family:tahoma;}
+pre span{color:#fff;font-size:14px;}
+header > div, section > div {margin-bottom:20px;border:1px solid #d0d0d0;padding:5px 30px;}
+.colorscripter-code{border:0;padding:0;}
+.colorscripter-code table{width:100%;}
+ul {padding:10px 0;}
+ol {padding-left:20px;}
+p {padding-top:10px;}
+footer{text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap guide_wrap">
+	<header>
+		<h1>딕셔너리와 해시</h1>
+
+		<h2>목차</h2>
+		<div>
+			<ol>
+				<li><a href="#con1">딕셔너리</a></li>
+				<li><a href="#con2">딕셔너리 만들기</a></li>
+				<li><a href="#con3">해시테이블</a></li>
+				<li><a href="#con4">해시테이블 간 충돌해결</a></li>
+			</ol>
+		</div>
+	</header>
+	<section>
+		<h2 id="con1">딕셔너리?</h2>
+		<div>
+			<ul>
+				<li><strong>딕셔너리(dictionary)</strong>는 데이터를 [키, 값] 쌍으로 담아두는 자료 구조</li>
+				<li>키는 원소를 찾기 위한 식별자</li>
+				<li>집합이 [키, 키], 딕셔너리가 [키, 값] 형태의 원소를 모아놓은 공간이라는 점에서 비슷</li>
+				<li>딕셔러니는 <strong>맵(map)</strong>이라고도 한다.</li>
+			</ul>
+		</div>
+
+		<h2 id="con2">딕셔너리 만들기</h2>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;Dictionary(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;this.items&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;{};</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;this.<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+		<div>
+			<ul>
+				<li>set(키, 값) : 딕셔너리에 원소를 추가한다. </li>
+				<li>remove(키) : 키에 해당하는 원소를 삭제한다. </li>
+				<li>has(키) : 키에 해당하는 원소가 딕셔너리에 존재하면 true를, 그렇지 않으면 false를 반환한다. </li>
+				<li>get(키) : 키에 해당하는 원소의 값을 반환한다. </li>
+				<li>clear() : 모든 원소를 삭제한다. </li>
+				<li>size() : 원소의 개수를 반환한다. 배열의 length 프로퍼티와 비슷하다. </li>
+				<li>keys() : 딕셔너리의 모든 키를 배열로 반환한다. </li>
+				<li>values() : 딕셔너리의 모든 값을 배열로 반환한다. </li>
+			</ul>
+		</div>
+
+		<h3>has와 set 메소드</h3>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.has&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(key){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;key&nbsp;<span style="color:#ff3399">in</span>&nbsp;this.items;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.set&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(key,&nbsp;value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(<span style="color:#0086b3"></span><span style="color:#ff3399">!</span>this.has(value)){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.items[key]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">1</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#c10aff">true</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#c10aff">false</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+		<div>
+			set은 key와 value를 인자로 받아 items에 [key, value] 형태로 원소를 세팅하는 메소드로, 새로우누 원소를 추가하거나 기존 원소를 수정할 수 있다.
+		</div>
+
+		<h3>remove 메소드</h3>
+		<div>
+			remove 역시 value 대신 key로 원소를 찾는다는 점에서 다르지 나머지는 Set과 같다.<br>
+			items에서 key키를 가진 원소를 찾아 삭제한다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.remove&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(key){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(this.has(key)){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">delete</span>&nbsp;this.items[key];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">-</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">1</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#c10aff">true</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#c10aff">false</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+
+
+		<h3>get과 values 메소드</h3>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.get&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(key){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;this.has(key)&nbsp;?&nbsp;this.items[key]&nbsp;:&nbsp;undefined;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.values&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;values&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;k&nbsp;<span style="color:#ff3399">in</span>&nbsp;this.items){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(this.has(k)){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values.push(this.items[k]);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;values;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+
+		<h3>clear, size, keys, getitems 메소드</h3>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.keys&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;keys&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;k&nbsp;<span style="color:#ff3399">in</span>&nbsp;this.items){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(this.has(k)){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keys.push(k);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;keys;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.clear&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.items&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;{};</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.size&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;this.<span style="color:#4be6fa">length</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">Dictionary.<span style="color:#4be6fa">prototype</span>.getItems&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;this.items;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+
+
+		<h2 id="con3">해시 테이블(HashTable)</h2>
+		<div>
+			<ul>
+				<li><strong>해싱(hashing)</strong>은 자료구조에서 특정 값을 가장 신속하게 찾는 방법</li>
+				<li>해시 함수는 어떤 키에 해당하는 값의 주소를 테이블에서 찾아주는 함수이므로 조회 속도가 매우 빠르고 간단하다.</li>
+			</ul>
+		</div>
+
+		<h3>해시 테이블 만들기</h3>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;HashTable(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.table&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[];</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+
+		<h3>세가지 기본메소드 </h3>
+		<div>
+			<ul>
+				<li>put(키, 값) : 원소를 추가한다(또는 기존원소를 수정한다.)</li>
+				<li>remove(키) : 키에 해당하는 원소를 찾아 삭제한다. </li>
+				<li>get(키) : 키에 해당하는 원소를 찾아 그 값을 반환한다. </li>
+			</ul>
+		</div>
+		<div>이들을 구현하기 전에 먼저 해시함수(HashTable의 프라이빗 메소드)부터 구현해보자.</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">HashTable.<span style="color:#4be6fa">prototype</span>._loseloseHasnCode&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(key){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;hash&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span>key.<span style="color:#4be6fa">length</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hash&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;key.charCodeAt(i);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;hash%<span style="color:#c10aff">37</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+		<div>
+			key를 구성하는 각 문자의 아스키값을 합하는 함수다. (자바스크립트 String클래스의 charCodeAt 내장 메소드를 사용한다)<br>
+			루프가 끝난 후, 아스키 수치가 작은 영역이 있음을 감안해 hasn를 임의의 숫자로 나눈 나머지를 최종값으로 반환한다.
+		</div>
+
+		<h3>put, get, remove</h3>
+		<div>
+			<ul>
+				<li>부분집합은 수학기호로 A⊂B와 같이 표시</li>
+				<li>A의 모든 원소는 반드시 B에 존재해야 함을 의미</li>
+			</ul>
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">HashTable.<span style="color:#4be6fa">prototype</span>.put&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(key,&nbsp;value){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;position&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this._loseloseHasnCode(key);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(position<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#ffd500">'-'</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>key);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;table[position]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;value;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">HashTable.<span style="color:#4be6fa">prototype</span>.get&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(key){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;table[this._loseloseHasnCode(key)];</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">HashTable.<span style="color:#4be6fa">prototype</span>.remove&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(key){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;table[this._loseloseHasnCode(key)]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;undefined;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+
+		<h2 id="con4">해시 테이블 간 충돌해결</h2>
+		<div>
+			분명히 키는 다른데, 값이 똑같은 경우가 있다. <br>
+			HashTable 인스턴스에서 동일한 인덱스에는 다른 값이 들어 있어야 하기 때문에 이를 충돌(collision)이라 한다.
+			<ul>
+				<li>넣은 값이 사라져버리는 자료 구조란 있을 수 없으므로 모든 원소가 포함되게 하려면 충돌이 발생했을때 어떤 특별한 처리를 해줘야한다. </li>
+				<li>처리방법으로 체이닝, 선형 탐사, 이중 해싱, 세가지가 있는데 이중해싱을 제외한 나머지 두가지에 대해서만 알아본다. </li>
+			</ul>
+		</div>
+
+		<h3>체이닝(separeate chaining)</h3>
+		<div>
+			체이닝은 테이블의 인텍스별로 연결리스트를 생성해 그 안에 원소를 저장하는 기법이다. <br>
+			충동을 해결하는 가장 단순한 방법이고, HashTable 인스턴스외에 메모리가 추가적으로 소요된다는 단점이 있다.
+		</div>
+		<div>
+			<a href="js/hashtableChaining.js" target="_blank">체이닝기법 적용 hashtableChaining.js</a>
+			<a href="04_HashTable클래스사용_체이닝.html" target="_blank">체이닝기법 적용 클래스 사용 </a>
+		</div>
+
+		<h3>선형탐색법(linear probing)</h3>
+		<div>
+			이 방법은 새 원소 추가 시 인덱스가 이미 점유된 상태라면 인덱스 +1을 찾아보고, 인덱스 +1도 점유됐다면 인덱스+2를 찾아보는 식으로 충돌을 회피한다.
+		</div>
+
+	</section>
+	<footer>
+		<address>Jewdri . 출처 : Learning Javascript Data Structures and Algorithms</address>
+	</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<script type="text/javascript" src="js/etc.js"></script>
+<title>그밖</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+a {color:#1b52b1;text-decoration:underline}
+a:active, a:hover {text-decoration:underline}
+li ul{padding-left:10px;}
+h1 {font-size:25px;padding-top:10px;}
+h2 {color:#000b72;font-size:22px;padding-bottom:10px;padding-top:10px;border-bottom:1px solid #d0d0d0;}
+h3 {font-size:14px;padding:10px 20px;background:#d0d0d0;}
+header h2 {margin-top:20px;font-size:14px;padding:10px 20px;background:#d0d0d0;color:#333;}
+h4 {color:#000;padding:10px 20px;border:1px solid #d0d0d0;}
+
+section {padding:10px;}
+article {padding:20px;}
+xmp {margin:2%;background:#f1f1f1;white-space:pre-line;padding:0 2% 1% 2%;}
+pre{margin-bottom:20px;background:#000;white-space:pre-line;padding:1% 2% 1% 2%;color:#ff0;font-size:16px;font-family:tahoma;}
+pre span{color:#fff;font-size:14px;}
+header > div, section > div {margin-bottom:20px;border:1px solid #d0d0d0;padding:5px 30px;}
+.colorscripter-code{border:0;padding:0;}
+.colorscripter-code table{width:100%;}
+.data_box table td{text-align:center;}
+ul {padding:10px 0;}
+ol {padding-left:20px;}
+p {padding-top:10px;}
+footer{text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap guide_wrap">
+	<header>
+		<h1>정렬</h1>
+
+		<h2>목차</h2>
+		<div>
+			<ol>
+				<li><a href="#con1">재귀</a></li>
+				<li><a href="#con2">피보나치수열</a></li>
+				<li><a href="#con3">동적프로그래밍</a></li>
+			</ol>
+		</div>
+	</header>
+	<section>
+
+		<h2 id="con1">재귀(recursiont)</h2>
+		<div>
+			재귀는 어떤 문제를 작은 단위의 동일한 문제들로 나누어 해결하는 방법으로, 함수 자기자신을 다시 호출하는 것이 특징이다.<br>
+			다음과 같이 어떤 메소드나 함수가 자신을 재호출하는 형태일 때 재귀적이라고한다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;recursiveFunction&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(someParam){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recursiveFunction(someParam);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+		<div>
+			다음처럼 함수가 간접적으로 스스로를 호출하는 것도 재귀적이다.
+		</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;recursiveFunction1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(someParam){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;recursiveFunction2(someParam);</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;recursiveFunction2&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(someParam){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;recursiveFunction1(someParam);</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+		<div>
+			recursiveFunction 함수를 실행하면 결과는 어떻게 될까? 별다른 조건없이 실행하면 끝없이 자기자신을 호출할 것이다. 그래서 재귀함수는 무한루프에 빠지는 것을 막기위해 재귀호출을 멈추는 조건(중단점), <strong>베이스케이스base case</strong>가 반드시 필요하다.
+		</div>
+
+		<h3>자바스크립트에서 호출 스택 크기의 한계</h3>
+		<div>
+			만약 베이스 케이스를 깜빡해 재귀 호출이 무한히 계속 된다면 어떤 일이 벌어질까? 실제로는 무한의 늪에 빠지기 전에 브라우저가 <strong>스택 오버플로 stack overflow</strong>에러를 던진다. <br><br>
+			재귀 호출의 한계량은 브라우저마다 다르다. 다음 코드를 돌려보고 브라우저 종류별 한계량을 체크해보자.
+		</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;i&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;recursiveFn(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;recursiveFn();</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">try</span>{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;recursiveFn();</div><div style="padding:0 6px; white-space:pre; line-height:130%">}<span style="color:#ff3399">catch</span>(ex){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">alert</span>(<span style="color:#ffd500">'i&nbsp;='</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;i&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;<span style="color:#ffd500">'error:'</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;ex);</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+
+		<h2 id="con2">피보나치 수열</h2>
+		<div>
+			<ul>
+				<li>1항, 2항은 1이다.</li>
+				<li> n(n>2)항은 (n-1)항과 (n-2)항의 합이다.</li>
+			</ul>
+			<p>피보나치 함수를 구현해보자.</p>
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;fibonacci(num){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(num&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">1</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">|</span><span style="color:#0086b3"></span><span style="color:#ff3399">|</span>&nbsp;num&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">2</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;<span style="color:#c10aff">1</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;fibonacci(num&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">-</span>&nbsp;<span style="color:#c10aff">1</span>)&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;fibonacci(num&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">-</span>&nbsp;<span style="color:#c10aff">2</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+		<div>
+			1항, 2항 모두 1이라는 조건이 베이스케이스이고, n항(n > 2)부터 fibonacci(n)은 fibonacci(n - 1) + fibonacci(n - 2)이다.
+			<br><br>
+			똑같은 코드를 재귀 아닌 방식으로 작성
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;fib(num){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;n1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">1</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;n2&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">1</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;n&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">1</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">3</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>num;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;n1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;n2;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n1&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;n2;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n2&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;n;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;n;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+
+		<h2 id="con3">동적 프로그래밍</h2>
+		<div>
+			동적프로그래밍DP, dynamic programming은 복잡한 문제를 작은 하위 문제들로 나누어 푸는 최적화 기법이다. <br>이 용어는 처음 나오지만, 이미 앞 장에서 동적프로그래밍 기법으로 문제를 해결했던 적이 있다. <br>
+			9장 '그래프'의 DFS 알고리즘이 그 일례다.
+		</div>
+		<div>
+			동적 프로그래밍을 사용해 문제를 해결할 때 중요한 세 단계가 있다.
+			<ol>
+				<li>하위 문제들을 정의한다.</li>
+				<li>하위 문제들을 풀기 위한 재귀를 구현한다(그리고 여기서 앞 절에서 배운 재귀 단계를 거쳐야한다.)</li>
+				<li>베이스 케이스를 찾아낸다.</li>
+			</ol>
+		</div>
+		<div>
+			동적프로그래밍 방식으로 해결한 유명한 알고리즘 문제들
+			<ul>
+				<li>
+					<strong>배낭 문제 : </strong>담을 수 있는 짐 무게의 최댓값이 정해져 '배낭'에 일정 가치와 무게의 짐들을 넣을 때 가치의 총합을 최대로 할 방법을 찾는 문제다.
+				</li>
+				<li>
+					<strong>최장 공통 부분수열 LCS, longest common subsequence: </strong>주어진 다수의 수열 모두의 부분수열이 되는 수열중에서 가장 긴 것(남아있는 원소의 순서를 바꾸지 않은 채 일부 원소를 삭제하든지 하여 다른 수열로부터 파생 가능한 수열)을 찾는 문제다.
+				</li>
+				<li>
+					<strong>행렬 연쇄 곱셈 matrix chain multiplication: </strong>주어진 행렬 집합에서 가장 효율적으로(가능하다면 적은 연산으로)행렬들을 곱하는 방법을 찾는 문제다. 실제로 곱셈을 하는 것은 아니고, 행렬의 곱셈 순서 조합을 찾는 것이다.
+				</li>
+				<li>
+					<strong>동전교환 : </strong>정해진 금액을 동전 d1, d2, .....dn으로 바꿔주는 경우의 수를 찾는 문제다.
+				</li>
+				<li>
+					<strong>그래프에서 모든 쌍의 최단경로 : </strong>그래프의 모든 정점 쌍(u, v)간의 최단 거리를 찾는 문제다.
+				</li>
+			</ul>
+		</div>
+
+		<h3>최소 동전 교환 문제</h3>
+		<div>
+			주어진 금액을 동전 d1, d2, .... dn으로 바꿔줄 떄 필요한 동전의 최소 개수를 찾는 문제다.
+			<br>
+			<p>
+				ex ) 미국에는 1센트, 5센트, 10센트, 25센트 짜리 동전이 있다. <br>
+				d1 = 1, d2 = 5, d3 = 10, d4 = 25<br>
+				36센트를 바꾼다면, 25센트짜리 동전 1개, 10센트짜리 동전1개, 1센트짜리 동전 1개가 우리가 찾는 정답이다.
+			</p>
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;MinCoinChange(coins){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.coins&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;coins;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.cache&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;{};</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">MinCoinChange.<span style="color:#4be6fa">prototype</span>.makeChange&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(amount){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;me&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(<span style="color:#0086b3"></span><span style="color:#ff3399">!</span>amount){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;[];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(this.cache[amount]){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;this.cache[amount];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;min&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;newMin;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;newAmount;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span>me.coins.<span style="color:#4be6fa">length</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;coin&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;me.coins[i];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newAmount&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;amount&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">-</span>&nbsp;coin;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(newAmount&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newMin&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;me.makeChange(newAmount);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newAmount&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&amp;</span><span style="color:#0086b3"></span><span style="color:#ff3399">&amp;</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(newMin.<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span>&nbsp;min.<span style="color:#4be6fa">length</span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">|</span><span style="color:#0086b3"></span><span style="color:#ff3399">|</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">!</span>min.<span style="color:#4be6fa">length</span>)</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&amp;</span><span style="color:#0086b3"></span><span style="color:#ff3399">&amp;</span>&nbsp;(newMin.<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">|</span><span style="color:#0086b3"></span><span style="color:#ff3399">|</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">!</span>newAmount)</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;min&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[coin].concat(newMin);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#4be6fa">console</span>.log(<span style="color:#ffd500">'new&nbsp;Min'</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;min<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#ffd500">'&nbsp;for'</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;amount);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;(me.cache[amount]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;min);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+		<div>
+			구현코드실행: <strong>console창에서 확인</strong>
+		</div>
+		<script>
+			var minCoinChange = new MinCoinChange([1,5,10,25]);
+			console.log(minCoinChange.makeChange(36));
+
+			var minCoinChange2 = new MinCoinChange([1,3,4]);
+			console.log(minCoinChange2.makeChange(6));
+		</script>
+
+		<h3>욕심쟁이 알고리즘</h3>
+		<div>
+			욕심쟁이 알고리즘 greedy algorithm은 최적해(전체적으로 최적인 해)를 찾기 위해 각 단계마다 지역 최적해(현 단계에서의 최적해)를 선택해 문제를 해결하는 방법이다. <br>
+			동적 프로그래밍에서 문제의 전체적인 그림을 그리고 접근했던 것과는 사뭇 대조적이다.
+		</div>
+
+		<div>
+			동적 프로그래밍 알고리즘으로 최적 조합을 찾았떤 최소 동전 교환 문제를 이번엔 욕심쟁이 알고리즘으로 풀어본다. <br>
+			대부분의 경우 실행결과는 최적이지만, 특정 인자에 대해서는 최적이 아닐 수 있다.<br>
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;MinCoinChange2(coins){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.coins&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;coins;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">MinCoinChange2.<span style="color:#4be6fa">prototype</span>.makeChange&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(amount){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;change&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;total&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>this.coins.<span style="color:#4be6fa">length</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">-</span><span style="color:#0086b3"></span><span style="color:#ff3399">-</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;coin&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.coins[i];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">while</span>(total&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;coin&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;amount){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;change.push(coin);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;coin;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;change;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+		<div>
+			구현코드실행: <strong>console창에서 확인</strong>
+		</div>
+		<script>
+			var minCoinChange3 = new MinCoinChange2([1,3,4]);
+			console.log(minCoinChange3.makeChange(6));
+		</script>
+		<div>
+			욕심쟁이 알고리즘은 동적 프로그래밍 알고리즘보다 간단하고 빠르긴 하지만 항상 최적의 답을 내놓지는 않는다. 하지만 평균적으로 봐서는 수행 시간에 비해 만족할만한 결과를 내놓는다고 볼 수 있다.
+		</div>
+
+
+
+
+
+	</section>
+	<footer>
+		<address>Jewdri . 출처 : Learning Javascript Data Structures and Algorithms</address>
+	</footer>
+</div>
+</body>
+</html>

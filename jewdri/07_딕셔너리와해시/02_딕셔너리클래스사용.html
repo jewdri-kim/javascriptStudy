@@ -1,0 +1,344 @@
+﻿<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>딕셔너리와 해시</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<script type="text/javascript"  src="js/jquery-1.11.0.min.js"> </script>
+<script type="text/javascript" src="js/dictionary.js"></script>
+<script type="text/javascript">
+var myBook = {
+    박효신 : {
+        name: '박효신',
+        phone: '010-1234-1234',
+        email: 'onlytree@email.com',
+        group: ['가수'],
+        active: false
+    },
+    김태원 : {
+        name: '김태원',
+        phone: '010-1234-1234',
+        group: 'frank@d2.com',
+        group: ['PB'],
+        active: false
+    },
+    박노정 : {
+        name: '박노정',
+        phone: '010-1234-1234',
+        email: 'free@d2.com',
+        group: ['네이처개발','네이처TF'],
+        active: false
+    },
+    이진주 : {
+        name: '이진주',
+        phone: '010-1234-1234',
+        email: 'pearl@d2.com',
+        group: ['PB','네이처TF'],
+        active: false
+    },
+    박진철 : {
+        name: '박진철',
+        phone: '010-1234-1234',
+        email: 'dan@d2.com',
+        group: ['PB','도미노TF'],
+        active: false
+    },
+    이설란 : {
+        name: '이설란',
+        phone: '010-1234-1234',
+        email: 'frida@d2.com',
+        group: ['PB','슈퍼카트TF','네이처TF'],
+        active: false
+    },
+    이설란 : {
+        name: '이설란',
+        phone: '010-1234-1234',
+        email: 'frida@d2.com',
+        group: ['PB','슈퍼카트TF','네이처TF'],
+        active: false
+    }
+}
+ function Addressbook(data, area){
+    this._addrBook = new Dictionary();   //딕셔너리를
+    this._area = $(area);
+    this._set(data);
+ }
+ //초기데이터 셋팅 - init
+ Addressbook.prototype._set = function(data){
+        for(var k in data){
+            this._addrBook.set(k, data[k]);
+        }
+        console.log(this._addrBook.getItems())
+        this.displayBook();
+ }
+ //주소록 추가
+ Addressbook.prototype.add = function(key, value){
+        //초기화 active
+         for(var k in this._addrBook.items){
+            this._addrBook.items[k].active = false;
+         }
+        var success = this._addrBook.set(key, value);
+        if(success) this.displayBook();
+        return success;
+ }
+//주소록 삭제
+ Addressbook.prototype.del = function(key){
+    //key값을통하여 삭제 key를 배열로 받음(여러개일수도 있으니까, )
+    for(var i=0; i<key.length; i++){
+        var isDel = this._addrBook.remove(key[i]);
+    }
+    if(isDel)this.displayBook();
+ }
+Addressbook.prototype.srch = function(key ,type){
+    // key 값으로 get!
+    if(type === 'name'){
+        for(var k in this._addrBook.items){
+            this._addrBook.items[k].active = false;
+            if(this._addrBook.items[k].name == key){
+                this._addrBook.items[k].active = true;
+            }
+         }
+    }else{
+        for(var k in this._addrBook.items){
+            this._addrBook.items[k].active = false;
+            for(var i=0; i < this._addrBook.items[k].group.length; i++){
+                if(this._addrBook.items[k].group[i] == key){
+                    this._addrBook.items[k].active = true;
+                }
+            }
+         }
+    }
+    this.displayBook();
+}
+//화면에 주소록 view
+Addressbook.prototype.displayBook = function(){
+    var listTemplate = '<tr{active}>\
+                        <td><input type="checkbox" id="{id}" name="selChk" value="{name}"></td>\
+                        <td>{number}</td>\
+                        <td>{name}</td>\
+                        <td>{email}</td>\
+                        <td>{phone}</td>\
+                        <td>{group}</td>\
+                        </tr>';
+    var bookList = '';
+    var num = 1;
+    for(var k in this._addrBook.items){
+        var group = (typeof this._addrBook.items[k].group === 'object')? this._addrBook.items[k].group.join(', ') : this._addrBook.items[k].group;
+        var active = this._addrBook.items[k].active ? ' class="active"' : '';
+        bookList += listTemplate.replace('{active}',active)
+                                .replace('{id}','selChk'+num)
+                                .replace('{name}',this._addrBook.items[k].name)
+                                .replace('{number}',num)
+                                .replace('{name}',this._addrBook.items[k].name)
+                                .replace('{email}',this._addrBook.items[k].email)
+                                .replace('{phone}',this._addrBook.items[k].phone)
+                                .replace('{group}',group);
+        num++;
+    }
+    this._area.html(bookList);
+}
+
+var selList = [];
+$(document).ready(function(){
+    var myAddress = new Addressbook(myBook,'.address_area tbody');
+
+    //주소록 추가
+    $('.address_area .btn_add').click(function(e){
+        e.preventDefault();
+        $('.add_book').fadeIn();
+
+    });
+    $('.add_book a').click(function(e){
+        e.preventDefault();
+
+        var temp = {};
+        $('.add_book input').each(function(){
+            var keys = $(this).attr('id');
+            var val = $(this).val();
+            var key = '';
+            var group = [];
+            if(val === ''){
+                alert('빈칸없이 입력해주세요.');
+                return false;
+            }else{
+                if(keys == 'group'){
+                    group =  val.split(',');
+                    console.log(group);
+                    temp[keys] = group;
+                }else{
+                    temp[keys] = val;
+                }
+            }
+        });
+        temp.active = true;
+        if(myAddress.add(temp.name, temp) == false){
+            alert('기존에 등록된 이름입니다. 이름을 달리하여 추가하여주세요. ')
+        }
+    })
+
+    //체크박스 선택시 - 전체선택 안됨.
+    $('.address_area table input').on('change',function(){
+        var isSel = $(this).is(':checked');
+        console.log(isSel);
+        var key = $(this).val();
+        if(key == '전체선택'){
+            if(isSel){
+                $('.address_area table input').each(function(){
+                    $(this).attr('checked',true);
+                    //setSelected(isSel,key);
+                });
+            }else{
+                $('.address_area table input').each(function(){
+                    $(this).attr('checked',false);
+                    //setSelected(isSel,key);
+                });
+            }
+        }else{
+            setSelected(isSel,key);
+        }
+
+
+    });
+    //삭제버튼 클릭
+    $('.address_area .btn_del').click(function(e){
+        e.preventDefault();
+        myAddress.del(selList);
+    });
+
+    //검색
+    $('.srch_area .btn_srch').click(function(e){
+        e.preventDefault();
+        var srchType = $('.srch_area select').val();
+        var srchTxt = $('.srch_area #srchTxt').val();
+        myAddress.srch(srchTxt,srchType);
+
+    });
+
+
+
+    function setSelected(type, key){
+        if(type){
+            selList.push(key);
+        }else{
+            for(var i=0; i<selList.length; i++){
+                if(selList[i] == key) selList.splice(i,1);
+            }
+        }
+        console.log(selList);
+    }
+});
+
+</script>
+<script type="text/javascript">
+    //책의 딕셔너리 클래스 사용하지만 value를 객체로..
+    var dictionary = new Dictionary();
+    var Gandalf = {
+        group: ['네이처','psnm'],
+        name : '김지혜',
+        phone : '010-2355-2341',
+        email: 'gandalf@email.com'
+    }
+    dictionary.set('Gandalf',Gandalf);
+    dictionary.set('John','johnsnow@email.com');
+    dictionary.set('Tyrion','tyrion@email.com');
+
+    console.log(dictionary.has('Gandalf'));
+    console.log(dictionary.size());
+
+    console.log(dictionary.keys());
+    console.log(dictionary.values());
+    console.log(dictionary.getItems());
+    console.log(dictionary.get('Tyrion'));
+
+
+</script>
+</head>
+<body>
+
+    <div class="address_area">
+        <h1>주소록</h1>
+        <div class="srch_area">
+            <form action="#">
+                <fieldset>
+                    <legend>주소록 검색</legend>
+                    <select>
+                        <option value="group">그룹</option>
+                        <option value="name">이름</option>
+                    </select>
+                    <input type="text" id="srchTxt" name="srchTxt" placeholder="검색은 한개만 검색가능(동일어로 검색)">
+                    <a href="#" class="btn_srch">검색</a>
+                </fieldset>
+            </form>
+        </div>
+        <table>
+            <colgroup>
+                <col style="width:7%">
+                <col style="width:7%">
+                <col style="width:15%">
+                <col>
+                <col style="width:20%">
+                <col style="width:20%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col"><input type="checkbox" id="allSelected" name="selChk" value="전체선택"></th>
+                    <th scope="col">번호</th>
+                    <th scope="col">이름</th>
+                    <th scope="col">이메일주소</th>
+                    <th scope="col">전화번호</th>
+                    <th scope="col">그룹</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" id="selChk1" name="selChk" value="김지혜"></td>
+                    <td>1</td>
+                    <td>김지혜</td>
+                    <td>ksoldier86@naver.com</td>
+                    <td>010-2366-2316</td>
+                    <td>네이처, psnm</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="selChk2" name="selChk" value="김지혜2"></td>
+                    <td>2</td>
+                    <td>김지혜2</td>
+                    <td>ksoldier86@naver.com</td>
+                    <td>010-2366-2316</td>
+                    <td>네이처, psnm</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="selChk3" name="selChk" value="김지혜3"></td>
+                    <td>3</td>
+                    <td>김지혜3ㄹ</td>
+                    <td>ksoldier86@naver.com</td>
+                    <td>010-2366-2316</td>
+                    <td>네이처, psnm</td>
+                </tr>
+            </tbody>
+        </table>
+         <div class="btn_wrap">
+            <a href="#" class="btn_del">선택삭제</a>
+            <a href="#" class="btn_add">주소록 추가</a>
+        </div>
+    </div>
+
+    <div class="add_book">
+        <form action="#">
+            <fieldset>
+                <legend>주소록 등록</legend>
+                <ul>
+                    <li><label for="name">이름 : </label><input type="text" id="name" placeholder="기존 추가된 이름과 중복X"></li>
+                    <li><label for="email">이메일주소 : </label><input type="text" id="email"></li>
+                    <li><label for="phone">전화번호 : </label><input type="text" id="phone" placeholder="010-0000-0000 으로 입력"></li>
+                    <li><label for="group">그룹 : </label><input type="text" id="group" placeholder="여러그룹일 경우 (,)으로 구분(공백X)"></li>
+                </ul>
+                <a href="#">등록</a>
+            </fieldset>
+        </form>
+    </div>
+
+</body>
+</html>

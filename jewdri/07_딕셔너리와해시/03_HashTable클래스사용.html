@@ -1,0 +1,27 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>딕셔너리와 해시</title>
+<script type="text/javascript" src="js/hashtable.js"></script>
+<script type="text/javascript">
+    //책의 해시테이블 클래스 사용
+    var hash = new HashTable();
+    hash.put('Gandalf','gandalf@email.com');
+    hash.put('John','johnsnow@email.com');
+    hash.put('Tyrion','tyrion@email.com');
+
+    console.log(hash.get('Gandalf'));
+    console.log(hash.get('Loiane'));
+
+    hash.remove('Gandalf');
+    console.log(hash.get('Gandalf'));
+</script>
+</head>
+<body>
+    <h1>console창에서 확인</h1>
+</body>
+</html>

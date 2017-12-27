@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Casegraphe</title>
+<link rel="stylesheet" type="text/css" href="../../css/common.css">
+<link rel="stylesheet" type="text/css" href="../../css/diy.css">
+<script type="text/javascript" src="../../js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/ui.js"></script>
+<script type="text/javascript">
+function getQS(name) {
+	var res = new RegExp("[?&]" + name.replace(/[\[\]]/g, "\\$&") + "(=([^&#]*)|&|#|$)").exec(window.location.href);
+	return !res ? null : (!res[2] ? '' :
+		decodeURIComponent(res[2].replace(/\+/g, " ")));
+}
+/* 2017-01-04//AJAX 항목 로드(s) */
+$(function() {
+	$.getJSON("http://psnmcase.d2.co.kr/diy/case/type", function(json) {
+		if (undefined === json.status || json.status != "SUCCESS" ||
+			undefined === json.resultData || undefined === json.resultData.list) {
+			alert("데이터 로드 중 오류가 발생했습니다.");
+			return;
+		}
+		var qs = window.location.href.replace(/^[^?]+\?/, "");
+		json.resultData.list.forEach(function(d) {
+			$("<li />").append(
+				$("<a />", { href:"02-1_sel_type.html?"+qs+"&diyCaseTypeIdx="+d.diyCaseTypeIdx }).append(
+					$("<img />", { src:getQS("diyTypeCd")=="01"?d.singleCaseImg:d.coupleCaseImg, alt:d.caseTypeNm })
+				).append("<strong>"+d.caseTypeNm+"<span>￦"+d.salePrice+"</span></strong>")
+			).appendTo($(".sel_list"));
+		});
+	});
+});
+/* 2017-01-04//AJAX 항목 로드(e) */
+</script>
+</head>
+<body>
+<div id="wrap">
+	<div id="container">
+		<div id="content" class=""><!-- 각 카테고리대표하는 클래스들어가기 -->
+			<div class="tit_sub_top">
+				<h2>케이스 타입</h2>
+				<a href="#" class="btn_spr btn_prev"><span class="blind">이전</span></a>
+				<a href="#" class="btn_spr btn_close"><span class="blind">닫기</span></a>
+			</div>
+
+			<ul class="sel_list">
+<!--
+				<li>
+					<a href="02-1_sel_type.html">
+						<img src="../../img/img_case_type_01.jpg" alt="">
+						<strong>하드 케이스<span>￦20,000</span></strong>						
+					</a>
+				</li>
+				<li>
+					<a href="02-1_sel_type.html">
+						<img src="../../img/img_case_type_02.jpg" alt="">
+						<strong>범퍼 케이스<span>￦27,000</span></strong>						
+					</a>
+				</li>
+				<li>
+					<a href="02-1_sel_type.html">
+						<img src="../../img/img_case_type_03.jpg" alt="">
+						<strong>다이어리 케이스<span>￦35,000</span></strong>						
+					</a>
+				</li>
+			</ul>
+-->
+		</div>
+	</div>
+	<!--?php include('../00_common/footer.html'); ?-->
+</div>
+</body>
+</html>

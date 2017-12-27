@@ -1,0 +1,392 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>배열_검색과정렬</title>
+<link rel="stylesheet" type="text/css" href="nature_republic_kr/renew/w/css/notosans.css">
+<link rel="stylesheet" type="text/css" href="nature_republic_kr/renew/w/css/common.css">
+<style type="text/css">
+#content{padding-bottom:100px;}
+</style>
+<script type="text/javascript">
+	var proInfo = [
+		{
+			name: '알로에시트팩',
+			year: 2016,
+			month: 1,
+			day: 20,
+			buy: 100,
+			promotion: false,
+			proImg: 'img/img_product.jpg',
+			price: 20300
+		},
+		{
+			name: '알로에클렌징폼',
+			year: 2017,
+			month: 5,
+			day: 15,
+			buy: 300,
+			promotion: true,
+			proImg: 'img/img_product2.jpg',
+			price: 10500
+		},
+		{
+			name: '클렌징티슈',
+			year: 2015,
+			month: 1,
+			day: 20,
+			buy: 50,
+			promotion: false,
+			proImg: 'img/img_product3.jpg',
+			price: 5000
+		},
+		{
+			name: '아르간오일',
+			year: 2015,
+			month: 5,
+			day: 23,
+			buy: 100,
+			promotion: true,
+			proImg: 'img/img_product4.jpg',
+			price: 10300
+		},
+		{
+			name: '진생크림',
+			year: 2014,
+			month: 1,
+			day: 23,
+			buy: 350,
+			promotion: true,
+			proImg: 'img/img_product5.jpg',
+			price: 30300
+		},
+		{
+			name: 'BB크림',
+			year: 2013,
+			month: 1,
+			day: 23,
+			buy: 1050,
+			promotion: true,
+			proImg: 'img/img_product6.jpg',
+			price: 15000
+		},
+		{
+			name: '새도우',
+			year: 2016,
+			month: 12,
+			day: 23,
+			buy: 20,
+			promotion: true,
+			proImg: 'img/img_product7.jpg',
+			price: 8000
+		},
+		{
+			name: '아쿠아크림',
+			year: 2011,
+			month: 10,
+			day: 6,
+			buy: 800,
+			promotion: true,
+			proImg: 'img/img_product8.jpg',
+			price: 22500
+		},
+		{
+			name: '클렌징오일',
+			year: 2016,
+			month: 5,
+			day: 6,
+			buy: 300,
+			promotion: true,
+			proImg: 'img/img_product9.jpg',
+			price: 22500
+		},
+		{
+			name: '클렌징폼2',
+			year: 2014,
+			month: 5,
+			day: 6,
+			buy: 600,
+			promotion: true,
+			proImg: 'img/img_product10.jpg',
+			price: 7000
+		},
+		{
+			name: '클렌징오일',
+			year: 2013,
+			month: 6,
+			day: 15,
+			buy: 895,
+			promotion: false,
+			proImg: 'img/img_product11.jpg',
+			price: 10500
+		},
+		{
+			name: '클렌징오일2',
+			year: 2012,
+			month: 6,
+			day: 15,
+			buy: 895,
+			promotion: true,
+			proImg: 'img/img_product12.jpg',
+			price: 9500
+		},
+		{
+			name: '클렌징오일3',
+			year: 2014,
+			month: 6,
+			day: 15,
+			buy: 758,
+			promotion: true,
+			proImg: 'img/img_product13.jpg',
+			price: 9500
+		}
+	];
+
+	if(window.addEventListener){
+	    window.addEventListener("load",init,false);
+	}else if(window.attachEvent){
+	    window.attachEvent("onload",init);
+	}
+
+	function init(){
+		proListView(proInfo);
+		var sortBtns = document.querySelectorAll('.sel_btns li a');
+		sortBtns.forEach(function(x){
+			x.onclick = function(){
+				var type = this.getAttribute('data-sort');
+				sortBtns.forEach(function(y){
+					y.parentNode.setAttribute('class','');
+				});
+				this.parentNode.setAttribute('class','active');
+				proSorting(type);
+			}
+		});
+	}
+
+	function proListView(list){
+		var proList = '<ul class="product_list">';
+		var colGrid = Number(list.length % 4);
+		for(var i=0; i <= list.length-1; i++){
+			var isClass = ''
+			if( i % 4 == 0) isClass = 'r_first';
+			var price = commify(list[i].price);
+			proList += '<li class="'+isClass+'">';
+			proList += '<a href="#">';
+			proList += '<div class="img_box">';
+			proList += '<img src="'+list[i].proImg+'" alt="'+list[i].name+'">';
+			proList += '</div>';
+			proList += '<dl>';
+			proList += '<dt>'+list[i].name+'</dt>';
+			proList += '<dd class="price">￦'+price+'</dd>';
+			proList += '</dl>';
+			proList += '</a>';
+			proList += '</li>';
+		}
+		if(colGrid != 0){
+			//console.log(4-colGrid);
+			for(var k=1; k <= 4-colGrid; k++){
+				proList += '<li><span class="blind">디자인 레이아웃을 위한 빈태그입니다.</span></li>';
+			}
+		}
+		proList += '</ul>';
+		var proArea = document.getElementById('productList');
+		proArea.innerHTML = proList;
+	}
+
+	// 천단위 숫자에 쉼표찍기(퍼옴) //정규식이런거 잘모름 ㅠㅠ
+	function commify(n) {
+	  var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
+	  n += '';                          // 숫자를 문자열로 변환
+
+	  while (reg.test(n))
+	    n = n.replace(reg, '$1' + ',' + '$2');
+
+	  return n;
+	}
+
+	//판매순
+	function compareBuy(a,b){
+		if(a.buy < b.buy){
+			return -1;
+		}
+		if(a.buy > b.buy){
+			return 1;
+		}
+		return 0;
+	}
+
+	//가격비교
+	function comparePrice(a,b){
+		if(a.price < b.price){
+			return -1;
+		}
+		if(a.price > b.price){
+			return 1;
+		}
+		return 0;
+	}
+
+	//날짜비교
+	function compareDate(a,b){
+		if(a.year < b.year){
+			return -1;
+		}
+		if(a.year > b.year){
+			return 1;
+		}
+		if(a.year == b.year){
+			if(a.month < b.month){
+				return -1;
+			}
+			if(a.month > b.month){
+				return 1;
+			}
+			if(a.month == b.month){
+				if(a.day < b.day){
+					return -1;
+				}
+				if(a.day > b.day){
+					return 1;
+				}
+				return 0;
+			}
+		}
+	}
+
+	function proSorting(type){
+		switch(type){
+			case 'ord':
+				proInfo.sort(compareBuy);
+				console.log(proInfo.reverse());
+				proListView(proInfo);
+			break;
+			case 'priceL':
+				console.log(proInfo.sort(comparePrice));
+				proListView(proInfo);
+			break;
+			case 'priceH':
+				proInfo.sort(comparePrice);
+				console.log(proInfo.reverse());
+				proListView(proInfo);
+			break;
+			case 'new':
+				proInfo.sort(compareDate);
+				proInfo.reverse();
+				proInfo.forEach(function(x){
+					console.log(x.year+'.'+x.month+'.'+x.day);
+				});
+				proListView(proInfo);
+			break;
+			case 'promotion':
+				var tempPro = new Array();
+				var idx =0;
+				proInfo.forEach(function(x){
+					console.log(x.promotion);
+					if(x.promotion){
+						 tempPro[idx] = x;
+						 idx++;
+					}
+				});
+				proListView(tempPro);
+			break;
+		}
+
+
+	}
+
+</script>
+</head>
+<body>
+<div id="wrap">
+	<!-- header -->
+	<div id="header">
+		<h1>배열_검색과정렬</h1>
+	</div>
+	<!-- //header -->
+	<!-- container -->
+	<div id="container">
+		<!-- content -->
+		<div id="content">
+			<h2>상품리스트</h2>
+			<div class="list_sorting">
+				<ul class="sel_btns">
+					<li><a href="javascript:" data-sort="new">신상품순</a></li>
+					<li><a href="javascript:" data-sort="ord">판매순</a></li>
+					<li><a href="javascript:" data-sort="priceL">낮은 가격순</a></li>
+					<li><a href="javascript:" data-sort="priceH">높은 가격순</a></li>
+					<li><a href="javascript:" class="btn_chk_list" data-sort="promotion"><span class="best"></span>혜택상품보기</a></li>
+				</ul>
+			</div>
+			<div id="productList">
+				<ul class="product_list">
+					<li class="r_first">
+						<a href="#">
+							<div class="img_box">
+								<img src="http://image.naturerepublic.co.kr/01/DX/01_10010008NL8571_DX300.jpg" alt="포레스트 가든 카모마일 클렌징 오일 500ml (대용량)">
+							</div>
+							<dl>
+								<dt>포레스트 가든 카모마일 클렌징 오일 500ml (대용량)</dt>
+								<dd class="price">
+									￦20,300
+								</dd>
+							</dl>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<div class="img_box">
+								<img src="http://image.naturerepublic.co.kr/01/DX/01_10010008NL8571_DX300.jpg" alt="포레스트 가든 카모마일 클렌징 오일 500ml (대용량)">
+							</div>
+							<dl>
+								<dt>
+									포레스트 가든 카모마일 클렌징 오일 500ml (대용량)</dt>
+								<dd class="price">
+									￦20,300
+								</dd>
+							</dl>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<div class="img_box">
+								<img src="http://image.naturerepublic.co.kr/01/DX/01_10010008NL8571_DX300.jpg" alt="포레스트 가든 카모마일 클렌징 오일 500ml (대용량)">
+							</div>
+							<dl>
+								<dt>
+									포레스트 가든 카모마일 클렌징 오일 500ml (대용량)</dt>
+								<dd class="price">
+									￦20,300
+								</dd>
+							</dl>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<div class="img_box">
+								<img src="http://image.naturerepublic.co.kr/01/DX/01_10010008NL8571_DX300.jpg" alt="포레스트 가든 카모마일 클렌징 오일 500ml (대용량)">
+							</div>
+							<dl>
+								<dt>
+									포레스트 가든 카모마일 클렌징 오일 500ml (대용량)</dt>
+								<dd class="price">
+									￦20,300
+								</dd>
+							</dl>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- //content -->
+	</div>
+	<!-- //container -->
+	<!-- footer -->
+	<div id="footer">
+	</div>
+	<!-- //footer -->
+</div>
+</body>
+</html>

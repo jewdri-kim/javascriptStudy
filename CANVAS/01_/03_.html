@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>03_캐릭터그리기</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+body *{box-sizing:border-box;}
+body{overflow:hidden;width:100%;}
+canvas{border:1px solid #000;box-sizing:border-box;}
+</style>
+</head>
+<body>
+	<div><canvas id="myCanvas" width="500" height="700"></canvas></div>
+	<script type="text/javascript">
+		/*
+			텍스트Hello World,검은선 두께 5, 노란테두리 원, 빨간 내부원, 초록사각형, 반원
+		*/
+		var c = document.getElementById('myCanvas');
+		c.width = window.innerWidth - 5;
+		var ctx = c.getContext('2d');
+
+		drawText('KaKao Lion', [100, 80]);	//Hello world
+
+		//이미지그리기
+		var img = new Image();
+		img.src = "img/lion.jpg";
+		img.onload = function(e){
+			ctx.drawImage(img,0,0);
+			drawGrid();
+		}
+
+
+		//그리드(s)
+		function drawGrid(){
+			var grid = 20;
+			for(var i = 0; i <= c.width; i+=grid){
+				drawLine('#efefef', 1, [i, 0, i, 700]);
+			}
+			for(var i = 0; i < c.width; i+=grid){
+				drawLine('#000', 1, [i, 0, i, 10]);
+			}
+
+			for(var i = 0; i <= 700; i+=grid){
+				drawLine('#efefef', 1, [0, i, c.width, i]);
+			}
+			for(var i = 0; i <= 700; i+=grid){
+				drawLine('#000', 1, [0, i, 10, i]);
+			}
+		}
+		//그리드(e)
+		/*
+		drawGrid('#000',0,0);
+		//좌표 그리기
+		function drawGrid( color, stepx, stepy ) {
+
+		    ctx.save();
+		    ctx.shadowColor = undefined;
+		    ctx.shadowOffsetX = 0;
+		    ctx.shadowOffsetY = 0;
+		    ctx.strokeStyle = color;
+		    ctx.fillStyle = '#ffffff';
+		    ctx.lineWidth = 0.5;
+		    // ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height );
+
+		    for( var i = stepx + 0.5; i < ctx.canvas.width; i += stepx ) {
+		        ctx.beginPath();
+		        ctx.moveTo(i, 0);
+		        ctx.lineTo(i, ctx.canvas.height);
+		        ctx.stroke();
+		    }
+
+
+		    for( var i = stepy + 0.5; i < ctx.canvas.height; i += stepy ) {
+		        ctx.beginPath();
+		        ctx.moveTo(0, i);
+		        ctx.lineTo(ctx.canvas.width, i);
+		        ctx.stroke();
+		    }
+
+		    ctx.restore();
+		}*/
+
+		//얼굴
+		//drawCircle([c.width/2,],)
+
+		/*
+		drawLine('#000', 5, [5,50, c.width, 50]);	//검은선 두께 5
+		drawCircle([200,300],'border','yellow'); //노란색 테두리 원
+		drawCircle([50, 100],'fill','#f00'); // 빨간 내부 원
+		drawRect('green',[300,300,150,100]);	//초록색 사각형
+		drawCircle([500,300],'half','blue'); // 반원
+
+		drawText('Jewdri', [0, 500]);
+		drawLine('#f00', 10, [5,450, c.width, 450]);
+		drawCircle([400,200],'border','purple');
+		drawCircle([200, 200],'fill','#f0f');
+		drawRect('blue',[300,300,10,20]);
+		drawCircle([100,400],'half','orange');
+		drawLine('#0f0', 10, [0,0,c.width, 500]);*/
+
+		function drawLine(color, w, pos){
+			ctx.save();
+			ctx.beginPath();
+			ctx.strokeStyle = color;
+			ctx.lineWidth = w;
+			ctx.lineCap = 'square';
+			ctx.beginPath();
+			ctx.moveTo(pos[0],pos[1]);
+			ctx.lineTo(pos[2],pos[3]);
+			ctx.stroke();
+			ctx.closePath();
+			ctx.restore();
+		}
+
+		function drawText(msg, pos){
+			ctx.save();
+			ctx.font = "italic 600 24px serif";
+			ctx.fillText(msg, pos[0], pos[1]);
+			ctx.restore();
+		}
+
+		function drawCircle(pos, type,color){
+			ctx.save();
+			ctx.beginPath();
+			var a = 2;
+			if(type === 'half') a = 1;
+			ctx.arc(pos[0],pos[1], 50, 0, a*Math.PI);
+			switch(type){
+				case 'fill':
+					ctx.lineWidth = 0;
+					ctx.strokeStyle = color;
+					ctx.fillStyle = color;
+					ctx.fill();
+					break;
+				case 'half':
+					ctx.lineWidth = 1;
+					ctx.strokeStyle = color;
+					/*
+					ctx.moveTo(x-50,y);
+					ctx.lineTo(x+50,y);*/
+					ctx.closePath();
+					ctx.stroke();
+					break;
+				case 'border' :
+					ctx.lineWidth = 1;
+					ctx.strokeStyle = color;
+				break;
+
+			}
+			ctx.stroke();
+			ctx.restore();
+		}
+
+		function drawRect(color, set){
+			ctx.save();
+			ctx.beginPath();
+			ctx.rect(set[0], set[1], set[2], set[3]);
+			ctx.fillStyle = color;
+			ctx.fill();
+			ctx.restore();
+		}
+
+	</script>
+</body>
+</html>

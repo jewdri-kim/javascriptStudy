@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>01_</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+body *{box-sizing:border-box;}
+body{overflow:hidden;width:100%;}
+canvas{border:1px solid #000;box-sizing:border-box;}
+</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="500" height="500"></canvas>
+	<script type="text/javascript">
+		/*
+			텍스트Hello World,검은선 두께 5, 노란테두리 원, 빨간 내부원, 초록사각형, 반원
+		*/
+		var c = document.getElementById('myCanvas');
+		c.width = window.innerWidth - 5;
+		var ctx = c.getContext('2d');
+
+		drawText();	//Hello world
+		drawLine();	//검은선 두께 5
+		drawCircle(200,300,'border','yellow'); //노란색 테두리 원
+		drawCircle(50, 100,'fill','#f00'); // 빨간 내부 원
+		drawRect();
+		drawCircle(500,300,'half','blue'); // 반원
+
+		function drawLine(){
+			ctx.strokeStyle = '#000';
+			ctx.lineWidth = 5;
+			ctx.lineCap = 'square';
+			ctx.beginPath();
+			ctx.moveTo(5,10);
+			ctx.lineTo(c.width,10);
+			ctx.stroke();
+			ctx.closePath();
+		}
+
+		function drawText(){
+			ctx.fillText('Hello World', 100, 80);
+		}
+
+		function drawCircle(x, y, type,color){
+			//테두리 원
+			ctx.beginPath();
+			var a = 2;
+			if(type === 'half') a = 1;
+			ctx.arc(x,y, 50, 0, a*Math.PI);
+			switch(type){
+				case 'border':
+					ctx.lineWidth = 0;
+					ctx.strokeStyle = color;
+					ctx.fillStyle = color;
+					ctx.fill();
+					break;
+				case 'half':
+					ctx.lineWidth = 1;
+					ctx.strokeStyle = color;
+					/*
+					ctx.moveTo(x-50,y);
+					ctx.lineTo(x+50,y);*/
+					ctx.closePath();
+					ctx.stroke();
+					break;
+				default :
+					ctx.lineWidth = 1;
+					ctx.strokeStyle = color;
+
+			}
+			ctx.stroke();
+		}
+
+		function drawRect(color){
+			ctx.beginPath();
+			ctx.rect(300,300,150,100);
+			ctx.fillStyle = "green";
+			ctx.fill();
+
+		}
+
+	</script>
+</body>
+</html>

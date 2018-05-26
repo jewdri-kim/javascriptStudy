@@ -1,0 +1,348 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>프로토타입클래스_핀터레스트따라해보기</title>
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<script type="text/javascript"  src="libs/jquery-1.11.0.min.js"> </script>
+<script type="text/javascript"  src="libs/masonry.js"> </script>
+<script>
+    /*
+
+        미션 03: 심플 갤러리를 클래스로 만들기
+        함수 단위 코딩으로 만들어진 심플 갤러리를 프로토타입 클래스로 만들어 주세요.
+
+    */
+
+    $(document).ready(function(){
+        // 이미지  찾기
+        var $images1 = $("#container1 img");
+        var $images2 = $("#container2 img");
+
+
+        // 이미지 배열 하기
+        showGallery($images1, 6,150,150);
+        showGallery($images2, 4,200,200);
+
+    });
+
+    //이미지 배열하기
+    function showGallery($images, count,width,height){
+        // 이미지 개수 구하기.
+        var length = $images.length;
+
+        // 이미지 배열하기.
+        for(var i=0;i<length;i++){
+            // n번째 이미지 구하기
+            var $img = $images.eq(i);
+
+            // 위치 값 구하기
+            var x = 100+((i%count)*width);
+            var y = 100+(parseInt(i/count)*height);
+
+            // 위치 설정
+            $img.css({
+                left:x,
+                top:y
+            });
+        }
+    }
+$(window).on('load',function(){
+    var list = new masonry();
+    var winW = window.innerWidth;
+    masonrySet(winW,list);
+    $(window).on('resize',function(){
+        winW = window.innerWidth;
+        masonrySet(winW,list);
+    });
+
+});
+
+function masonrySet(w,obj){
+    if(w <= 650){
+        obj.init(".content .item_list li",1,300,0);
+    }
+    else if(w <= 950){
+        obj.init(".content .item_list li",2,300,10);
+    }else if(w <= 1280){
+        obj.init(".content .item_list li",3,300,10);
+    }else{
+        obj.init(".content .item_list li",5,300,10);
+    }
+}
+
+
+
+</script>
+</head>
+
+<body>
+<div class="wrap">
+    <header>
+        <h1>Pinterest</h1>
+    </header>
+    <section class="content">
+        <ul class="item_list">
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/br_collection.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/br_shop_01.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/br_shop_02.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+             <li>
+                <a href="#">
+                    <img src="img/pinterest/br_shop_03.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/img_case_type_02.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/img_case_type_04.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/img_filter_01.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/img_filter_07.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/br_collection.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/br_shop_01.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/br_shop_02.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+             <li>
+                <a href="#">
+                    <img src="img/pinterest/br_shop_03.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/img_case_type_02.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/img_case_type_04.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/img_filter_01.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/pinterest/img_filter_07.jpg" alt="">
+                    <dl>
+                        <dt>
+                           제목제목제목제목
+                        </dt>
+                        <dd>
+                            내용요약내용요약
+                        </dd>
+                        <dd class="author">
+                            Jewdri
+                        </dd>
+                    </dl>
+                </a>
+            </li>
+        </ul>
+    </section>
+</div>
+</body>
+
+</html>

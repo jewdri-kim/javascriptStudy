@@ -1,0 +1,249 @@
+@charset "utf-8";
+
+@import url("common.css");
+
+#content {padding-bottom:80px}
+#content em {color:#719444}
+.sub_tit_wrap {}
+.guide_txt {margin-top:60px; text-align:center; letter-spacing:-1px}
+.guide_txt strong {font-size:18px; color:#222}
+.guide_txt strong em {color:#719444; font-weight:600}
+.guide_txt p {font-size:16px; color:#666; line-height:24px}
+.accredit {overflow:hidden; padding:30px; margin-top:30px; background:#f8f8f8}
+.accredit > dl {float:left; width:50%; border-left:1px solid #ddd; text-align:center; font-size:14px}
+.accredit > dl:first-child {border-left:0}
+.accredit dt {font-size:24px; color:#222; font-weight:600}
+.accredit dt span {display:block; width:121px; height:121px; margin:0 auto 15px; background:url(../img/spr_ico.png) no-repeat  -347px 0}
+.accredit dt .ipin {background-position:-347px -139px}
+.accredit dd {margin-top:10px}
+.accredit dd a {width:87px; padding:0; margin-top:25px}
+.accredit dd .accredit_end {position:relative; padding-left:29px; background:#719444; border-color:#719444; text-align:left; cursor:default}
+.accredit dd .accredit_end:after {display:block; content:''; position:absolute; top:9px; left:10px; width:12px; height:11px; background:url(../img/spr_ico.png) no-repeat -165px -50px}
+.btn_wrap {margin-top:30px}
+.btn_wrap a {display:inline-block; width:100px; height:48px; background:#fff; border:1px solid #c6c6c6; line-height:46px; text-align:center; font-size:16px; color:#5f5f5f; }
+.btn_wrap .v2 {background:#70953f; border-color:#70953f; color:#fff}
+.btn_wrap.v2 a {width:148px; color:#5f5f5f}
+.btn_wrap.v2 a.v2 {color:#fff}
+.end_area {margin-top:60px; padding-bottom:50px; border-bottom:1px solid #ddd; text-align:center; font-size:16px; }
+.end_area dt {padding-bottom:30px; border-bottom:1px solid #333; font-size:28px; color:#222; font-weight:600}
+.end_area em {color:#719444}
+.end_area .ico_spr {margin-top:54px}
+.end_area strong {display:block; margin:40px 0 25px; font-size:18px; color:#222}
+.end_area p {line-height:22px}
+
+.agree_area {margin-top:80px;}
+.agree_area .top {padding-bottom:20px; border-bottom:1px solid #dedede}
+.agree_area .top .custom_form {display:block}
+.agree_area .top .custom_form label {color:#999}
+.agree_area .top .custom_form label strong {display:block; font-size:16px; color:#666}
+.agree_area .top .custom_form em {top:0; margin-top:0}
+.agree_area > dl > dt {margin-top:30px; font-size:16px; color:#222; font-weight:600}
+.agree_area > dl > dt em {color:#70953e}
+.agree_area > dl > dt > p {display:inline-block; font-size:13px; color:#999}
+.agree_area > dl > dd {overflow-y:auto; max-height:320px; margin-top:10px; padding:20px; border:1px solid #e9e9e9; line-height:18px}
+.agree_area > dl > dd h4 {margin-top:25px}
+.agree_area > dl > dd h4:first-child {margin-top:0}
+.agree_area > dl > dd p {margin-top:25px}
+.join_form {width:531px; margin:40px auto 0}
+.caution_txt {margin-top:5px; font-size:12px; color:#e93e44}
+.pass_txt {margin-top:5px; font-size:12px; color:#719444}
+.user_info .caution_txt {}
+.join_form .hipin {vertical-align:middle; font-size:14px; color:#222}
+.join_form input:focus, .join_form fieldset > ul > li input:focus, .join_form .form_item .i_text:focus, .form_item .selectbox:focus {border:2px solid #d1dec2}
+.join_form h3 {text-align:center}
+.join_form fieldset {margin-top:10px; border:1px solid #d8d8d8; letter-spacing:-1px}
+.join_form fieldset:first-child {margin-top:15px}
+.join_form fieldset > ul > li {padding:14px 30px 15px; border-top:1px solid #e9e9e9; font-size:0}
+.join_form fieldset > ul > li:first-child {border-top:0}
+.join_form fieldset > ul > li .form_item {display:inline-block; width:287px; vertical-align:middle; font-size:13px}
+.join_form fieldset > ul > li input, .join_form .form_item .i_text {border:0}
+.join_form label {display:inline-block; width:105px; font-size:16px; color:#666; vertical-align:middle}
+.join_form label .require {display:inline-block; margin-left:13px; vertical-align:middle}
+.join_form .sel_box.v2 .selectbox:after {right:10px}
+.join_form .sel_box .selectbox .list {border:2px solid #d1dec2}
+.join_form .btn_large {vertical-align:middle}
+.user_info .form_item, .user_info .form_item input {font-size:16px}
+.join_form .user_info > li .form_item {width:364px}
+.join_form .setting label {width:auto}
+.join_form .user_info .custom_form label {width:72px; color:#999}
+.phone input {width:100px; vertical-align:middle}
+.phone span {vertical-align:middle; font-size:22px; color:#222; font-weight:200}
+
+.birth .caution_txt {padding-left:10px}
+.birth > div {display:inline-block; width:364px; vertical-align:middle; font-size:0}
+.join_form fieldset > ul > li.birth .form_item {display:inline-block; width:134px}
+.birth .sel_box {display:inline-block; width:115px; border-left:1px solid #e9e9e9; font-size:16px; color:#999; vertical-align:middle}
+.join_form fieldset > ul > li.email .form_item {width:112px}
+.join_form fieldset > ul > li.email > input {width:104px; margin-right:1px}
+.join_form fieldset > ul > li.email .hipin {margin:0 9px}
+.email .sel_box {display:inline-block; width:221px; font-size:16px; color:#999; vertical-align:middle; letter-spacing:-1px}
+.direct .sel_box {width:116px}
+.join_form fieldset > .user_info > li.address {padding:0 30px}
+.user_info .address label {padding:0}
+.join_form fieldset > .user_info > li.address ul li {padding:14px 0 15px; border-top:1px solid #e9e9e9}
+.join_form fieldset > .user_info > li.address ul li:first-child {border-top:0}
+.user_info .address ul li label {width:105px}
+.user_info .address input[type='text'] {width:360px}
+.user_info .address li:first-child input[type='text'] {width:264px} 
+.join_form .setting {padding:30px 20px; border-top:1px solid #e9e9e9}
+.join_form .setting dt {font-size:14px; color:#222; font-weight:600}
+.join_form .setting dd {margin-top:15px; font-size:14px; line-height:18px; letter-spacing:-1px}
+.join_form .setting ul {font-size:0}
+.join_form .setting ul li {display:inline-block; margin-left:35px; font-size:14px; vertical-align:middle}
+.join_form .setting ul li span {vertical-align:middle}
+.join_form .setting ul li:first-child {margin-left:0}
+.join_form .setting ul li .custom_form {margin-left:9px}
+.join_form .btn_wrap {margin-top:20px}
+.join_caution {margin-top:20px; padding:15px 0; background:#fff4f6; text-align:center;}
+.join_caution span {font-size:14px; color:#666}
+
+.point_chance {overflow:hidden; margin-top:80px; padding:30px 50px;background:#f8f8f8}
+.point_chance dl {position:relative; float:left; width:463px; padding-left:95px; font-size:14px}
+.point_chance dl:after {display:block; content:''; position:absolute; top:6px; left:0; width:64px; height:63px; background:url(../img/spr_ico.png) no-repeat 0 -487px}
+.point_chance dt {font-size:24px; color:#222; }
+.point_chance dd {margin-top:15px}
+.point_chance dd a {margin-top:15px; color:#333}
+.point_chance ol {float:left; }
+.point_chance ol li {position:relative; float:left; padding-left:30px}
+.point_chance ol li:after {display:block; content:''; position:absolute; top:50%; left:10px; width:9px; height:16px; margin-top:-8px; background:url(../img/spr_ico.png) no-repeat -189px -170px}
+.point_chance ol li:first-child {padding-left:0}
+.point_chance ol li:first-child:after {display:none}
+.point_chance ol li p {width:127px; height:127px; padding:20px; background:url(../img/bg/bg_round.png) no-repeat 0 0; text-align:center; font-size:14px; letter-spacing:-1px}
+.point_chance ol li p strong {display:block; margin-bottom:10px; text-align:center; color:#222}
+
+.login_area {width:570px; margin:60px auto 0}
+#content .login_area .sub_tit_wrap h2 {padding-bottom:4px; border-bottom:0}
+
+.login_area .sub_tit_wrap p {font-size:16px; text-align:center}
+.login_area .sub_tit_wrap {padding-bottom:35px; border-bottom:2px solid #333}
+.login_area fieldset {padding:30px; border-bottom:1px solid #e8e8e8}
+.login_area fieldset > ul {float:left; width:378px}
+.login_area fieldset > ul li {margin-top:10px; font-size:0}
+.login_area fieldset > ul li:first-child {margin-top:0}
+.login_area fieldset > ul li label {display:inline-block; width:69px; font-size:14px; color:#222; vertical-align:middle}
+.login_area fieldset > ul li input {width:300px; vertical-align:middle}
+.login_area fieldset > .btn_login {display:block; float:left; width:126px; height:74px; background:#70953f; border:0; line-height:74px; font-size:18px; color:#fff; cursor:pointer}
+.login_area fieldset > p {padding-top:14px; padding-left:69px; clear:both}
+.login_area fieldset > p > span {margin-left:20px}
+.login_area fieldset > p > span:first-child {margin-left:0}
+.login_area .btn_wrap a {width:auto; height:initial; line-height:initial; margin-left:68px; border:0; font-size:14px; color:#666 }
+.login_area .btn_wrap a:first-child {margin-left:0}
+.login_area .btn_wrap a span {margin-right:7px}
+.login_area .caution_txt {margin-left:69px}
+.login_bottom {overflow:hidden; margin-top:60px; height:110px}
+.login_bottom div {float:left; width:513px; margin-left:10px}
+.login_bottom div:first-child {margin-left:0}
+.srch_result {margin-top:60px; text-align:center; border-bottom:1px solid #dedede}
+.srch_result .guide_txt {margin-top:20px}
+.srch_result > strong {display:block; margin-top:40px; font-size:24px; color:#70953f}
+.srch_result > strong span {margin-left:10px; font-size:13px; color:#888; font-weight:400}
+.srch_result .btn_wrap {margin-bottom:70px}
+.srch_result .btn_wrap a {width:100px}
+.send_id {margin-top:50px; text-align:center}
+.send_id dt {font-size:18px; color:#222; font-weight:600}
+.send_id dd {margin-top:10px; font-size:16px; }
+.send_id dd p {margin-top:20px}
+.send_id dd a {margin-top:30px; padding:0 20px; }
+.input_area {margin-top:30px; text-align:center; font-size:0}
+.input_area label {display:inline-block; width:56px; font-size:14px; color:#222; font-weight:600; vertical-align:middle}
+.input_area input {width:240px; vertical-align:middle}
+.input_area .caution_txt {display:block; margin-left:430px; text-align:left}
+dl.input_area {text-align:left; padding-left:310px; }
+dl.input_area dt {display:inline-block; width:117px; font-size:14px; color:#222; font-weight:600; vertical-align:top}
+dl.input_area dd {display:inline-block; width:250px; vertical-align:middle}
+dl.input_area dd ul li {margin-top:10px; font-size:13px}
+dl.input_area dd ul li:first-child {margin-top:0}
+dl.input_area dd ul li span {font-weight:600}
+dl.input_area dd ul li label {font-weight:400}
+dl.input_area dd ul li .custom_form {margin-right:10px; font-weight:400}
+dl.input_area .caution_txt {margin-left:0}
+.srch_result.v2 {padding-bottom:30px}
+.set_pw {padding:30px 0; border-bottom:1px solid #dedede}
+.set_pw li {font-size:0; margin-top:10px; text-align:center}
+.set_pw li:first-child {margin-top:0}
+.set_pw li label {display:inline-block; width:111px; font-size:14px; color:#222; font-weight:600; text-align:left; vertical-align:middle}
+.set_pw li input {width:240px; vertical-align:middle}
+
+#content .sub_tit_wrap.pw h2{padding-top:75px;padding-bottom:26px;border-bottom-width:1px;}
+.change_top {padding-top:60px; text-align:center }
+.change_top h2 {margin-top:20px; font-size:26px; color:#222; font-weight:600}
+.change_top h2 em {color:#70953f; font-weight:600}
+.change_top > strong {display:block; margin-top:35px; font-size:16px; color:#222}
+.change_top > p {margin-top:15px; font-size:14px; color:#999}
+.change_top ul {text-align:center; margin-top:60px; padding:30px 0; border-top:1px solid #dedede; border-bottom:1px solid #dedede}
+.change_top ul li {margin-top:10px; font-size:0}
+.change_top ul li:first-child {margin-top:0}
+.change_top ul li label {display:inline-block; width:114px; font-size:14px; color:#222; font-weight:600; text-align:left; vertical-align:middle}
+.change_top ul li input, .change_top ul li .form_item {display:inline-block; width:310px; vertical-align:middle}
+.change_top .i_label {font-size:13px}
+.change_top .btn_wrap {margin-bottom:30px}
+.change_top .btn_wrap a {width:165px; height:38px; line-height:36px; background:#ebebeb; border-color:#dedede; font-size:15px; color:#333}
+.change_top .btn_wrap a.v2 {background:#5f5f5f; border-color:#575757; color:#fff}
+.change_top .caution_txt {margin-left:270px; text-align:left}
+/* 2016-07-07//수정 */
+.change_top .caution_txt {margin-left:420px; text-align:left}
+
+.sel_id {margin-top:30px; }
+.sel_id th, .sel_id td {padding-left:0; text-align:center}
+.sel_id td {border-left:1px solid #e9e9e9; color:#999}
+.sel_id td.bdr0 {border-left:0}
+.sel_id tr:first-child td {color:#222}
+.sel_id > dl {margin-top:40px}
+.sel_id > dl dt {font-size:24px; color:#222; font-weight:600}
+.sel_id > dl dt > span {margin-right:8px; vertical-align:top}
+.sel_id > dl dd {margin-top:10px; padding-left:37px}
+
+/* footer */
+.sub_tit_wrap.v2 h2 {padding:34px 0 25px; border-bottom:0; text-align:center; font-size:38px; font-weight:600; color:#222}
+.sub_tit_wrap .bookmark{overflow:hidden;padding:35px 10px;}
+.sub_tit_wrap .bookmark>li{position:relative;float:left;width:33.33%;font-size:14px;}
+.sub_tit_wrap .bookmark>li>ul>li{margin-top:8px;}
+.sub_tit_wrap .bookmark>li>ul>li a{position:relative;}
+.sub_tit_wrap .bookmark>li>ul>li.active a{color:#444;}
+.sub_tit_wrap .bookmark>li>ul>li.active a:after{position:absolute;bottom:-2px;left:0;content:'';width:100%;height:1px;background:#b1b1b1;}
+.sub_tit_wrap .bookmark>li>ul>li:first-child{margin-top:0;}
+
+.footer .terms_content{padding:34px 0 62px 0;background:#f8f8f8;}
+.footer .terms_wrap{}
+.footer .terms_wrap>div{padding:28px 20px;margin-right:5px;border:1px solid #e9e9e9;background:#fff;font-size:12px;}
+.footer .terms_wrap>div>dl>dt{margin-bottom:20px;font-size:16px;color:#222;}
+.footer .terms_wrap>div>dl>dd>dl{margin-bottom:36px;}
+.footer .terms_wrap>div>dl>dd>dl>dt{margin-bottom:20px;}
+.footer .terms_wrap>div>dl>dd>dl>dd>ol>li>p{padding-left:15px;}
+.footer .terms_wrap>div>dl>dd>dl>dd>ol>li>p>span{margin-left:-15px;}
+.footer .terms_wrap>div>dl>dd>dl>dd>ol>li>ol{margin-top:20px;margin-bottom:35px;}
+.footer .terms_wrap>div>dl>dd>dl>dd>ol>li>ol>li{margin-left:30px;list-style:decimal;}
+.footer .terms_wrap>div>dl>dd>dl>dd>ol>li>ol>li>ul>li{padding-left:10px;}
+.footer .terms_wrap>div>dl>dd>dl>dd>ol>li>ol>li>ul>li>span{margin-left:-8px}
+
+/* 개인정보취급방침 */
+
+.footer .privacy_policy_content{margin-top:40px;padding:34px 0 62px 0;background:#f8f8f8;}
+.footer .privacy_policy_wrap{}
+.footer .privacy_policy_wrap>div{padding:28px 20px;margin-right:5px;border:1px solid #e9e9e9;background:#fff;font-size:12px;}
+
+.footer .privacy_policy_wrap>div>dl{margin-top:40px;}
+.footer .privacy_policy_wrap>div>dl>dt{margin-bottom:20px;font-size:16px;color:#222;}
+.footer .privacy_policy_wrap>div>dl>dd>dl>dt{margin-bottom:10px;}
+.footer .privacy_policy_wrap>div>dl>dd>ol{margin-top:20px;}
+.footer .privacy_policy_wrap>div>dl>dd>ol>li{padding-left:30px;}
+.footer .privacy_policy_wrap>div>dl>dd>ol>li>span{margin-left:-15px;}
+.footer .privacy_policy_wrap>div>dl>dd>ol>li>ol{margin:10px 0;}
+.footer .privacy_policy_wrap>div>dl>dd>dl>dd>ol>li{padding-left:30px;}
+.footer .privacy_policy_wrap>div>dl>dd>dl>dd>ol>li>span{margin-left:-20px;}
+
+.footer .privacy_policy_wrap .line li{padding-left:20px;}
+.footer .privacy_policy_wrap .line li span{margin-left:-10px;}
+
+.footer .privacy_policy_wrap .num{padding-left:30px;}
+.footer .privacy_policy_wrap .num>li{padding-left:0;list-style:decimal;}
+.footer .privacy_policy_wrap .num_tit{display:block;}
+.footer .privacy_policy_wrap .num_tit.v2{margin-left:0;}
+.footer .privacy_policy_wrap .sub_desc{display:block;padding-left:30px;}
+.footer .privacy_policy_wrap .charge{padding-left:20px;margin:10px 0}
+/*.footer .privacy_policy_wrap.v2>div>dl>dt{font-size:14px;}*/
+.footer .privacy_policy_wrap .consign{margin:15px 30px 15px 0;display:inline-block;vertical-align:top}
+.footer .privacy_policy_wrap .consign dt{margin-bottom:0;font-weight:600;}
+.footer .privacy_policy_wrap .n_margin{margin-bottom:0;}
+.footer .privacy_policy_wrap .prev{margin:15px 0;}
+.footer .privacy_policy_wrap .url{margin-top:15px;}

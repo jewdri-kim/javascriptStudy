@@ -1,0 +1,92 @@
+/*
+* Noto Sans KR (korean) http://www.google.com/fonts/earlyaccess
+ 
+@font-face {
+  font-family: 'noto';
+  font-style: normal;
+  font-weight: 200;
+  src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),
+       url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),
+       url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');
+}
+
+@font-face {
+   font-family: 'noto';
+   font-style: normal;
+   font-weight: 400;
+   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'noto';
+   font-style: normal;
+   font-weight: 600;
+   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'noto';
+   font-style: normal;
+   font-weight: 800;
+   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'noto';
+   font-style: normal;
+   font-weight: 900;
+   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');
+ }*/
+/*
+ * Nanum Barun Gothic (Korean) http://hangeul.naver.com
+ */
+@font-face {
+    font-family: 'noto';
+	 font-style: normal;
+	font-weight: 200;
+    src:  local('Noto Sans Light'), local('NotoSans-Light');
+    src:		 url(../font/notokr-light.eot);
+    src:		 url(../font/notokr-light.eot?#iefix) format('embedded-opentype'),
+         url(../font/notokr-light.woff2) format('woff2'),
+         url(../font/notokr-light.woff) format('woff'),
+         url(../font/notokr-light.ttf) format('truetype')
+}
+@font-face {
+    font-family: 'noto';
+	 font-style: normal;
+	font-weight: 400;
+   src: local('Noto Sans Regular'), local('NotoSans-Regular');
+   src:		 url(../font/notokr-regular.eot);
+   src: url(../font/notokr-regular.eot?#iefix) format('embedded-opentype'),
+         url(../font/notokr-regular.woff2) format('woff2'),
+         url(../font/notokr-regular.woff) format('woff'),
+         url(../font/notokr-regular.ttf) format('truetype')
+}
+@font-face {
+    font-family: 'noto';
+	font-style: normal;
+	font-weight: 600;
+    src:local('Noto Sans Medium'), local('NotoSans-Medium');
+	src:url(../font/notokr-medium.eot);
+    src:url(../font/notokr-medium.eot?#iefix) format('embedded-opentype'),
+         url(../font/notokr-medium.woff2) format('woff2'),
+         url(../font/notokr-medium.woff) format('woff'),
+         url(../font/notokr-medium.ttf) format('truetype')
+}
+@font-face {
+    font-family: 'noto';
+	font-style: normal;
+	font-weight: 800;
+    src:local('Noto Sans Bold'), local('NotoSans-Bold');
+	src:url(../font/notokr-bold.eot);
+    src:url(../font/notokr-bold.eot?#iefix) format('embedded-opentype'),
+         url(../font/notokr-bold.woff2) format('woff2'),
+         url(../font/notokr-bold.woff) format('woff'),
+         url(../font/notokr-bold.ttf) format('truetype')
+}
+

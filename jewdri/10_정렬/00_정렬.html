@@ -1,0 +1,235 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>정렬</title>
+<style type="text/css">
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+a {color:#1b52b1;text-decoration:underline}
+a:active, a:hover {text-decoration:underline}
+li ul{padding-left:10px;}
+h1 {font-size:25px;padding-top:10px;}
+h2 {color:#000b72;font-size:22px;padding-bottom:10px;padding-top:10px;border-bottom:1px solid #d0d0d0;}
+h3 {font-size:14px;padding:10px 20px;background:#d0d0d0;}
+header h2 {margin-top:20px;font-size:14px;padding:10px 20px;background:#d0d0d0;color:#333;}
+h4 {color:#000;padding:10px 20px;border:1px solid #d0d0d0;}
+
+section {padding:10px;}
+article {padding:20px;}
+xmp {margin:2%;background:#f1f1f1;white-space:pre-line;padding:0 2% 1% 2%;}
+pre{margin-bottom:20px;background:#000;white-space:pre-line;padding:1% 2% 1% 2%;color:#ff0;font-size:16px;font-family:tahoma;}
+pre span{color:#fff;font-size:14px;}
+header > div, section > div {margin-bottom:20px;border:1px solid #d0d0d0;padding:5px 30px;}
+.colorscripter-code{border:0;padding:0;}
+.colorscripter-code table{width:100%;}
+.data_box table td{text-align:center;}
+ul {padding:10px 0;}
+ol {padding-left:20px;}
+p {padding-top:10px;}
+footer{text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap guide_wrap">
+	<header>
+		<h1>정렬</h1>
+
+		<h2>목차</h2>
+		<div>
+			<ol>
+				<li><a href="#con1">버블정렬</a></li>
+				<li><a href="#con2">선택정렬</a></li>
+				<li><a href="#con3">삽입정렬</a></li>
+				<li><a href="#con4">병합정렬</a></li>
+				<li><a href="#con5">정렬시간 비교</a></li>
+				<li><a href="#con6">퀵정렬</a></li>
+			</ol>
+		</div>
+	</header>
+	<section>
+		<h2>정렬시작하기 전 </h2>
+		<div>
+			ArrayList(리스트)를 정의하고 정렬/검색 대상 데이터르르 저장한다.<br>
+			정렬/검색 알고리즘을 이용하기 위함.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">function</span>&nbsp;ArrayList(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.array&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;[];</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.insert&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(item){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.array.push(item);</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.toString&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;this.array.<span style="color:#4be6fa">join</span>();</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+
+		<h2 id="con1">버블정렬(bubble sort)</h2>
+		<div>
+			<ul>
+				<li>정렬 알고리즘 중에서 가장 단순하기 때문에 언제나 1번 타자.</li>
+				<li>단순한만큼 실행시간은 최악</li>
+				<li>인접한 두 원소를 모두 다 비교하고 그 결과에 따라 두 원소의 위치를 서로 바꾼다.</li>
+				<li>원소가 정렬돼가는 모습이 마치 수면 위로 떠오르는 거품(버플) 같다고 하여 버플정렬이란 이름이 붙었다. </li>
+			</ul>
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.bubbleSort&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array.<span style="color:#4be6fa">length</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(this.array[j]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span>&nbsp;this.array[j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#c10aff">1</span>]){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this._swap(j,&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#c10aff">1</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+		<div>
+			<ul>
+				<li>첫 번째 원소부터 마지막 원소까지 순회한다.(바깥쪽루프)</li>
+				<li>안쪽루프는 첫번째 원소부터 끝에서 두번쨰 원소까지 순회하면서 현재원소와 그 다음 원소를 비교한다. </li>
+				<li>이 두 원소가 정렬되어 있지 않다면, 위치를 서로 바꾼다. </li>
+			</ul>
+		</div>
+
+		<div>
+			<p>교환 기능을 전담할 swap 함수를 작성 (ArrayList 내부에서만 사용가능한 프라이빗 함수)</p>
+		</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>._swap&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(index1,&nbsp;index2){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;aux&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array[index1];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.array[index1]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array[index2];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.array[index2]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;aux;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			버블정렬 알고리즘이 잘 구현됐는지 테스트 <a href="01_정렬하기.html" target="_blank">01_정렬하기.html</a>
+		</div>
+
+
+
+		<h3>개선된 버블정렬</h3>
+		<div>
+			바깥쪽 루프를 두번 째 반복할때, 숫자 4,5는 이미 정렬이 끝난 상태다. <br>
+			사실 굳이 비교할 필요가 없음에도 버블정렬은 일일이 모든 원소를 비교한다. <br>
+			안쪽루프에서 바깥쪽 루프의 반복횟수를 차감하면 불필요한 비교작업이 준다.
+			<p>sortTime이라고 두 수를 비교할때마다 1씩 증가시켜 비교 </p>
+		</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.modifiedBubbleSort&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.sortTime&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#999999">//비교하기위해&nbsp;</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array.<span style="color:#4be6fa">length</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span><span style="color:#ff3399">-</span>i;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(this.array[j]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span>&nbsp;this.array[j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#c10aff">1</span>]){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this._swap(j,j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#c10aff">1</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.sortTime<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#999999">//비교하기위해&nbsp;</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">//기존&nbsp;버블정렬에서도&nbsp;sortTime을&nbsp;초기화하고&nbsp;두수를&nbsp;비교할</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.bubbleSort&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.sortTime&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array.<span style="color:#4be6fa">length</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(this.array[j]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span>&nbsp;this.array[j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#c10aff">1</span>]){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this._swap(j,&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#c10aff">1</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.sortTime<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+		<div>
+			기존 버블정렬 코드에서는 sortTime이 20 인 반면, 개선된 버블정렬 코드에서는 10.
+			반으로 줄일 수 있다.
+		</div>
+
+
+		<h2 id="con2">선택정렬(selection sort)</h2>
+		<div>
+			selection sort는 제자리(in-place) 정렬 알고리즘의 하나로, 최솟값을 찾아 맨 앞으로 보내고, 그 다음으로 작은값을 찾아 2번째 위치로 보내는 식으로 정렬한다.
+		</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.selectionSort&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.sortTime&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array.<span style="color:#4be6fa">length</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;indexMin;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">0</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indexMin&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;i;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>i;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span>;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(this.array[indexMin]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span>&nbsp;this.array[j]){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indexMin&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;j;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(i&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">!</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;indexMin){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this._swap(i,&nbsp;indexMin);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.sortTime<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+
+		<h2 id="con3">삽입정렬(insertion sort)</h2>
+
+		<div>
+			<ul>
+				<li>한 번에 한 원소씩 정렬된 배열을 만들어가는 알고리즘</li>
+				<li>첫번째 원소는 정렬이 끝났따고 가정하고, 두번째 원소와 비교해 첫번째 원소보다 더 작다면 첫번째 원소 앞으로 옮긴다.</li>
+				<li>처음 두 원소의 정렬이 끝나면 다음엔 세번째 원소와의 비교를 계속한다.</li>
+			</ul>
+		</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.insertionSort&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.sortTime&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#c10aff">0</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array.<span style="color:#4be6fa">length</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;j,&nbsp;temp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">for</span>(<span style="color:#ff3399">var</span>&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#c10aff">1</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#4be6fa">length</span>;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>i;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;temp&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array[i];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">while</span>(j<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span><span style="color:#c10aff">0</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&amp;</span><span style="color:#0086b3"></span><span style="color:#ff3399">&amp;</span>&nbsp;this.array[j<span style="color:#0086b3"></span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span>&nbsp;temp){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.array[j]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.array[j<span style="color:#0086b3"></span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">-</span><span style="color:#0086b3"></span><span style="color:#ff3399">-</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.sortTime<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.array[j]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;temp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+
+		<h2 id="con4">병합정렬(merge sort)</h2>
+		<div>
+			<ul>
+				<li>실전에 응용된 정렬 알고리즘</li>
+				<li>복잡도가 O(n log n)으로 훨씬 뛰어난 성능</li>
+				<li>병합정렬 알고리즘의 핵심은 분할과 정복이다.</li>
+				<li>정렬한 배열을 원소가 하나뿐인 배열 단위로 나뉠 때까지 분할하고, 반대로 이렇게 분할된 배열을 점점 더 큰 배열로 병합하면서 정렬을 완성한다.</li>
+				<li>분할/정복이라는 접근 방식 덕분에 재귀호출 !!</li>
+			</ul>
+		</div>
+
+
+		<h2 id="con5">정렬시간 비교</h2>
+		<h3>숫자 5까지 일때</h3>
+		<div><img src="img/sort_01.png" alt=""></div>
+		<h3>숫자 20까지 일때</h3>
+		<div>
+			<img src="img/sort_02.png" alt="">
+		</div>
+		<h3>숫자 1000까지 일때</h3>
+		<div>
+			<ul>
+				<li>버블정렬 &gt; 999000</li>
+				<li>개선된버블정렬 &gt; 499500</li>
+				<li>선택정렬 &gt; 500499</li>
+				<li>삽입정렬 &gt; 499500</li>
+				<li>병합정렬 &gt; 2000</li>
+			</ul>
+		</div>
+
+		<p>숫자가 많아질수록 병합정렬이 제일 적게 걸린다.</p>
+
+		<h2 id="con6">퀵정렬</h2>
+		<div>
+			퀵 정렬 quick sort은 애용되는 정렬 알고리즘이다.<br>
+			복잡도는 O(n log n)이고, 복잡도가 동일한 여타 정렬 알고리즘보다 성능이 낫다. <br>
+			병합정렬과 마찬가지로 분할/정복 방식으로 접근한다(그러나 병합정렬과는 달리, 원소를 하나 가진 배열까지 잘게 쪼개지 않는다). <br>
+			퀵 정렬은 지금까지 소개한 정렬 알고리즘 중 가장 복잡하다.
+			<ol>
+				<li>배열의 중간 지점에 위치한 원소(피봇pivot이라고한다)를 선택한다.</li>
+				<li>2개의 포인터(배열의 첫 번째 원소를 가리키는 좌측 포인터, 배열의 마지막 원소를 가리키는 우측포인터)를 생성한다.<br>피봇보다 더 큰 원소가 나올 때까지 좌측 포인터를 움직이고, 피봇보다 더 작은 원소가 나올 때까지 우측 포인터를 움직인 다음, 두 포인터에 해당하는 원소를 서로 교환한다. 이 과정을 좌측 포인터가 우측 포인터보다 더 커질때까지 반복한다. 이렇게 함으로써 피봇보다 작은원소는 좌측에, 그리고 큰ㅇ눤소는 우측에 나열된다. 이작업을 <strong>파티션partition</strong>이라고 한다.</li>
+				<li>그 결과 피봇을 중심으로 나뉜 두 서브배열(더 작은 원소 배열과 더 큰원소배열)에 대해 정렬이 끝날 때까지 위 과정을 재귀적으로 반복한다.</li>
+			</ol>
+		</div>
+		<div>
+			메인 메소드를 선언하고 정렬할 배열과 처음/끝 인덱스(배열의 일부가 아닌, 전체 원소를 정렬해야하니)를 인자로 재귀함수를 호출한다.
+		</div>
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">//퀵정렬</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.quickSort&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;this.quick(this.array,&nbsp;<span style="color:#c10aff">0</span>,&nbsp;this.array.<span style="color:#4be6fa">length</span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.quick&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(array,&nbsp;left,&nbsp;right){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;index;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(array.<span style="color:#4be6fa">length</span>&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span>&nbsp;<span style="color:#c10aff">1</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;this.partition(array,&nbsp;left,&nbsp;right);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(left&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span>&nbsp;index<span style="color:#0086b3"></span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.quick(array,&nbsp;left,&nbsp;index<span style="color:#0086b3"></span><span style="color:#ff3399">-</span><span style="color:#c10aff">1</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(index&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span>&nbsp;right){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.quick(array,&nbsp;index,&nbsp;right);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+		<div>
+			index 변수는 더 작은 원소를 가진 서브배열, 더 큰 원소를 가진 서브배열로 나누어서 quick함수를 재귀호출하기 위해 선언한다. partition 함수의 반환 값을 index에 세팅한다. <br>
+			배열 크기가 2이상이면(원소가 1개인 배열은 이미 정렬된것이나 다름없으므로), 해당 배열에 파티션 작업(전체배열을 넘기는 첫번째 호출)을 하여 index를 얻는다. <br>
+			더 작은 원소들을 가진 서브배열이 존재하면, 같은 과정을 반복한다. <br>더 큰 원소들을 가진 서브배열도 마찬가지로 존재하면, 똑같은 과정을 되풀이한다.
+		</div>
+
+		<h3>파티션 과정</h3>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.partition&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(array,&nbsp;left,&nbsp;right){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;pivot&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;array[Math.floor((right<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>left)<span style="color:#0086b3"></span><span style="color:#ff3399">/</span><span style="color:#c10aff">2</span>)];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;i&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;left;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;j&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;right;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">while</span>(i&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;j){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">while</span>(array[i]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span>&nbsp;pivot){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">while</span>(array[j]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&gt;</span>&nbsp;pivot){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">-</span><span style="color:#0086b3"></span><span style="color:#ff3399">-</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">if</span>(&nbsp;i&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">&lt;</span><span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;j){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.swapQuickSort(arry,&nbsp;i,&nbsp;j);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j<span style="color:#0086b3"></span><span style="color:#ff3399">+</span><span style="color:#0086b3"></span><span style="color:#ff3399">+</span>;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;}</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">return</span>&nbsp;i;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table>
+		</div>
+
+		<div>
+			가장 먼저 pivot을 정해야 하는데, 여기에는 몇 가지 방법이 있다.<br>
+			가장 간단하게는 배열의 첫 번째 원소(좌측끝에 위치한 원소)도 가능하다. <br>
+			그러나 많은 연구 결과, 거의 정렬된 상태인 배열에서 그렇게 하면 성능상 가장 나쁘다는 사실이 밝혀졌다. <br>
+			무작위로 집어내거나 맨 끝에 원소를 선택하는 방법도 있는데, 여기서는 정가운데 원소를 pivot으로 한다. <br>
+			그리고 배열의 첫 번째 원소를 left 마지막 원소는 right로, 포인터 i,j를 각각 초기화 한다.<br>
+			i와 j의 위치가 역전될때까지 파티션을 반복한다. pivot보다 같거나 큰 원소를 찾을 때까지 좌측 포인터를 우측으로 이동시키고(i++)., 반대로 pivot보다 같거나 작은원소를 찾을때까지 우측 포인터를 좌측으로 계속 이동시킨다. (j++).<br>
+			결국, 좌측포인터가 가리키는 원소는 pivot보다 크고, 우측 포인터가 가리키는 원소는 pivot 보다 작을 것이다. 두 포인터가 역전되어 좌측 포인터가 우측 포인터의 우측으로 넘어가지 않았다면, 두 포인터가 가리키는 원소 둘을 교환하고 같은과정을 반복한다.<br>
+			파티션 과정이 끝나면 좌측 포인터 변수(i)를 반환하고 퀵 메서드의 index에서 이 값을 받아 서브배열 생성시 사용한다.<br>
+		</div>
+
+		<div>swapQuickSort 함수는, array인자가 추가된 점만 빼고는 앞서 구현했던 swap함수와 유사하다.</div>
+
+		<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto">
+			<table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0">
+				<tr><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%">ArrayList.<span style="color:#4be6fa">prototype</span>.swapQuickSort&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;<span style="color:#ff3399">function</span>(array,&nbsp;index1,&nbsp;index2){</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff3399">var</span>&nbsp;aux&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;array[index1];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;array[index1]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;array[index2];</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;array[index2]&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;aux;</div><div style="padding:0 6px; white-space:pre; line-height:130%">}</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr>
+			</table>
+		</div>
+
+
+	</section>
+	<footer>
+		<address>Jewdri . 출처 : Learning Javascript Data Structures and Algorithms</address>
+	</footer>
+</div>
+</body>
+</html>

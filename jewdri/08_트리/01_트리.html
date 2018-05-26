@@ -1,0 +1,138 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>트리</title>
+<style type="text/css">
+.tree>li>ol>li{margin-top:20px;}
+.tree>li>ol>li:first-child{margin-top:0;}
+ol{overflow:hidden;padding-left:0;}
+ol li{padding-left:40px;list-style:none;}
+ol li span{display:inline-block;width:30px;height:30px;font-weight:bold;border:2px solid #000;border-radius:100%;font-size:14px;text-align:center;line-height:26px;}
+ol li span+ol{display:inline-block;vertical-align:top;}
+ol li span+ol li{margin-top:5px;}
+ol li span+ol li:first-child{margin-top:0;}
+.tree li ol li{position:relative;}
+.tree li ol li:before{display:block;content:'';position:absolute;top:10px;left:0;width:40px;height:2px;background:#000;}
+.tree li ol li:after{display:block;content:'';position:absolute;top:-80%;left:0;width:2px;height:87%;background:#000;}
+.tree li ol li:first-child:after{display:none;}
+.tree li ol li ol li:after{height:55%;top:-38%;}
+.BST_area{min-height:100px;}
+.now span{background:yellow;}
+.node{display:inline-block;width:30px;height:30px;font-weight:bold;border:2px solid #000;border-radius:100%;font-size:14px;text-align:center;line-height:26px;}
+.node.node_root{display:block;margin:0 auto;}
+.node.node_root:after{display:block;content:'';width:100%;height:10px}
+</style>
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/binarySearchTree.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    //책의 트리내용
+    var tree = new BinarySearchTree('.BST_area');
+    tree.insert(11);
+    tree.insert(7);
+    tree.insert(15);
+    tree.insert(5);
+    tree.insert(3);
+    tree.insert(9);
+    tree.insert(8);
+    tree.insert(10);
+    tree.insert(13);
+    tree.insert(12);
+    tree.insert(14);
+    tree.insert(20);
+    tree.insert(18);
+    tree.insert(25);
+    tree.insert(6);
+    //tree.treeView();
+
+    console.log('중위순회');
+    tree.inOrderTraverse(tree.printNode);
+    console.log('전위순회');
+    tree.preOrderTraverse(tree.printNode);
+    console.log('후위순회');
+    tree.postOrderTraverse(tree.printNode);
+    console.log('최소값');
+    var min = tree.min();
+    console.log(min);
+    console.log('최대값');
+    var max = tree.max();
+    console.log(max);
+    console.log('특정값찾기');
+    console.log(tree.search(1) ? '키 1을 찾았습니다. ': '키 1을 찾지 못했습니다.');
+    console.log(tree.search(8) ? '키 8을 찾았습니다. ': '키 8을 찾지 못했습니다.');
+
+    console.log('노드삭제:6');
+    tree.remove(6);
+    tree.postOrderTraverse(tree.printNode);
+    console.log('노드삭제:5');
+    tree.remove(5);
+    tree.postOrderTraverse(tree.printNode);
+    console.log('노드삭제:18');
+    tree.remove(18);
+    tree.postOrderTraverse(tree.printNode);
+
+
+
+})
+
+
+
+</script>
+</head>
+<body>
+    <h1>이진탐색트리(Binary Search Tree)</h1>
+    <ul>
+        <li class="add"><label for="addTree">추가 : </label><input type="text" id="addTree"><button>추가</button></li>
+    </ul>
+    <div class="BST_area"></div>
+    <!--
+    <ol class="tree">
+        <li>
+            <span>11</span>
+            <ol>
+                <li>
+                    <span>7</span>
+                    <ol>
+                        <li>
+                            <span>5</span>
+                            <ol>
+                                <li><span>3</span></li>
+                            </ol>
+                        </li>
+                        <li>
+                            <span>9</span>
+                            <ol>
+                                <li><span>8</span></li>
+                                <li><span>10</span></li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+                <li>
+                    <span>15</span>
+                    <ol>
+                        <li>
+                            <span>13</span>
+                            <ol>
+                                <li><span>12</span></li>
+                                <li><span>14</span></li>
+                            </ol>
+                        </li>
+                        <li>
+                            <span>20</span>
+                            <ol>
+                                <li><span>18</span></li>
+                                <li><span>25</span></li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </li>
+    </ol>-->
+</body>
+</html>

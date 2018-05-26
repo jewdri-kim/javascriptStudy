@@ -1,0 +1,1003 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>NATURE REPUBLIC</title>
+<link rel="stylesheet" type="text/css" href="../../css/notosans.css">
+<link rel="stylesheet" type="text/css" href="../../css/beauty_cel.css">
+<script type="text/javascript" src="../../js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../../js/selectbox.js"></script>
+<script type="text/javascript" src="../../js/jquery.flexslider.js"></script>
+<script src='../../js/jquery.elevatezoom.js'></script><!-- 2016-08-26// -->
+
+<script type="text/javascript">
+//media(s)
+$(document).ready(function(){
+	//2016-08-10(s)
+	$('.btn_menu').click(function(e){
+		e.preventDefault();
+		$('.bcel_menu').fadeIn();
+		//var top =  $(window).scrollTop()+80;
+		//$('.bcel_menu .w_cont').css('top',top+'px');
+		$('body').addClass('menu_open');
+	});
+
+	$('.bcel_menu').click(function(e){
+		e.preventDefault();
+		$('.bcel_menu').fadeOut();
+		$('body').removeClass('menu_open');
+	});
+	//2016-08-10(e)
+
+	//매거진(s)
+		var magazine_list_num = $('.magazine .w_cont .slides li').length;
+
+		if(magazine_list_num > 3){
+			$('.magazine .w_cont').flexslider({
+				animation: "slide",
+				itemWidth: 508,
+				move: 1,
+				animationSpeed: 500,
+				itemMargin: 20,
+				minItems: 2,
+				controlNav: false
+			});
+		}else{
+			$('<div class="viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo($('.magazine .w_cont')).append($('.magazine .w_cont .slides'));
+			$('.magazine .w_cont .slides').addClass('slides_none');
+		}
+
+		$('.magazine .w_cont .slides li a').click(function(e){
+			e.preventDefault();
+			var top = $(window).scrollTop()+100;
+			$('.pop_magazine').addClass('open');
+			$('.pop_magazine .pop_wrap').css('top',top+'px');
+			//2016-08-26//매거진확대(s)
+			$('.pop_magazine .pop_wrap > img').elevateZoom({
+				zoomType				: "lens",
+				lensShape : "round",
+				lensSize    : 200
+		   });
+			//2016-08-26//매거진확대(e)
+		});
+
+		$('.pop_magazine .btn_close, .pop_magazine .bg').click(function(e){
+			e.preventDefault();
+			$('.pop_magazine').removeClass('open');
+			//2016-08-26//매거진확대(s)
+			$('.zoomContainer').hide();
+			//2016-08-26//매거진확대(e)
+		});
+	//매거진(e)
+
+	//브랜드라인(s)
+		$('.brand_line .w_cont').flexslider({
+			animation: "slide",
+			itemWidth: 259,
+			move: 1,
+			animationSpeed: 500,
+			minItems: 4,
+			controlNav: false
+		});
+	//브랜드라인(e)
+
+	//리뷰(s)
+		$('.review .w_cont').flexslider({
+			animation: "slide",
+			itemWidth: 244,
+			move: 1,
+			animationSpeed: 500,
+			itemMargin: 20,
+			minItems: 4,
+			controlNav: false
+		});
+		//이미지리사이징삭제
+		//$('.review .w_cont .slides li img').load(function(){
+			/*
+			$('.review .w_cont .slides li img').each(function(){
+				var img_w = $(this).width();
+				alert(img_w);
+				var img_h = $(this).height();
+				if(img_w < 244){
+					alert(0);
+					$(this).addClass('img_w');
+					img_h = $(this).height();
+				}
+				img_w = img_w/2;
+				img_h = img_h/2;
+				$(this).css('margin-left',-img_w+'px').css('margin-top',-img_h+'px');
+			});*/
+		//});
+	//리뷰(e)
+
+	//인스타(s)
+		var insta_list_num = $('.instagram .w_cont .slides li').length;
+
+		if(insta_list_num > 4){
+			$('.instagram .w_cont').flexslider({
+				animation: "slide",
+				slideshow: false,
+				itemWidth: 244,
+				move: 1,
+				animationSpeed: 500,
+				itemMargin: 20,
+				minItems: 4,
+				controlNav: false
+			});
+		}else{
+			$('<div class="viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo($('.instagram .w_cont')).append($('.instagram .w_cont .slides'));
+			$('.instagram .w_cont .slides').addClass('slides_none');
+		}
+
+		$('.instagram .w_cont .slides li a').click(function(e){
+			e.preventDefault();
+			var top = $(window).scrollTop()+100;
+			$('.pop_instagram').addClass('open');
+			$('.pop_instagram .pop_wrap').css('top',top+'px');
+		});
+
+		$('.pop_instagram .btn_close, .pop_instagram .bg').click(function(e){
+			e.preventDefault();
+			$('.pop_instagram').removeClass('open');
+		});
+	//인스타(e)
+
+	//페이스북(s)
+		var facebook_list_num = $('.facebook .w_cont .slides li').length;
+
+		// 2016-08-01//수정
+		if(facebook_list_num > 2){
+			$('.facebook .w_cont').flexslider({
+				animation: "slide",
+				slideshow: false,
+				itemWidth: 508,
+				move: 1,
+				animationSpeed: 500,
+				itemMargin: 20,
+				minItems: 2,
+				controlNav: false
+			});
+		}else{
+			$('<div class="viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo($('.facebook .w_cont')).append($('.facebook .w_cont .slides'));
+			$('.facebook .w_cont .slides').addClass('slides_none');
+		}
+
+	//페이스북(e)
+
+	//동영상(s)
+		// $('.vd_player .btn_play').click(function(e){
+		// 	e.preventDefault();
+		// 	vd_control($(this));
+		// });
+
+		// function vd_control(btn, st){
+		// 	if(st != 'stop'){
+		// 		btn.fadeOut();
+		// 		btn.next().fadeIn();
+		// 	}else{
+		// 		btn.fadeIn();
+		// 		btn.next().fadeOut();
+		// 	}
+		// }
+});
+
+$(window).load(function(){
+
+	// 스크롤모션(s)
+	var now_t = $(this).scrollTop();
+
+	var cont_pos = new Array;
+	var prev_pos = new Array;
+	var cont_max = $('.scroll_cont').length; //2016-07-05//수정
+	//2016-07-05//삭제//var tip_pos =  $('.tip').offset().top-600;
+	var tip_max = 0;
+	var tip_start = new Array;
+	var tip_end = new Array
+
+	// 배열 1 > 모션 컨텐츠 각위치 배열저장
+	for(var i = 0; i < cont_max;  i++){
+		var n = $('.cont_lst'+(i+1));
+		cont_pos[i] = n.offset().top-700;
+	}
+
+	// 배열 2 > 모션 컨텐츠 중  TIP 타입 각위치 배열저장
+	//2016-07-05//tip유무체크(s)
+	var is_tip = $('#bcel_wrap').children().hasClass('tip');
+	var tip_pos = 0;
+	if(is_tip){
+		tip_pos =  $('.tip').offset().top-600;
+		beauty_tip_set();
+	}
+	//2016-07-05//tip유무체크(e)
+
+	if(now_t < 100) $('.cont_lst1').addClass('active'); /* 2016-08-04//클래스수정 */
+    else	scroll_visual(now_t);
+
+	// 스크롤할때 모션
+	$(window).scroll(function(){
+		var win_top = $(this).scrollTop();
+		scroll_visual(win_top);
+	});
+
+	function scroll_visual(nt){
+		console.log(nt);
+		for(var i = 0; i < cont_max;  i++){
+			var n = $('.cont_lst'+(i+1));
+
+			if(cont_pos[i] <= nt){
+				$(n).addClass('active');
+			}
+		}
+
+		if(nt >= tip_pos){
+			for(var k = 0; k < tip_max; k++){
+				if(nt >= tip_start[k]){
+					$('.tip ul li').eq(k).addClass('active');
+				}
+			}
+		}
+
+	}
+
+	function beauty_tip_set(){
+		tip_max = $('.tip ul li').length;
+		for(var k = 0; k < tip_max; k++){
+			if( k%2 == 0) tip_start[k] = $('.tip ul li').eq(k).offset().top-500;
+			else tip_start[k] = $('.tip ul li').eq(k).offset().top-800;
+		}
+	}
+	// 스크롤모션(e)
+
+
+});
+//media(e)
+
+function img_resize(obj){
+	//var img_file = new Image();
+	//img_file.src = obj.src;
+	var w= obj.width;
+	var h= obj.height;
+	if(w < 244){
+		obj.setAttribute('class','img_w');
+		h= obj.height;
+		w= obj.width;
+	}
+	w = w/2;
+	h = h/2;
+	//alert('가로:'+w+',세로:'+h);
+	obj.style.marginTop = -h+'px';
+	obj.style.marginLeft = -w+'px';
+}
+
+
+</script>
+</head>
+<body>
+<!-- wrap  -->
+<div id="bcel_wrap">
+	<a href="#" class="btn_top">top</a><!-- 2016-08-16//버튼추가 -->
+	<!-- 2016-08-10//header(s) -->
+	<div id="bcel_header" style=" ">
+		<div class="w_cont">
+			<h1><a href="http://code.d2.co.kr/nature_republic/renew/w/html/"><img src="../../img/tit/h1_beauty_logo.png" alt="NATURE REPUBLIC"></a></h1>
+			<a href="#" class="btn_menu">메뉴</a>
+			<a href="#" class="btn_my">마이페이지</a>
+			<a href="#" class="btn_cart"><span class="spr">장바구니</span><span class="num">0</span></a>
+		</div>
+
+		<!-- 메뉴 -->
+		<div class="bcel_menu">
+			<h1><a href="http://code.d2.co.kr/nature_republic/renew/w/html/"><img src="../../img/tit/h1_beauty_logo2.png" alt="NATURE REPUBLIC"></a></h1>
+			<div class="w_cont">
+				<dl>
+					<dt>Beauty Celeb</dt>
+					<dd>
+						<ul>
+							<li><a href="http://www.naver.com">진생 로얄 실크</a></li>
+							<li><a href="#">제주 탄산</a></li>
+							<li><a href="#">포레스트 가든 클렌징 오일</a></li>
+							<li><a href="http://www.naver.com">진생 로얄 실크</a></li>
+							<li><a href="#">제주 탄산</a></li>
+							<li><a href="#">포레스트 가든 클렌징 오일</a></li>
+							<li class="last"><a href="#">스네일 솔루션</a></li><!-- 마지막메뉴에 클래스추가 : last -->
+						</ul>
+					</dd>
+				</dl>
+				<a href="#" class="btn_close_m">메뉴닫기</a>
+			</div>
+		</div>
+		<!-- //메뉴 -->
+	</div>
+	<!-- //2016-08-10//header(e) -->
+
+    <!-- 비쥬얼 -->
+	<div class="visual scroll_cont cont_lst1"><!-- 위치하는순서에 맞게 클래스 부여 cont_lst+n ( cont_lst1, cont_lst2, ~ .....)-->
+		<!-- 2016-07-19//수정(s) -->
+		<div class="w_cont">
+			<h2>
+				<span style="color:#ffffff">진귀한 것만 담은</span>
+				<em style="color:#ffffff">
+					Ginseng Royal Silk
+					<span style="color:#ffffff">/</span>
+				</em>
+				<strong style="color:#ffffff">황금케어, 지금 시작하세요</strong>
+				<a href="#" class="btn_stroy" style="color:#fff; border-color:#fff">
+					원료 스토리<span>&gt;</span>
+				</a>
+			</h2>
+			<img src="../../img/img_bec_visual.jpg" alt="" class="bg_img">
+
+		</div>
+		<!-- 2016-07-19//수정(e) -->
+	</div>
+	<!-- //비쥬얼 -->
+
+	 <!-- 비쥬얼_동영상타입 -->
+	<div class="visual_vd scroll_cont cont_lst2">
+		<div class="w_cont">
+			<h2>
+				김주하 아나운서의 <strong>진생 로얄 실크 워터리 크림</strong> TV CF
+			</h2>
+			<img src="../../img/img_bec_visua2l.jpg" alt="" class="bg_img">
+			<!-- 2016-08-01//동영상 자동재생 수정(s) -->
+			<div class="vd_player">
+				<a href="#" class="btn_play">
+					<img src="http://code.d2.co.kr/upload/01/cm/beautyTpl/IMGV_1467708001192_5.jpg" alt="">
+				</a>
+				<div class="video">
+					<iframe width="100%" height="100%" src="https://www.youtube.com/embed/A9-GU3dcrHM?enablejsapi=1&rel=0&showinfo=0&autohide=1&modestbranding=1&wmode=opaque&autoplay=0" frameborder="0" allowfullscreen ></iframe>
+				</div>
+			</div>
+			<!-- 2016-08-01//동영상 자동재생 수정(e) -->
+		</div>
+	</div>
+	<!-- //비쥬얼_동영상타입 -->
+
+	<!-- 2016-08-01//유튜브동영상API추가(s) -->
+	<script type="text/javascript">
+
+		var brow_ver = navigator.appVersion;
+		var is_ie8 = false;
+
+		var agent = navigator.userAgent.toLowerCase();
+		if ( (navigator.appName == 'Netscape' && agent.indexOf('trident') != -1) || (agent.indexOf("msie") != -1)) {
+			 if(brow_ver.indexOf('8.0') != -1) is_ie8 = true;
+		}else{
+			 // ie가 아닐 경우
+		}
+
+		if(!is_ie8){
+				var tag = document.createElement('script');
+				tag.src = "https://www.youtube.com/iframe_api";
+				var firstScriptTag = document.getElementsByTagName('script')[0];
+				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+				var $videoElement = $('.vd_player .video > iframe');
+				var player = {};
+
+				function onYouTubePlayerAPIReady() {
+					for (var i = 0; i < $videoElement.length; i++) {
+						$videoElement.eq(i).attr('id', 'player'+i);
+					}
+					for(var i = 0; i < $videoElement.length;i++) {
+					  player[ $videoElement.eq(i).attr('id') ] = new YT.Player($videoElement.eq(i).attr('id'));
+					}
+				}
+
+				function videoPlay( target ){
+					target.playVideo();
+				}
+
+				function videoStop( target ){
+					target.pauseVideo();
+				}
+		}
+
+		//media(s)
+		$(document).ready(function(){
+			$('.vd_player .btn_play').click(function(e){
+				e.preventDefault();
+				vd_control($(this));
+			});
+
+			function vd_control(btn, st){
+				var vd = btn.next().children('iframe').attr('id');
+				if(st != 'stop'){
+					btn.fadeOut();
+					btn.next().fadeIn();
+					if(!is_ie8){
+						for(var i = 0; i < $videoElement.length;i++) {
+						  if(player[ vd ] != player[ 'player'+i ]) videoStop( player[ 'player'+i ] );
+						}
+						videoPlay( player[ vd ] );
+					}
+				}else{
+					btn.fadeIn();
+					btn.next().fadeOut();
+
+				}
+			}
+		});
+		/*
+		var vd = li.eq(idx).find('iframe').attr('id');
+		videoStop(  player[ vd ] );*/
+
+		//media(e)
+
+      </script>
+      <!-- 유튜브동영상(e) -->
+      <!-- 2016-08-01//유튜브동영상 js추가(e) -->
+
+	<!-- 팁 -->
+	<div class="tip scroll_cont cont_lst3">
+		<h2>
+			<em>TIP</em>
+			<span>진생 로얄 실크 워터리 크림으로</span>
+			일상생활에서 <strong>주름케어</strong> 하는 법
+		</h2>
+		<img src="../../img/img_bec_visua3.jpg" alt="" class="bg_img">
+
+		<div class="bg_bottom" style="background:#f5f2eb"></div><!-- 2016-07-19//배경색상영역 -->
+
+		<div class="w_cont">
+			<ul>
+				<li class="r_first">
+					<a href="#">
+						<img src="../../img/tmp/img_tip_01.png" alt="">
+					</a>
+				</li>
+				<li class="r_right r_right_top"> <!-- 2016-08-31//두번째 리스트에 클래스 추가  -->
+					<a href="#">
+						<img src="../../img/tmp/img_tip_02.png" alt="">
+					</a>
+				</li>
+				<li class="r_first">
+					<a href="#">
+						<img src="../../img/tmp/img_tip_03.png" alt="">
+					</a>
+				</li>
+				<li class="r_right">
+					<a href="#">
+						<img src="../../img/tmp/img_tip_01.png" alt="">
+					</a>
+				</li>
+				<li class="r_first">
+					<a href="#">
+						<img src="../../img/tmp/img_tip_02.png" alt="">
+					</a>
+				</li>
+				<li class="r_right last"><!-- 마지막에만 클래스 추가 : last -->
+					<a href="#"><img src="../../img/tmp/img_tip_more.png" alt=""></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- //팁 -->
+
+	<!-- 매거진 -->
+	<div class="magazine scroll_cont cont_lst4">
+		<h2>MAGAZINE</h2>
+		<div class="w_cont">
+			<ul class="slides">
+				<li>
+					<a href="#"><img src="../../img/tmp/img_magazine_01.jpg" alt=""></a>
+				</li>
+				<li>
+					<a href="#"><img src="../../img/tmp/img_magazine_01.jpg" alt=""></a>
+				</li>
+				<li>
+					<a href="#"><img src="../../img/tmp/img_magazine_01.jpg" alt=""></a>
+				</li>
+				<li>
+					<a href="#"><img src="../../img/tmp/img_magazine_01.jpg" alt=""></a>
+				</li><!--
+				<li>
+					<a href="#"><img src="../../img/tmp/img_magazine_01.jpg" alt=""></a>
+				</li>
+				<li>
+					<a href="#"><img src="../../img/tmp/img_magazine_02.jpg" alt=""></a>
+				</li>-->
+			</ul>
+		</div>
+	</div>
+	<!-- //매거진 -->
+
+	<!-- 매거진팝업 -->
+	<div class="pop_magazine">
+		<div class="bg"></div>
+		<div class="pop_wrap">
+			<!-- 2016-08-26//매거진이미지확대(s) -->
+			<img src="../../img/tmp/img_magazine_view.jpg" alt=""  id="zoom" data-zoom-image="../../img/tmp/img_magazine_view.jpg">
+			<!-- 2016-08-26//매거진이미지확대(e) -->
+			<a href="#" class="btn_close">닫기</a>
+		</div>
+	</div>
+	<!-- //매거진팝업 -->
+
+	<!-- 수상N개 -->
+	<div class="be_awarded scroll_cont cont_lst5">
+		<div class="w_cont">
+			<ul>
+				<li>
+					<img src="../../img/tmp/img_award_01.jpg" alt="">
+				</li>
+				<li class="r_right">
+					<img src="../../img/tmp/img_award_02.png" alt="">
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- //수상N개 -->
+
+	<!-- 브랜드라인 -->
+	<div class="brand_line scroll_cont cont_lst6">
+		<h2>
+			Ginseng Royal
+			<em>Brand Line</em>
+		</h2>
+		<!--img src="../../img/bg_brand_line.jpg" alt="" class="bg_img"-->
+		<div class="brand_line_wrap" style="background:#d8e4d6">
+			<span class="ingredient">
+				<img src="../../img/img_material.png" alt="">
+			</span>
+			<div class="inner">
+				<div class="w_cont">
+					<ul class="slides">
+						<li>
+							<a href="#">
+								<div class="img_box">
+									<img src="../../img/tmp/img_product5.jpg" alt="">
+								</div>
+								<dl>
+									<dt>진생 로얄 실크 골드 하이드로겔마스크진생 로얄 실크 골드 하이드로겔마스크</dt>
+									<dd>더보기</dd>
+								</dl>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="img_box">
+									<img src="../../img/tmp/img_product2.jpg" alt="">
+								</div>
+								<dl>
+									<dt>진생 로얄 실크 골드 하이드로겔마스크진생 로얄 실크 골드 하이드로겔마스크</dt>
+									<dd>더보기</dd>
+								</dl>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="img_box">
+									<img src="../../img/tmp/img_product3.jpg" alt="">
+								</div>
+								<dl>
+									<dt>진생 로얄 실크 아이크림</dt>
+									<dd>더보기</dd>
+								</dl>
+							</a>
+						</li>
+
+						<li>
+							<a href="#">
+								<div class="img_box">
+									<img src="../../img/tmp/img_product2.jpg" alt="">
+								</div>
+								<dl>
+									<dt>진생 로얄 실크 아이크림</dt>
+									<dd>더보기</dd>
+								</dl>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="img_box">
+									<img src="../../img/tmp/img_product7.jpg" alt="">
+								</div>
+								<dl>
+									<dt>진생 로얄 실크 아이크림</dt>
+									<dd>더보기</dd>
+								</dl>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="img_box">
+									<img src="../../img/tmp/img_product5.jpg" alt="">
+								</div>
+								<dl>
+									<dt>진생 로얄 실크 아이크림</dt>
+									<dd>더보기</dd>
+								</dl>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<div class="img_box">
+									<img src="../../img/tmp/img_product3.jpg" alt="">
+								</div>
+								<dl>
+									<dt>진생 로얄 실크 아이크림</dt>
+									<dd>더보기</dd>
+								</dl>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //브랜드라인 -->
+
+	<!-- 리뷰 -->
+	<div class="review scroll_cont cont_lst7">
+		<h2>
+			<em>REVIEW</em>
+			진생 로얄의 입증된 이야기를 확인하세요
+		</h2>
+		<div class="w_cont">
+			<ul class="slides">
+				<li>
+					<a href="#">
+						<div class="img_box">
+							<img src="../../img/tmp/review_list07.jpg" alt="" onload="img_resize(this)">
+							<div class="more">
+								<span>더보기</span>
+							</div>
+						</div>
+						<dl>
+							<dt>금가루 가득!  진짜가 나타났다!! 금가루 가득!  진짜가 나타났다!! </dt>
+							<dd>
+								<span class="star_rating star_rating_list">
+									 <span style="width: 40%;" class="score">4점</span>
+								 </span>
+								 sus****
+							</dd>
+						</dl>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<div class="img_box">
+							<img src="../../img/tmp/img_review.jpg" alt="" onload="img_resize(this)">
+							<div class="more">
+								<span>더보기</span>
+							</div>
+						</div>
+						<dl>
+							<dt>금가루 가득!  진짜가 나타났다!!</dt>
+							<dd>
+								<span class="star_rating star_rating_list">
+									 <span style="width: 40%;" class="score">4점</span>
+								 </span>
+								 sus****
+							</dd>
+						</dl>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<div class="img_box">
+							<img src="../../img/tmp/main_visual_01.jpg" alt="" onload="img_resize(this)">
+							<div class="more">
+								<span>더보기</span>
+							</div>
+						</div>
+						<dl>
+							<dt>금가루 가득!  진짜가 나타났다!! 금가루 가득!  진짜가 나타났다!! </dt>
+							<dd>
+								<span class="star_rating star_rating_list">
+									 <span style="width: 40%;" class="score">4점</span>
+								 </span>
+								 sus****
+							</dd>
+						</dl>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<div class="img_box">
+							<img src="../../img/tmp/test.jpg" alt="" onload="img_resize(this)">
+							<div class="more">
+								<span>더보기</span>
+							</div>
+						</div>
+						<dl>
+							<dt>금가루 가득!  진짜가 나타났다!! 금가루 가득!  진짜가 나타났다!! </dt>
+							<dd>
+								<span class="star_rating star_rating_list">
+									 <span style="width: 40%;" class="score">4점</span>
+								 </span>
+								 sus****
+							</dd>
+						</dl>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<div class="img_box">
+							<img src="../../img/tmp/img_review.jpg" alt="" onload="img_resize(this)">
+							<div class="more">
+								<span>더보기</span>
+							</div>
+						</div>
+						<dl>
+							<dt>금가루 가득!  진짜가 나타났다!!</dt>
+							<dd>
+								<span class="star_rating star_rating_list">
+									 <span style="width: 40%;" class="score">4점</span>
+								 </span>
+								 sus****
+							</dd>
+						</dl>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<div class="img_box">
+							<img src="../../img/tmp/main_visual_01.jpg" alt="" onload="img_resize(this)">
+							<div class="more">
+								<span>더보기</span>
+							</div>
+						</div>
+						<dl>
+							<dt>금가루 가득!  진짜가 나타났다!! 금가루 가득!  진짜가 나타났다!! </dt>
+							<dd>
+								<span class="star_rating star_rating_list">
+									 <span style="width: 40%;" class="score">4점</span>
+								 </span>
+								 sus****
+							</dd>
+						</dl>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<div class="img_box">
+							<img src="../../img/tmp/test.jpg" alt="" onload="img_resize(this)">
+							<div class="more">
+								<span>더보기</span>
+							</div>
+						</div>
+						<dl>
+							<dt>금가루 가득!  진짜가 나타났다!! 금가루 가득!  진짜가 나타났다!! </dt>
+							<dd>
+								<span class="star_rating star_rating_list">
+									 <span style="width: 40%;" class="score">4점</span>
+								 </span>
+								 sus****
+							</dd>
+						</dl>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- //리뷰 -->
+
+	<!-- 인스타 -->
+	<div class="instagram scroll_cont cont_lst8">
+		<h2>INSTAGRAM</h2>
+		<p>#진생로얄워터리크림  #김주하크림  #황금케어</p>
+		<div class="w_cont">
+			<ul class="slides">
+				<li>
+					<a href="#">
+						<img src="../../img/tmp/main_visual_01.jpg" alt="" >
+						<div>
+							<p>
+							기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림
+							</p>
+							<span>더보기</span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="../../img/tmp/test.jpg" alt="">
+						<div>
+							<p>
+							기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림
+							</p>
+							<span>더보기</span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="../../img/insta_thum03.jpg" alt="">
+						<div>
+							<p>
+							기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림
+							</p>
+							<span>더보기</span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="../../img/main_celeb01.jpg" alt="">
+						<div>
+							<p>
+							기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림
+							</p>
+							<span>더보기</span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="../../img/insta_thum01.jpg" alt="">
+						<div>
+							<p>
+							기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림
+							</p>
+							<span>더보기</span>
+						</div>
+					</a>
+				</li><!--
+				<li>
+					<a href="#">
+						<img src="../../img/tmp/main_visual_01.jpg" alt="">
+						<div>
+							<p>
+							기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림
+							</p>
+							<span>더보기</span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="../../img/tmp/test.jpg" alt="">
+						<div>
+							<p>
+							기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림기초 유목민 오늘도 좋은 제품 찾아
+							떠돌다가 로드샵에서는 볼 수 없는
+							가격의 네이처리퍼블릭 크림
+							</p>
+							<span>더보기</span>
+						</div>
+					</a>
+				</li>-->
+			</ul>
+		</div>
+	</div>
+	<!-- //인스타 -->
+
+	<!-- 인스타팝업 -->
+	<div class="pop_instagram">
+		<div class="bg"></div>
+		<div class="pop_wrap">
+			<!-- 2016-08-01//수정(s) -->
+			<div class="img_box">
+				<img src="../../img/tmp/img_instagram_view.jpg" alt="">
+			</div>
+			<!-- 2016-08-01//수정(e) -->
+			<a href="#" class="btn_close">닫기</a>
+		</div>
+	</div>
+	<!-- //인스타팝업 -->
+
+	<!-- 페이스북 -->
+	<div class="facebook scroll_cont cont_lst9">
+		<h2>FACEBOOK</h2>
+		<div class="w_cont">
+			<ul class="slides">
+				<li>
+					<div class="img_box">
+						<img src="../../img/tmp/img_fb_02.jpg" alt="">
+						<!-- 2016-07-19//마우스오버부분수정(s) -->
+						<div>
+							#블링블링<br>
+							우주를 보는 듯 자글자글한 골드가@_@<br><br>
+
+							인생템 등극! 두.둥.<br>
+							'진생 로얄 실크 워터리크림'<br><br><br>
+
+
+							#한번빠지면<br>
+							#헤어나오지못해<br>
+						</div>
+						<!-- 2016-07-19//마우스오버부분수정(e) -->
+					</div>
+					<div class="comment_box">
+						<img src="../../img/tmp/img_fb_comment.jpg" alt="">
+					</div>
+				</li>
+				<li>
+					<div class="img_box">
+						<img src="../../img/tmp/img_fb_03.jpg" alt="">
+						<!-- 2016-07-19//마우스오버부분수정(s) -->
+						<div>
+							축하해주세요!<br>
+							네이처리퍼블릭 #진생로얄실크워터리크림이<br>
+							2016년 몽드 셀렉션 #그랜드골드상을 수상했습니다!<br>
+							세계적 권위의 국제 품평회에서<br>
+							전문가들의 엄격한 심사를 거쳐 받은 상이에요~<br>
+							국내 뿐만 아니라 해외에서도 인정 받은 <br>
+							자랑스러운 #진생크림♥<br>
+							앞으로도 많은 사랑 부탁드려요~!<br><br><br>
+
+
+							#몽드셀렉션_그랜드골드상<br>
+							#감사합니다<br>
+						</div>
+						<!-- 2016-07-19//마우스오버부분수정(e) -->
+					</div>
+					<div class="comment_box">
+						<img src="../../img/tmp/img_fb_comment.jpg" alt="">
+					</div>
+				</li>
+				<li>
+					<div class="img_box">
+						<img src="../../img/tmp/img_fb_01.jpg" alt="">
+						<div>
+
+						</div>
+					</div>
+					<div class="comment_box">
+						<img src="../../img/tmp/img_fb_comment.jpg" alt="">
+					</div>
+				</li>
+				<li>
+					<div class="img_box">
+						<img src="../../img/tmp/img_fb_03.jpg" alt="">
+						<div>
+
+						</div>
+					</div>
+					<div class="comment_box">
+						<img src="../../img/tmp/img_fb_comment.jpg" alt="">
+					</div>
+				</li>
+				<li>
+					<div class="img_box">
+						<img src="../../img/tmp/img_fb_02.jpg" alt="">
+						<div>
+
+						</div>
+					</div>
+					<div class="comment_box">
+						<img src="../../img/tmp/img_fb_comment.jpg" alt="">
+					</div>
+				</li><!---->
+			</ul>
+		</div>
+	</div>
+	<!-- //페이스북 -->
+
+	<!-- footer -->
+	<div id="bcel_footer">
+		<a href="#"><img src="../../img/tit/foot_beauty_logo.png" alt=""></a>
+		<address>Copyright(C) 2016 NATURE REPUBLIC ALL RIGHTS RESERVED.</address>
+	</div>
+	<!-- //footer -->
+</div>
+<!-- //wrap  -->
+</body>
+</html>

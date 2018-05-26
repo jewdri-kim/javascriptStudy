@@ -1,0 +1,51 @@
+/*
+* Noto Sans SC (Chinese Simplified) http://www.google.com/fonts/earlyaccess
+ */
+@font-face {
+  font-family: 'noto';
+  font-style: normal;
+  font-weight: 100;
+  src: url(../font/NotoSansSC-Thin.woff2) format('woff2'),
+       url(../font/NotoSansSC-Thin.woff) format('woff'),
+       url(../font/NotoSansSC-Thin.otf) format('opentype');
+}
+@font-face {
+  font-family: 'noto';
+  font-style: normal;
+  font-weight: 300;
+  src: url(../font/NotoSansSC-Light.woff2) format('woff2'),
+       url(../font/NotoSansSC-Light.woff) format('woff'),
+       url(../font/NotoSansSC-Light.otf) format('opentype');
+}
+@font-face {
+   font-family: 'noto';
+   font-style: normal;
+   font-weight: 400;
+   src: url(../font/NotoSansSC-Regular.woff2) format('woff2'),
+        url(../font/NotoSansSC-Regular.woff) format('woff'),
+        url(../font/NotoSansSC-Regular.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'noto';
+   font-style: normal;
+   font-weight: 500;
+   src: url(../font/NotoSansSC-Medium.woff2) format('woff2'),
+        url(../font/NotoSansSC-Medium.woff) format('woff'),
+        url(../font/NotoSansSC-Medium.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'noto';
+   font-style: normal;
+   font-weight: 700;
+   src: url(../font/NotoSansSC-Bold.woff2) format('woff2'),
+        url(../font/NotoSansSC-Bold.woff) format('woff'),
+        url(../font/NotoSansSC-Bold.otf) format('opentype');
+ }
+@font-face {
+   font-family: 'noto';
+   font-style: normal;
+   font-weight: 900;
+   src: url(../font/NotoSansSC-Black.woff2) format('woff2'),
+        url(../font/NotoSansSC-Black.woff) format('woff'),
+        url(../font/NotoSansSC-Black.otf) format('opentype');
+ }

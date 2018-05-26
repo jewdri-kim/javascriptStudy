@@ -1,0 +1,70 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>정렬하기</title>
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="js/sort.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+});
+var sortNum = 30
+function createNonSortedArray(size){
+    var array = new ArrayList();
+    for(var i=size; i>0; i--){
+        array.insert(i);
+    }
+    return array;
+}
+console.log('버블정렬');
+var array = createNonSortedArray(sortNum);
+console.log(array.toString());
+array.bubbleSort();   //sortTime20
+console.log(array.toString());
+console.log(array.sortTime);
+
+console.log('개선된버블정렬');
+var array2 = createNonSortedArray(sortNum);
+console.log(array2.toString());
+array2.modifiedBubbleSort();   //sortTime10
+console.log(array2.toString());
+console.log(array2.sortTime);
+
+console.log('선택정렬');
+var array3 = createNonSortedArray(sortNum);
+console.log(array3.toString());
+array3.selectionSort();
+console.log(array3.toString());
+console.log(array3.sortTime);
+
+console.log('삽입정렬');
+var array4 = createNonSortedArray(sortNum);
+console.log(array4.toString());
+array4.insertionSort();
+console.log(array4.toString());
+console.log(array4.sortTime);
+
+console.log('병합정렬');
+var array5 = createNonSortedArray(sortNum);
+console.log(array5.toString());
+array5.mergeSort();
+console.log(array5.toString());
+console.log(array5.sortTime);
+
+console.log('퀵정렬');
+var array6 = createNonSortedArray(sortNum);
+console.log(array6.toString());
+array6.quickSort();
+console.log(array6.toString());
+console.log(array6.sortTime);/**/
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> </title>
+
+    <style>
+        body {
+            font-size:9pt;
+        }
+        div.image-container{
+            position: relative;
+            border:1px solid #000;
+            height:600px;
+        }
+
+        div.image-container img{
+            position: absolute;
+            left:0;
+            top:0;
+            width:120px;
+        }
+
+
+
+
+    </style>
+
+
+
+    <script type="text/javascript"  src="libs/jquery-1.11.0.min.js"> </script>
+    <script>
+        /*
+
+            미션 03: 심플 갤러리를 클래스로 만들기
+            함수 단위 코딩으로 만들어진 심플 갤러리를 프로토타입 클래스로 만들어 주세요.
+
+        */
+
+        $(document).ready(function(){
+            // 이미지  찾기
+            var images1 = new simpleGaller("#container1 img", 6, 150,150);
+            var images2 = new simpleGaller("#container2 img", 4, 200,200);
+
+        });
+
+        function simpleGaller(img,col,w,h){
+            this.imgItem = null;
+            this.colGrid = null;
+            this.leftPos = null;
+            this.topPos = null;
+
+            this.init(img, col, w, h);
+            this.showGallery();
+        }
+
+        simpleGaller.prototype.init = function(img,col,w,h){
+            this.imgItem = $(img);
+            this.colGrid = col;
+            this.leftPos = w;
+            this.topPos = h;
+        }
+        simpleGaller.prototype.showGallery = function(){
+            var length = this.imgItem.length;
+
+            for(var i = 0; i < length; i++){
+                var img = this.imgItem.eq(i);
+
+                var x = 100 + ((i%this.colGrid)*this.leftPos);
+                var y = 100 + (parseInt(i/this.colGrid)*this.topPos);
+
+                img.css({left:x, top:y});
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <p>container1</p>
+    <div class="image-container" id="container1">
+
+        <img src="img/br/1.png" >
+        <img src="img/br/2.png" >
+        <img src="img/br/3.png" >
+        <img src="img/br/4.png" >
+        <img src="img/br/5.png" >
+        <img src="img/br/6.png" >
+        <img src="img/br/7.png" >
+        <img src="img/br/8.png" >
+    </div>
+     <p>container2</p>
+
+     <div class="image-container" id="container2">
+        <img src="img/br/1.png" >
+        <img src="img/br/2.png" >
+        <img src="img/br/3.png" >
+        <img src="img/br/4.png" >
+        <img src="img/br/5.png" >
+        <img src="img/br/6.png" >
+        <img src="img/br/7.png" >
+        <img src="img/br/8.png" >
+    </div>
+</body>
+
+</html>

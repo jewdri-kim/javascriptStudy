@@ -1,0 +1,68 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name ="format-detection" content ="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>배열_원소추가</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+	if(window.addEventListener){
+	    window.addEventListener("load",musicListView,false);
+	}else if(window.attachEvent){
+	    window.attachEvent("onload",musicListView);
+	}
+
+	var musicList = ['KNOCK KNOCK-TWICE(트와이스)','첫눈처럼 너에게 가겠다-에일리'];
+	function musicListView(){
+		var inContent = '<ol>';
+		for(var i=0; i <= musicList.length-1; i++){
+			inContent += '<li>'+musicList[i]+'</li>';
+		}
+		inContent += '</ol>';
+		var listArea = document.getElementById('music_list');
+		listArea.innerHTML = inContent;
+	}
+
+	function musicAdd(type){
+		var musicTxt = document.getElementById('musicTxt').value;
+		if(type === 'add'){
+			musicList.push(musicTxt);
+		}else{
+			musicList.unshift(musicTxt);
+		}
+		musicListView();
+	}
+
+</script>
+</head>
+<body>
+<div id="wrap">
+	<!-- header -->
+	<div id="header">
+		<h1>배열_원소추가</h1>
+	</div>
+	<!-- //header -->
+	<!-- container -->
+	<div id="container">
+		<!-- content -->
+		<div id="content">
+			<h2>노래 선곡 리스트</h2>
+			<div id="music_list">
+			</div>
+			<label for="musicTxt">선곡입력</label>
+			<input type="text" id="musicTxt" name="" placeholder="노래제목-가수">
+			<button onclick="musicAdd('add')">예약하기</button><button onclick="musicAdd('first')">우선예약</button>
+		</div>
+		<!-- //content -->
+	</div>
+	<!-- //container -->
+	<!-- footer -->
+	<div id="footer">
+	</div>
+	<!-- //footer -->
+</div>
+</body>
+</html>

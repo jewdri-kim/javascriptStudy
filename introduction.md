@@ -22,6 +22,10 @@ https://terms.naver.com/entry.nhn?docId=3658659&cid=42117&categoryId=42117
 
 
 
+
+
+
+
 ## 등장배경  - 처음부터 있었나?  
 
 없었다.
@@ -30,7 +34,11 @@ https://terms.naver.com/entry.nhn?docId=3658659&cid=42117&categoryId=42117
 
 
 
+
+
 ### 테이블 코딩세대 ( = 웹표준이전세대 )
+
+
 
 예시사이트 : http://www.marathon.pe.kr/
 
@@ -45,9 +53,6 @@ https://terms.naver.com/entry.nhn?docId=3658659&cid=42117&categoryId=42117
   - ```html
      <font size="12" >안녕하세요.</font>
      ```
-    ```
-  
-    ```
 
 - 문법 같은거 없음 (기술표준 (=웹표준)이 자체가 없다)
 
@@ -63,6 +68,8 @@ https://terms.naver.com/entry.nhn?docId=3658659&cid=42117&categoryId=42117
 - 유지보수 용이하지 않다. 
   - 레이아웃  table td 이기 때문에 레이아웃 바꿀 때 색교체 등등
   - 스타일 인라인이므로
+
+
 
 
 
@@ -98,14 +105,17 @@ http://www.evolutionoftheweb.com/
 
 웹의 진화이후, 
 
-### 
+
+
+
 
 ### 모바일시대
 
 - 서버사이드 랜더링  VS 클라이언트 사이드 랜더링 (http://asfirstalways.tistory.com/244)
-- 모바일시대에서 프론트엔드개발자라고 부르면서 더 !!!!
-- But, 웹퍼블리셔 = 프론트엔드개발자 = UI개발자 등등등
+- 모바일 기기에 맞춰서 화면 랜더링 최소화할 필요
 - 클라이언트사이드 랜더링으로인해 Javascript로 화면개발 비중 확대
+- 모바일시대에서 프론트엔드개발자시대라고 부를만한 
+- But, 웹퍼블리셔 = 프론트엔드개발자 = UI개발자 등등등
 - 더불어 더 쉽고 효율적으로 개발할 수 있게 다양한 프레임워크, 라이브러리들 등장(reactJS vueJs 등등등)
 
 ##### So,웹퍼블리셔 = 프론트엔드개발자 = UI개발자 등등등

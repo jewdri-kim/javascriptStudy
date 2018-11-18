@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+@import url(font.css);
+
+* {margin:0;padding:0;line-height:1;font-family:'NotoSans', sans-serif;font-weight:400;font-size:100%;vertical-align:baseline;-webkit-text-size-adjust:100%;}
+
+/* HTML5 display-role reset for older browsers */
+
+body {overflow-x:hidden;line-height:1;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block;}
+ol, ul {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after,q:before, q:after {content: '';display:block;}
+h1, h2, h3, h4, h5, h6 {font-size:100%;font-weight:400;color:#111;line-height:1em;}
+
+/* 테이블 스타일 초기화 */
+table {width:100%;border-collapse:collapse;border-spacing:0;empty-cells:show;table-layout:fixed;}
+td {word-break:break-all; word-wrap:break-word; word-break:keep-all;}
+fieldset {border:0;margin:0;padding:0;}
+legend, caption {visibility:hidden;overflow:hidden;width:0;height:0;font-size:0;line-height:0;}
+select {-webkit-appearance:none;-moz-appearance:none;appearance:none;border:solid 1px #d9d9d9;padding:0 40px 0 10px;color:#555;height:47px;background:url(images/ico_select.png) right center no-repeat #fff;box-sizing:border-box;border-radius:2px;}
+select::-ms-expand {display:none;}
+
+/* 링크 */
+a:link{color:#50555C;text-decoration:none;}
+a:visited{color:#50555C;text-decoration:none;}
+a:active{color:#50555C;text-decoration:none;}
+a:hover{color:#50555C;text-decoration:none;}
+
+/* 이미지, 폼관련 요소 */
+img {border:0;vertical-align:middle;}
+label, select, input, textarea {vertical-align:middle;}
+input, select, textarea {font-size:1em;vertical-align:middle;}
+input[type="text"], input[type="submit"], input[type="password"], input[type="search"], input[type="number"], input[type="reset"], input[type="email"], input[type="tel"],
+select, textarea {-webkit-appearance:none;-webkit-border-radius:0;}
+input[type="text"], input[type="password"], input[type="search"], input[type="number"], input[type="file"], input[type="email"], input[type="tel"] {border:solid 1px #d9d9d9;height:47px;box-sizing:border-box;padding:0 15px;color:#555;border-radius:2px;}
+textarea {border:solid 1px #d9d9d9;height:90px;box-sizing:border-box;padding:10px;width:100%;}
+input[type="submit"] {cursor:pointer}
+input[readonly] {background:#f6f6f8;color:#111;}
+button {border:0;-webkit-appearance:none;box-shadow:none;cursor:pointer;}
+
+::-webkit-input-placeholder {color:#555;}
+::-moz-placeholder {color:#555;}
+::-ms-input-placeholder {color:#555;}
+
+::-webkit-scrollbar {width: 10px;}
+::-webkit-scrollbar-track {background: #f1f1f1;}
+::-webkit-scrollbar-thumb {background: linear-gradient(to bottom, #3e97cc, #803db9);}
+
+.hidden {position:absolute;width:0;height:0;font-size:0;line-height:0;overflow:hidden;visibility:hidden;}
+.clear {clear:both;}
+.clear:after {content:"";clear:both;display:block;}
+.floatleft {float:left;}
+.floatright {float:right;}
+
+.dim {display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.8;z-index:100;} 

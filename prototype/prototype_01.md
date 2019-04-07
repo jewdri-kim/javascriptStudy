@@ -474,6 +474,44 @@ function tabMenu(){
         this.$selectMenuItem.addClass('active');
     }
 }
+
+```
+
+#### 예제 수정 2 > 인스턴스 생성시 메서드 호출 줄여주기
+
+```javascript
+// 탭메뉴 함수 방식으로 클래스이용
+$(document).ready(function(){
+    //인스턴스 생성
+    var tabMenu1 = new TabMenu('.tabMenu1');    //생성자에 파라미터 추가
+    //tabMenu1.init('.tabMenu1');       //매번만들때마다 귀찮
+    //tabMenu1.initEvent();       //매번만들때마다 귀찮
+    
+    //인스턴스 생성2
+    var tabMenu2 = new TabMenu('.tabMenu1');    //생성자에 파라미터 추가
+    //tabMenu2.init('.tabMenu2');       //매번만들때마다 귀찮
+    //tabMenu2.initEvent();       //매번만들때마다 귀찮
+})
+
+function tabMenu(pSelector){   //생성자에 파라미터 추가
+    //프로퍼티생성
+    this.$tabMenu = null;
+    this.$menuItems = null;
+    this.$selectMenuItem = null;
+    
+    // ***생성자에서 초기메서드 호출***
+    this.init(pSelector);      //생성자에서 받은 파라미터 메서드에
+    this.initEvent();
+    //메서드
+    
+    //초기화 메서드
+    this.init = function(pSelector){      //생성자에 파라미터 추가 //여기서잠깐!!!=>추가에서
+        this.$tabMenu = $(pSelector);
+        this.$menuItems = this.$tabMenu.find('li');
+    }
+    
+    //... 생략
+}    
 ```
 
 
@@ -512,43 +550,6 @@ function tabMenu(){
         this.$selectMenuItem.addClass('active');
     }
 }
-```
-
-#### 예제 수정 2 > 인스턴스 생성시 메서드 호출 줄여주기
-
-```javascript
-// 탭메뉴 함수 방식으로 클래스이용
-$(document).ready(function(){
-    //인스턴스 생성
-    var tabMenu1 = new TabMenu('.tabMenu1');    //생성자에 파라미터 추가
-    //tabMenu1.init('.tabMenu1');       //매번만들때마다 귀찮
-    //tabMenu1.initEvent();       //매번만들때마다 귀찮
-    
-    //인스턴스 생성2
-    var tabMenu2 = new TabMenu('.tabMenu1');    //생성자에 파라미터 추가
-    //tabMenu2.init('.tabMenu2');       //매번만들때마다 귀찮
-    //tabMenu2.initEvent();       //매번만들때마다 귀찮
-})
-
-function tabMenu(pSelector){   //생성자에 파라미터 추가
-    //프로퍼티생성
-    this.$tabMenu = null;
-    this.$menuItems = null;
-    this.$selectMenuItem = null;
-    
-    // ***생성자에서 초기메서드 호출***
-    this.init(pSelector);      //생성자에서 받은 파라미터 메서드에
-    this.initEvent();
-    //메서드
-    
-    //초기화 메서드
-    this.init = function(pSelector){      //생성자에 파라미터 추가 //여기서잠깐!!!=>추가에서
-        this.$tabMenu = $(pSelector);
-        this.$menuItems = this.$tabMenu.find('li');
-    }
-    
-    //... 생략
-}    
 ```
 
 

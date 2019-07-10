@@ -1,0 +1,6 @@
+
+.movie-list{overflow:hidden;font-size:0;padding:50px;}
+.movie-list li{display:inline-block;width:23%;margin:0 1% 1% 0;}
+.movie-list .movie-item h2{padding:10px 0;background:#000;color:#fff;font-size:600;font-size:15px;text-align:center;}
+.movie-list .movie-item .movie-img{width:100%;}
+.movie-list .movie-item .movie-img img{width:100%;}

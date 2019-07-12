@@ -8,7 +8,8 @@ class App extends Component {
   state = {
       error: false,
       data : null,
-      dataUrl : 'https://yts.lt/api/v2/list_movies.json?magnet:?xt=urn:btih:TORRENT_HASH&dn=Url+Encoded+Movie+Name&tr=http://track.one:1234/announce&tr=udp://track.two:80'
+      dataUrl : 'https://yts.lt/api/v2/list_movies.json?magnet:?xt=urn:btih:TORRENT_HASH&dn=Url+Encoded+Movie+Name&tr=http://track.one:1234/announce&tr=udp://track.two:80',
+      value : 1
   }
 
   constructor(props){
@@ -61,7 +62,6 @@ class App extends Component {
 
   sortMovieListRating = () =>{
     this.setState({
-        data : null,
         dataUrl : 'https://yts.lt/api/v2/list_movies.json?sort_by=rating'
     })
     this._getMovies();    

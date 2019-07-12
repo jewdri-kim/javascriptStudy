@@ -5,7 +5,12 @@ class Movie extends Component {
     
     state = {
        title : null,
-       poster: null
+       poster: null,
+    }
+
+    constructor(props){
+      super(props);
+      console.log('Movie : constructor');
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -16,24 +21,25 @@ class Movie extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      console.log('shouldComponentUpdate');
+      console.log('Movie : shouldComponentUpdate');
        return true;
     }
   
     componentDidUpdate(prevProps, prevState) {
-      console.log('componentDidUpdate :value 값이 바뀌었다!');
+      console.log('Movie : componentDidUpdate :value 값이 바뀌었다!');
     }
   
     componentWillUnmount() {
       this.setState({
         title:null,
-        poster:null
+        poster:null,
       });
-      console.log('Good Bye');
+      console.log('Movie : Good Bye');
     }
   
     
   render(){
+    console.log('Movie : render');
     return (
       <Fragment>
           <div className="movie-item">

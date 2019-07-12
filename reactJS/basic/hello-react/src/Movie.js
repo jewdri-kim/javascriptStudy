@@ -20,9 +20,14 @@ class Movie extends Component {
         return null;
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-      console.log('Movie : shouldComponentUpdate');
-       return true;
+    shouldComponentUpdate(nextProps, nextState) {     //특정조건에 따라 랜더링 막아줌
+      if (nextProps.title === this.state.title){
+        console.log('Movie False : shouldComponentUpdate');
+        return false;
+      }else{
+        console.log('Movie True: shouldComponentUpdate');
+        return true;
+      }
     }
   
     componentDidUpdate(prevProps, prevState) {

@@ -7,16 +7,16 @@ class MyComponent extends Component {
        value : 0
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
+    static getDerivedStateFromProps(nextProps, prevState) {  //nextProps: 다음으로 받아올, prevState: 업데이트 되기전 상태
         if (prevState.value !== nextProps.value) {
             return {
-            value: nextProps.value
+              value: nextProps.value
             };
         }
         return null;
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {  //업데이트 성능 최적화 false면 업데이트안함 
       if (nextProps.value === 10) return false;
       return true;
     }

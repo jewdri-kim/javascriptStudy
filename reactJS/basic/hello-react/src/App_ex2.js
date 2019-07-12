@@ -64,6 +64,7 @@ class App extends Component {
     this.setState({
         dataUrl : 'https://yts.lt/api/v2/list_movies.json?sort_by=rating'
     })
+    
     this._getMovies();    
   }
   render(){

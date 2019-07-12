@@ -5,7 +5,7 @@
 - 이번엔 아래 LifeCycle을 실제 코드를 짜보며 익히는 시간.
 - https://codesandbox.io/embed/reactanyone-lifecycle-api-ycc2j
 
-![](D:\github\javascriptStudy\reactJS\basic\img\images.jpg)
+![](/jewdri-kim/javascriptStudy/blob/master/reactJS/basic/img/images.jpg?raw=true)
 
 
 

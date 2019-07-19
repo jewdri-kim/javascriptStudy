@@ -146,6 +146,65 @@ user.showInfo();
 
 
 
+### 프로토타입 이용한 구버전 브라우저 최적화 및 사용
+
+- 자바스크립트는 자바처럼 private , public 개념이 없어 클래스 외부에서 자꾸 수정하여 사용가능.
+
+```javascript
+var a = new String("1234");
+console.log(String);
+console.log(String.prototype);
+a.charAt(1);
+
+
+// 외부에서 charAt 메서드 수정
+String.prototype.charAt = function(){
+    console.log("김지혜");
+}
+var b = new String("1234");
+b.charAt(1);
+```
+
+- 위에 특징을 활용하는 방법 :  ES6 에서 나온 repeat 문자열 반복함수
+
+```javascript
+var a = new String("abc");
+a.repeat(3);  //=> "abcabcabc";
+
+--------------------------------------------
+var a = new String("abc");
+if(typeof String.prototype.repeat !== "function"){
+    String.prototype.repeat = function repeat(count) {
+        console.log('수정');
+        var str = this;
+        var innerRepeat = function (str, count) {
+            var result = str;
+            var i, endi;
+
+            if (count > 2) {
+                for (i = 2, endi = count; i < endi; i *= 2) {
+                    result += result;
+                }
+
+                result += innerRepeat(str, endi - i / 2);
+            } else if (count === 2) {
+                result += str;
+            } else if (count <= 0) {
+                result = "";
+            }
+
+            return result;
+        }
+
+        return innerRepeat(str, count);
+    };
+}
+
+a.repeat(3);    
+
+
+```
+
 
 
 # Lesson 06 - 클래스 정의방법 3가지 비교

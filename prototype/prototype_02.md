@@ -285,3 +285,154 @@ function 클래스이름(){
 
 
 
+# 추가 : 클래스 프로퍼티와 메서드
+
+- 지금까지 사용한 클래스의 프로퍼티와 메서드는 독립적으로 사용X
+- 인스턴스 생성한 후 사용했었다.
+- 지금까지 이용했던 형태를 그냥 프로퍼티와 메서드라고 부른다. 
+
+예>
+
+```javascript
+ var tabMenu1 = new TabMenu("#tabMenu");
+ tabMenu1.setSelectItemAt(1);
+```
+
+
+
+## 클래스 프로퍼티와 메서드란?
+
+- 인스턴스를 생성하지 않고도 사용할 수 있는 프로퍼티와 메서드가 있다. 
+- static - 자바에서도 있음
+
+
+
+### 만드는 방법
+
+```javascript
+function 클래스이름(){
+    ....
+}
+클래스이름.프로퍼티 = 값;
+클래스이름.메서드이름 = function(){}
+```
+
+
+
+### 사용법
+
+```javascript
+
+클래스이름.프로퍼티 = 값;
+클래스이름.메서드이름 = function(){}
+
+```
+
+
+
+### 주용도
+
+- 유틸리티성 기능
+- 실행하더라도 내부데이터에 영향을 주지않고 독립적으로 실행되는 기능이나 정보담을 때 사용
+
+```javascript
+클래스이름.프로퍼티 = 값;
+클래스이름.메서드이름 = function(){}
+
+```
+
+
+
+#### 용도 예제1> 탭메뉴 클래스
+
+```javascript
+function TabMenu(){
+    ....
+}
+
+TabMenu.version = "1.0";
+TabMenu.getInfo = function(){
+    var info = {
+        developer : "딴동네",
+        email : "ddandongne@webdongne.com",
+        decs : "탭메뉴를 구현한 클래스입니다." 
+    }
+    return info;
+}
+```
+
+#### 용도 예제2> Math 기능사용
+
+```javascript
+// 0에서 10사이의 랜덤 숫자만들기
+Math.floor(Math.random()*10);
+
+// 두 수중 큰 숫자 값 알아내기
+Math.max(10,20);
+```
+
+- Math : 자바스크립트 코어 라이브러리중 수학관련 기능을 담고 있는 클래스 
+- Math 에서 제공해주는 기능은 모두 클래스 프로퍼티와 메서드로 만들어져있다. 
+- 클래스 메서드의 공통점은 이 메서드를 실행한다고해서 Math 클래스 내부에 처리결과가 남거나 하지않는다. 그냥 사용할 목적에 해당
+- 이와 같은 기능을 클래스 메서드로 만들어 사용 => static
+
+#### 용도 예제3> jQuery 기능
+
+- jQuery 에서도 static 메서드를 찾을 수 있다.
+- https://api.jquery.com/category/utilities/
+- 목록중에서 jQuery.메서드, jQuery.프로퍼티가 있는것을 확인할 수 있다.
+- 이 중 jQuery.trim()
+
+```javascript
+var data = " 1234 ";   //문자열 좌우에 공백 포함
+var result = jQuery.trim(data); 
+alert(result);      //실행결과 = "1234";
+```
+
+#### 
+
+# 패키지
+
+- 함수: 특정 알고리증이나 구문의 영역 나누기 위해 포장
+- 클래스 : 연관있는 변수와 함수를 묶을때 (포장) 사용
+- 패키지 : 연관있는 클래스를 묶을 때 사용하는 기술
+- 전문 프로그래밍 패턴용어로 - **네임스페이스 패턴**이라고 한다. 
+
+
+
+### 일반 개발언어에서의 패키지
+
+- 일반 프로그래밍에서는 대부분 패키지 문법을 제공해줌.
+
+- 자바에서는 package 라는 명령어를 사용한다.
+
+```java
+//문법
+package 패키지명 : 
+publick class 클래스이름 {
+    .....
+}
+//예
+package ddan.utils:
+public class StringUtil {
+    ....
+}
+```
+
+
+
+### 자바스크립트에서 패키지
+
+- 자바스크립트에서는 따로 패키지 문법을 제공하진 않는다.
+- 하지만 흉내내어 사용할 수 있다.
+
+```javascript
+var packageName = {}    
+//또는
+var packageName = new Object();
+
+packageName.className = function(){
+    .....
+}....
+```
+

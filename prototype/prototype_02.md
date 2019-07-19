@@ -304,6 +304,7 @@ function 클래스이름(){
 
 - 인스턴스를 생성하지 않고도 사용할 수 있는 프로퍼티와 메서드가 있다. 
 - static - 자바에서도 있음
+- [https://github.com/jewdri-kim/OOAD/blob/master/99_java/05%EC%9E%A5%EC%A0%84%EA%B9%8C%EC%A7%80md.md](https://github.com/jewdri-kim/OOAD/blob/master/99_java/05장전까지md.md)
 
 
 
@@ -435,4 +436,26 @@ packageName.className = function(){
     .....
 }....
 ```
+
+
+
+
+
+
+
+출처 : [자바스크립트+jQuery 완전정복 스터디 3 중급/고급/활용편
+
+참고 : 
+
+[https://github.com/jewdri-kim/OOAD/blob/master/99_java/05%EC%9E%A5%EC%A0%84%EA%B9%8C%EC%A7%80md.md](https://github.com/jewdri-kim/OOAD/blob/master/99_java/05장전까지md.md)
+
+[https://github.com/jewdri-kim/OOAD/blob/master/99_java/5%EC%9E%A5%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md](https://github.com/jewdri-kim/OOAD/blob/master/99_java/5장 객체지향 프로그래밍.md)
+
+
+
+자바문법 : https://wikidocs.net/book/31
+
+자바코드연습 : https://code.sololearn.com/cVRUy2BwauK8/#java
+
+
 

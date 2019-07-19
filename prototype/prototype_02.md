@@ -508,7 +508,7 @@ packageName.className = function(){
 
 [https://github.com/jewdri-kim/OOAD/blob/master/99_java/05%EC%9E%A5%EC%A0%84%EA%B9%8C%EC%A7%80md.md](https://github.com/jewdri-kim/OOAD/blob/master/99_java/05장전까지md.md)
 
-[https://github.com/jewdri-kim/OOAD/blob/master/99_java/5%EC%9E%A5%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md](https://github.com/jewdri-kim/OOAD/blob/master/99_java/5장 객체지향 프로그래밍.md)
+https://github.com/jewdri-kim/OOAD/blob/master/99_java/5%EC%9E%A5%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D.md
 
 
 

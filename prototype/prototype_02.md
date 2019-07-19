@@ -97,7 +97,7 @@ function tabMenu(pSelector){   //생성자에 파라미터 추가
 
 ## 01_ 사용법
 
-```javascrit
+```javascript
 function 클래스이름(){
     this.프로퍼티1 = 초기값;
     this.프로퍼티2 = 초기값;

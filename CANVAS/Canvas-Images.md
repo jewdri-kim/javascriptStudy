@@ -181,7 +181,7 @@ alpha=imgData.data[3];
                   ctx.beginPath();
                   ctx.arc(200,100,100,0,2*Math.PI,true);
                   ctx.clip();
-                  ctx.drawImage(img, 50, 0);
+                  ctx.drawImage(img, 0, 0);
               }
           }
   	</script>

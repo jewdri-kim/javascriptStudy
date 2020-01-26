@@ -70,7 +70,7 @@ alpha=imgData.data[3];
 
 - getImageData를 통해 이미지에 읽어드린 픽셀정보를 -> 공식에 의해 변환 (많음) -> 그 변환된 픽셀데이터를 다시 캔버스에 넣어준다.
 
-- [grayscale.html]: http://code.d2.co.kr/jewdri/idea/grayscale.html
+- grayscale.html: http://code.d2.co.kr/jewdri/idea/grayscale.html
 
   ```html
   
@@ -112,7 +112,7 @@ alpha=imgData.data[3];
 
   
 
-- [reverse.html]: http://code.d2.co.kr/jewdri/idea/reverse.html
+- reverse.html: http://code.d2.co.kr/jewdri/idea/reverse.html
 
 ```html
 
@@ -157,7 +157,7 @@ alpha=imgData.data[3];
 - 클리핑 영역이란 그리기가 제한되는 영역을 의미한다.
 - 설정된 패스가 클리핑 영역이 되어 패스의 안쪽만 출력된다.
 
-- [이미지원모양으로 clip]: http://code.d2.co.kr/jewdri/idea/clip.html
+- 이미지원모양으로 clip: http://code.d2.co.kr/jewdri/idea/clip.html
 
   ```html
   	<canvas id="canvas" width="400" height="500">
@@ -187,7 +187,7 @@ alpha=imgData.data[3];
   	</script>
   ```
 
-- [이미지 하트모양으로 clip]: http://code.d2.co.kr/jewdri/idea/clip2.html
+- 이미지 하트모양으로 clip: http://code.d2.co.kr/jewdri/idea/clip2.html
 
   ```html
   	<canvas id="canvas" width="400" height="500">
@@ -245,17 +245,17 @@ alpha=imgData.data[3];
   - source-over : 새 도형은 기존 내용 위에 그려진다. 기본값
   - xor : 겹쳐지는 부분의 도형은 모두 투명하게 그렇지 않은 부분은 정상적으로 그려진다.
 
-- [속성들 한번에]: https://www.w3schools.com/tags/canvas_globalcompositeoperation.asp
+- 속성들 한번에: https://www.w3schools.com/tags/canvas_globalcompositeoperation.asp
 
-- [lighter예시1]: http://code.d2.co.kr/jewdri/idea/reverse2.html
+- lighter예시1: http://code.d2.co.kr/jewdri/idea/reverse2.html
 
-- [lighter예시2 - 글자랑 겹치기]: http://code.d2.co.kr/jewdri/idea/reverse4.html
+- lighter예시2 - 글자랑 겹치기: http://code.d2.co.kr/jewdri/idea/reverse4.html
 
-- [lighter예시3 - 글자랑 겹치기]: http://code.d2.co.kr/jewdri/idea/reverse5.html
+- lighter예시3 - 글자랑 겹치기: http://code.d2.co.kr/jewdri/idea/reverse5.html
 
-- [lighter예시4 - 글자랑 겹치기]: http://code.d2.co.kr/jewdri/idea/reverse6.html
+- lighter예시4 - 글자랑 겹치기: http://code.d2.co.kr/jewdri/idea/reverse6.html
 
-- [xor 예시 - 글자랑 겹치기]: http://code.d2.co.kr/jewdri/idea/reverse7.html
+- xor 예시 - 글자랑 겹치기: http://code.d2.co.kr/jewdri/idea/reverse7.html
 
 - 코드 : reverse6.html
 

@@ -21,7 +21,7 @@ window.onload = function() {
 
 - context*.drawImage(*img,sx,sy,swidth,sheight,x,y,width,height*);
 
-[test.html]: http://code.d2.co.kr/jewdri/idea/test.html
+test.html: http://code.d2.co.kr/jewdri/idea/test.html
 
 ```html
 
